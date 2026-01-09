@@ -1,0 +1,55 @@
+# 并行执行规则
+
+```yaml
+parallel_execution_rules:
+  DEFAULT_MODE: PARALLEL
+
+  mandatory_parallel:
+    - "Multiple search queries"
+    - "Batch URL extractions"
+    - "Independent analyses"
+    - "Non-dependent hops"
+    - "Result processing"
+    - "Information extraction"
+
+  sequential_only_with_justification:
+    - reason: "Explicit dependency"
+      example: "Hop N requires Hop N-1 results"
+    - reason: "Resource constraint"
+      example: "API rate limit reached"
+    - reason: "User requirement"
+      example: "User requests sequential for debugging"
+
+  parallel_optimization:
+    batch_sizes:
+      searches: 5
+      extractions: 3
+      analyses: 2
+    intelligent_grouping:
+      by_domain: true
+      by_complexity: true
+      by_resource: true
+```
+
+# 性能优化策略
+
+```yaml
+optimization_strategies:
+  caching:
+    - Cache Tavily search results: 1 hour
+    - Cache Playwright extractions: 24 hours
+    - Cache Sequential analysis: 1 hour
+    - Reuse case patterns: always
+
+  parallelization:
+    - Parallel searches: max 5
+    - Parallel extractions: max 3
+    - Parallel analysis: max 2
+    - Tool call batching: true
+
+  resource_limits:
+    - Max time per research: 10 minutes
+    - Max search iterations: 10
+    - Max hops: 5
+    - Max memory per session: 100MB
+```

@@ -1,0 +1,35 @@
+# 案例学习架构
+
+```yaml
+case_schema:
+  case_id:
+    format: "research_[timestamp]_[topic_hash]"
+
+  case_content:
+    query: "original research question"
+    strategy_used: "planning approach"
+    successful_patterns:
+      - query_formulations: []
+      - extraction_methods: []
+      - synthesis_approaches: []
+    findings:
+      key_discoveries: []
+      source_credibility_scores: {}
+      confidence_levels: {}
+    lessons_learned:
+      what_worked: []
+      what_failed: []
+      optimizations: []
+    metrics:
+      time_taken: seconds
+      sources_processed: count
+      hops_executed: count
+      confidence_achieved: float
+
+memory_management:
+  case_based_reasoning: true
+  pattern_learning: true
+  session_persistence: true
+  cross_session_learning: true
+  retention_days: 30
+```

@@ -1,0 +1,185 @@
+# triggers.yaml - 自动触发规则配置
+# 定义何时自动记录到知识库、调用专家、执行 Hooks
+
+version: "1.0"
+updated: "2026-01-08"
+
+# ============================================
+# 知识记录触发器 (Knowledge Recording Triggers)
+# ============================================
+knowledge_triggers:
+  # 踩坑记录触发条件
+  pitfall_recording:
+    conditions:
+      - type: "debug_time"
+        threshold: "15min"
+        action: "prompt_record"
+      - type: "error_pattern"
+        patterns: ["同一问题出现2次", "需要Web搜索解决"]
+        action: "auto_record"
+      - type: "keyword"
+        keywords: ["踩坑", "坑", "记录这个", "下次注意"]
+        action: "auto_record"
+    target: "~/.ai-knowledge/global/pitfalls.md"
+    template: "~/.claude/templates/pitfalls.md"
+
+  # 架构决策记录
+  decision_recording:
+    conditions:
+      - type: "action"
+        actions: ["技术选型", "架构变更", "Breaking Change"]
+        action: "prompt_record"
+      - type: "keyword"
+        keywords: ["决定用", "选择", "采用方案"]
+        action: "prompt_record"
+    target: "~/.ai-knowledge/projects/{project}/decisions.md"
+    template: "~/.claude/templates/decisions.md"
+
+  # 组件模式记录
+  pattern_recording:
+    conditions:
+      - type: "reuse_count"
+        threshold: 2
+        action: "auto_record"
+      - type: "keyword"
+        keywords: ["复用", "抽象", "通用组件"]
+        action: "prompt_record"
+    target: "~/.ai-knowledge/domains/{domain}/patterns.md"
+
+# ============================================
+# 专家路由触发器 (Expert Routing Triggers)
+# ============================================
+expert_routing:
+  # 前端专家
+  frontend:
+    triggers:
+      - file_patterns: ["*.tsx", "*.jsx", "*.css", "*.scss"]
+      - keywords: ["组件", "React", "样式", "布局", "响应式"]
+    skill: "skills/experts/frontend/SKILL.md"
+
+  # 后端专家
+  backend:
+    triggers:
+      - file_patterns: ["*.py", "*.go", "*.java", "api/**"]
+      - keywords: ["API", "数据库", "服务端", "接口"]
+    skill: "skills/experts/backend/SKILL.md"
+
+  # 架构师
+  architect:
+    triggers:
+      - conditions: ["weight >= 7", "多模块变更", "Breaking Change"]
+      - keywords: ["架构", "重构", "设计", "系统"]
+    skill: "skills/experts/architect/SKILL.md"
+
+  # 产品经理
+  product:
+    triggers:
+      - keywords: ["需求", "PRD", "验收", "进度汇报"]
+      - actions: ["Spec-Kit完成", "任务验收"]
+    skill: "skills/experts/product/SKILL.md"
+
+# ============================================
+# Skill 自动调用触发器
+# ============================================
+skill_triggers:
+  # Spec-Kit 触发
+  speckit:
+    condition: "weight >= 7"
+    sequence:
+      - "/speckit.constitution"
+      - "/speckit.specify"
+      - "/speckit.plan"
+      - "/speckit.tasks"
+      - "/speckit.implement"
+
+  # 工作流编排触发
+  workflow_orchestrator:
+    condition: "always"
+    description: "每个任务开始时自动评估权重并路由"
+    skill: "skills/workflow-orchestrator/SKILL.md"
+
+  # 代码复用检查
+  component_reuse:
+    condition: "before_new_component"
+    directories:
+      - "src/components/"
+      - "src/services/"
+      - "src/hooks/"
+    skill: "skills/patterns/component-reuse/SKILL.md"
+
+  # 开发前检查（复用 + 踩坑）
+  pre_dev_check:
+    condition: "task_start AND weight >= 2"
+    description: "开发前自动检查可复用资源和相关踩坑"
+    sequence:
+      - "component_reuse_check"
+      - "pitfall_reminder"
+    knowledge_sources:
+      - "~/.ai-knowledge/global/pitfalls.md"
+      - "~/.ai-knowledge/domains/{domain}/pitfalls.md"
+      - "~/.ai-knowledge/projects/{project}/pitfalls.md"
+    skill: "skills/workflow/pre-dev-check/SKILL.md"
+
+# ============================================
+# Session 生命周期触发器
+# ============================================
+session_lifecycle:
+  on_start:
+    actions:
+      - read: "~/.claude/templates/SESSION.md"
+      - read: "~/.ai-knowledge/global/pitfalls.md"
+      - call: "mcp__serena__list_memories"
+      - call: "mcp__task-master-ai__next_task"
+
+  on_checkpoint:  # 每30分钟
+    interval: "30min"
+    actions:
+      - call: "mcp__serena__write_memory"
+      - update: "SESSION.md progress"
+
+  on_end:
+    actions:
+      - eval: "knowledge_value_assessment"
+      - write: "session_summary to Serena"
+      - cleanup: "temp files"
+
+# ============================================
+# 质量门禁触发器
+# ============================================
+quality_gates:
+  pre_commit:
+    checks:
+      - "pnpm lint"
+      - "pnpm exec tsc --noEmit"
+      - "no console.log"
+      - "no any without comment"
+    on_fail: "block_commit"
+
+  pre_implement:
+    condition: "weight >= 7"
+    checks:
+      - "spec.md exists"
+      - "plan.md exists"
+      - "tasks.md exists"
+    on_fail: "redirect_to_speckit"
+
+# ============================================
+# Hook 映射
+# ============================================
+hooks:
+  SessionStart:
+    script: "hooks/session-start.py"
+    triggers: ["session_lifecycle.on_start"]
+
+  TaskComplete:
+    script: "hooks/task-complete.py"
+    triggers: ["knowledge_triggers.pitfall_recording"]
+
+  PreCommit:
+    script: "hooks/pre-commit.py"
+    triggers: ["quality_gates.pre_commit"]
+
+  SpecProtect:
+    script: "hooks/spec-protect.py"
+    condition: "file in .specify/specs/**"
+    action: "require_confirmation"

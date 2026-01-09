@@ -1,0 +1,39 @@
+# 错误处理配置
+
+```yaml
+error_handling:
+  tavily_errors:
+    api_key_missing: "Check TAVILY_API_KEY environment variable"
+    rate_limit: "Wait and retry with exponential backoff"
+    no_results: "Expand search terms or try alternatives"
+
+  playwright_errors:
+    timeout: "Skip source or increase timeout"
+    navigation_failed: "Mark as inaccessible, continue"
+    screenshot_failed: "Continue without visual"
+
+  quality_errors:
+    low_confidence: "Trigger replanning"
+    contradictions: "Seek additional sources"
+    insufficient_data: "Expand search scope"
+
+replanning_triggers:
+  confidence_based:
+    critical: < 0.4
+    low: < 0.6
+    acceptable: 0.6-0.7
+    good: > 0.7
+
+  time_based:
+    warning: 70% of limit
+    critical: 90% of limit
+
+  quality_based:
+    insufficient_sources: < 3
+    contradictions: > 30%
+    gaps_identified: > 50%
+
+  user_based:
+    explicit_request: immediate
+    implicit_dissatisfaction: assess
+```

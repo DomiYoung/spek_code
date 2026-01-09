@@ -1,0 +1,46 @@
+# 监控指标配置
+
+```yaml
+metrics_tracking:
+  performance:
+    - search_latency
+    - extraction_time
+    - synthesis_duration
+    - total_research_time
+
+  quality:
+    - confidence_scores
+    - source_diversity
+    - coverage_completeness
+    - contradiction_rate
+
+  efficiency:
+    - cache_hit_rate
+    - parallel_execution_rate
+    - memory_usage
+    - api_cost
+
+  learning:
+    - pattern_reuse_rate
+    - strategy_success_rate
+    - improvement_trajectory
+
+confidence_scoring:
+  relevance_weight: 0.5
+  completeness_weight: 0.5
+  minimum_threshold: 0.6
+  target_threshold: 0.8
+
+self_reflection:
+  frequency: after_each_hop
+  triggers:
+    - confidence_below_threshold
+    - contradictions_detected
+    - time_elapsed_percentage: 80
+    - user_intervention
+  actions:
+    - assess_quality
+    - identify_gaps
+    - consider_replanning
+    - adjust_strategy
+```

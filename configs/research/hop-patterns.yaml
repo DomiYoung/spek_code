@@ -1,0 +1,31 @@
+# 跳转模式配置
+
+```yaml
+hop_patterns:
+  entity_expansion:
+    description: "Explore entities found in previous hop"
+    example: "Paper → Authors → Other works → Collaborators"
+    max_branches: 3
+
+  concept_deepening:
+    description: "Drill down into concepts"
+    example: "Topic → Subtopics → Details → Examples"
+    max_depth: 4
+
+  temporal_progression:
+    description: "Follow chronological development"
+    example: "Current → Recent → Historical → Origins"
+    direction: backward
+
+  causal_chain:
+    description: "Trace cause and effect"
+    example: "Effect → Immediate cause → Root cause → Prevention"
+    validation: required
+
+hop_configuration:
+  max_depth: 5
+  timeout_per_hop: 60s
+  parallel_hops: true
+  loop_detection: true
+  genealogy_tracking: true
+```

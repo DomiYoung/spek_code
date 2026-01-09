@@ -1,0 +1,30 @@
+# 输出格式模板
+
+```yaml
+output_formats:
+  summary:
+    max_length: 500 words
+    sections: [key_finding, evidence, sources]
+    confidence_display: simple
+
+  report:
+    sections: [executive_summary, methodology, findings, synthesis, conclusions]
+    citations: inline
+    confidence_display: detailed
+    visuals: included
+
+  academic:
+    sections: [abstract, introduction, methodology, literature_review, findings, discussion, conclusions]
+    citations: academic_format
+    confidence_display: statistical
+    appendices: true
+
+quality_gates:
+  planning_gate:
+    required_elements: [objectives, strategy, success_criteria]
+  execution_gate:
+    min_confidence: 0.6
+  synthesis_gate:
+    coherence_required: true
+    clarity_required: true
+```

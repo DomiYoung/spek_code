@@ -1,0 +1,453 @@
+---
+name: reactflow-patterns
+description: |
+  ReactFlow 11.x 工作流编辑器专业知识。当涉及节点、边、Handle、迭代节点、
+  画布操作、节点持久化时自动触发。
+  关键词：ReactFlow、节点、边、Handle、parentNode、迭代、workflow、画布、连接。
+  【项目核心】包含迭代节点、子节点持久化等关键业务知识。
+version: 2.0.0
+expert-routing:
+  - trigger: "迭代.*不显示|子节点.*没有|连线.*失败|parentNode.*问题"
+    expert: "feature-dev:feature-dev"
+    strict-mode: true
+    flags: "--chrome --seq --think-hard"
+  - trigger: "添加.*节点|创建.*组件|新增.*节点类型"
+    expert: "feature-dev:feature-dev"
+    strict-mode: true
+    flags: "--type component --framework react --magic"
+  - trigger: "性能.*优化|卡顿|渲染.*慢|重新渲染"
+    expert: "feature-dev:feature-dev"
+    strict-mode: true
+    flags: "--seq --think"
+  - trigger: "持久化.*失败|保存.*不成功|IndexedDB.*问题"
+    expert: "feature-dev:feature-dev"
+    strict-mode: true
+    flags: "--serena --seq"
+allowed-tools: Read, Grep, Glob, Task, mcp__sequential-thinking__sequentialthinking
+---
+
+# ReactFlow 11.x 工作流开发指南
+
+## 项目架构
+
+```
+src/features/workflow-editor/
+├── canvas/
+│   └── hooks/
+│       ├── useNodesInteractions.ts  # 节点交互
+│       └── useEdgesInteractions.ts  # 边交互
+├── components/
+│   ├── CustomNode.tsx               # 自定义节点
+│   ├── IterationElement/            # 迭代节点 ⚠️ 重点
+│   │   ├── IterationNode.tsx        # 迭代容器
+│   │   └── AddBlock.tsx             # 添加子节点
+│   └── edges/                       # 自定义边
+├── hooks/
+│   ├── useIterationChildren.ts      # 迭代子节点管理
+│   └── useWorkflowPersistence.ts    # 持久化
+├── state/
+│   └── workflowStore.ts             # Zustand 状态
+└── utils/
+    ├── workflowCache.ts             # IndexedDB 缓存
+    └── iterationHelpers.ts          # 迭代辅助函数
+```
+
+---
+
+## 1. 硬性约束 (Hard Constraints)
+
+### 迭代节点约束
+
+| 约束 | 规则 | 审计命令 | 严重度 |
+|------|------|----------|--------|
+| 子节点必须设置 parentNode | `isInIteration: true` 必须有 `parentNode` | `grep -A10 "isInIteration.*true" src/ --include="*.ts" \| grep -v "parentNode"` | 🔴 Critical |
+| 使用 parentNode 不是 parentId | ReactFlow 11.x 使用 parentNode | `grep -rn "parentId" src/ --include="*.ts" \| grep -v "// legacy"` | 🔴 Critical |
+| 必须设置 expandParent | 子节点必须有 `expandParent: true` | `grep -B5 -A5 "parentNode" src/ --include="*.ts" \| grep -v "expandParent"` | 🟡 Warning |
+| 添加节点后必须 updateNodeInternals | 否则 Handle 位置不更新 | `grep -A15 "addNode" src/ --include="*.ts" \| grep -v "updateNodeInternals"` | 🔴 Critical |
+
+### 状态管理约束
+
+| 约束 | 规则 | 审计命令 | 严重度 |
+|------|------|----------|--------|
+| 禁止直接修改 nodes/edges | 必须通过 store action | `grep -rn "setNodes\|setEdges" src/components/ --include="*.tsx"` | 🟡 Warning |
+| 必须使用 immer 更新 | 复杂更新使用 immer | `grep -rn "produce\|immer" src/state/ --include="*.ts"` | 🟡 Warning |
+
+---
+
+## 2. 反模式 (Anti-Patterns)
+
+### 反模式 2.1: 缺少 parentNode
+
+**问题**：创建迭代子节点时忘记设置 parentNode，导致子节点不显示在容器内。
+
+**检测**：
+```bash
+# 检测 isInIteration: true 但无 parentNode
+grep -A10 "isInIteration.*true" src/ -r --include="*.ts" | \
+  grep -B5 -A5 "isInIteration" | \
+  grep -v "parentNode"
+
+# 检测使用了废弃的 parentId
+grep -rn "parentId:" src/ --include="*.ts" | grep -v "// legacy\|// deprecated"
+```
+
+**修正**：
+```typescript
+// ❌ 错误：缺少 parentNode
+const newNode = {
+  id: 'child-1',
+  type: 'custom',
+  position: { x: 50, y: 50 },
+  data: {
+    config: {
+      isInIteration: true,
+      iterationId: 'iteration-1',
+    }
+  }
+};
+
+// ✅ 正确：设置 parentNode（ReactFlow 11.x）
+const newNode = {
+  id: 'child-1',
+  type: 'custom',
+  position: { x: 50, y: 50 },  // 相对于父节点的位置
+  parentNode: 'iteration-1',   // ⚠️ ReactFlow 11.x 使用 parentNode
+  expandParent: true,          // ⚠️ 必须设置
+  data: {
+    config: {
+      isInIteration: true,
+      iterationId: 'iteration-1',
+    }
+  }
+};
+```
+
+---
+
+### 反模式 2.2: 忘记 updateNodeInternals
+
+**问题**：添加子节点后忘记调用 updateNodeInternals，导致边连接点不更新。
+
+**检测**：
+```bash
+# 检测添加节点后是否有 updateNodeInternals
+grep -A15 "addNode\(" src/ -r --include="*.ts" | \
+  grep -B10 "addNode" | \
+  grep -v "updateNodeInternals"
+```
+
+**修正**：
+```typescript
+// ❌ 错误：忘记调用 updateNodeInternals
+function addChildNode(iterationId: string) {
+  const newNode = createChildNode(iterationId);
+  actions.addNode(newNode);
+  actions.addEdge(createEdge(newNode.id));
+  // 缺少 updateNodeInternals
+}
+
+// ✅ 正确：调用 updateNodeInternals
+function addChildNode(iterationId: string) {
+  const newNode = createChildNode(iterationId);
+  actions.addNode(newNode);
+  actions.addEdge(createEdge(newNode.id));
+
+  // ⚠️ 关键：同步 ReactFlow 内部状态
+  updateNodeInternals(iterationId);
+}
+```
+
+---
+
+### 反模式 2.3: 双重标识不同步
+
+**问题**：ReactFlow 的 `parentNode` 和业务层的 `relation_id` 不同步，导致刷新后子节点丢失。
+
+**检测**：
+```bash
+# 检测添加第一个子节点时是否更新 relation_id
+grep -A20 "addNode\|addChildNode" src/ -r --include="*.ts" | \
+  grep -v "relation_id"
+```
+
+**修正**：
+```typescript
+// ❌ 错误：只设置 parentNode，不更新 relation_id
+actions.addNode(newNode);
+
+// ✅ 正确：同时更新两层
+// 1. ReactFlow 层
+actions.addNode(newNode);
+
+// 2. 业务层（仅第一个子节点）
+if (childCount === 0) {
+  actions.updateNode(iterationNodeId, {
+    config: {
+      relation_id: Number(newNodeId)  // 第一个子节点作为入口
+    }
+  });
+}
+
+// 3. 同步内部状态
+updateNodeInternals(iterationNodeId);
+```
+
+---
+
+### 反模式 2.4: 节点组件不使用 memo
+
+**问题**：自定义节点组件未使用 React.memo，导致不必要的重渲染。
+
+**检测**：
+```bash
+# 检测节点组件是否使用 memo
+grep -rn "export.*function.*Node\|export.*const.*Node" src/components/ --include="*.tsx" | \
+  xargs -I {} sh -c 'grep -L "React.memo\|memo(" {}'
+```
+
+**修正**：
+```typescript
+// ❌ 错误：未使用 memo
+export function CustomNode({ data }: NodeProps<CustomNodeData>) {
+  return <div>{data.label}</div>;
+}
+
+// ✅ 正确：使用 memo
+export const CustomNode = React.memo(({ data }: NodeProps<CustomNodeData>) => {
+  return <div>{data.label}</div>;
+});
+```
+
+---
+
+## 3. 最佳实践 (Golden Paths)
+
+### 3.1 双重标识机制
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ ReactFlow 层（运行时显示）                                   │
+│                                                              │
+│ • parentNode: 视觉分组，子节点相对于父节点定位               │
+│ • 用于画布渲染和交互                                         │
+│ • 存储在 node.parentNode                                     │
+│ • ReactFlow 11.x 使用 parentNode（不是 parentId）            │
+└─────────────────────────────────────────────────────────────┘
+                              ↕ 需要同步
+┌─────────────────────────────────────────────────────────────┐
+│ 业务层（持久化和恢复）                                       │
+│                                                              │
+│ • relation_id: 迭代节点的入口子节点 ID                       │
+│ • 用于后端存储和刷新后恢复                                   │
+│ • 存储在 node.data.config.relation_id                        │
+│ • 配合 edges 通过 DFS 遍历找到所有子节点                     │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### 3.2 添加子节点的正确方式
+
+```typescript
+// AddBlock.tsx - 添加子节点的正确实现
+
+function addChildNode(iterationNodeId: string) {
+  const newNodeId = `child-${Date.now()}`;
+  const childCount = getChildCount(iterationNodeId);
+
+  // 1. 创建节点，设置 parentNode（ReactFlow 层）
+  const newNode: Node = {
+    id: newNodeId,
+    type: 'custom',
+    position: calculateChildPosition(childCount),
+    parentNode: iterationNodeId,  // ⚠️ ReactFlow 11.x
+    expandParent: true,
+    data: {
+      config: {
+        isInIteration: true,
+        iterationId: iterationNodeId,
+      }
+    }
+  };
+
+  // 2. 添加到 store
+  actions.addNode(newNode);
+
+  // 3. 🔥 关键：更新迭代节点的 relation_id（业务层）
+  if (childCount === 0) {
+    actions.updateNode(iterationNodeId, {
+      config: {
+        relation_id: Number(newNodeId)  // 第一个子节点作为入口
+      }
+    });
+  }
+
+  // 4. 同步 ReactFlow 内部状态
+  updateNodeInternals(iterationNodeId);
+}
+```
+
+### 3.3 节点组件优化
+
+```typescript
+// 使用 React.memo 和 useCallback 优化
+export const CustomNode = React.memo(({ data, id }: NodeProps<CustomNodeData>) => {
+  const updateNode = useStore(state => state.updateNode);
+
+  // 使用 useCallback 避免重新创建函数
+  const handleClick = useCallback(() => {
+    updateNode(id, { selected: true });
+  }, [id, updateNode]);
+
+  return (
+    <div className="custom-node" onClick={handleClick}>
+      <Handle type="source" position={Position.Right} />
+      <span>{data.label}</span>
+      <Handle type="target" position={Position.Left} />
+    </div>
+  );
+});
+```
+
+### 3.4 持久化恢复流程
+
+```typescript
+// 恢复时重建 parentNode 关系
+function restoreIterationChildren(
+  nodes: Node[],
+  edges: Edge[],
+  iterationNode: Node
+) {
+  const relationId = iterationNode.data?.config?.relation_id;
+  if (!relationId) return nodes;
+
+  // 通过 DFS 从 relation_id 开始遍历
+  const childIds = findChildrenByDFS(edges, String(relationId));
+
+  return nodes.map(node => {
+    if (childIds.includes(node.id)) {
+      return {
+        ...node,
+        parentNode: iterationNode.id,  // 恢复 parentNode
+        expandParent: true,
+      };
+    }
+    return node;
+  });
+}
+```
+
+---
+
+## 4. 自我验证 (Self-Verification)
+
+### ReactFlow 合规审计脚本
+
+```bash
+#!/bin/bash
+# reactflow-audit.sh - ReactFlow 代码合规检查
+
+echo "🔄 ReactFlow 合规审计"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+ERRORS=0
+
+# 1. 检测缺少 parentNode
+echo -e "\n📍 检测 parentNode 设置..."
+MISSING_PARENT=$(grep -A10 "isInIteration.*true" src/ -r --include="*.ts" 2>/dev/null | \
+  grep -B5 -A5 "isInIteration" | grep -c "parentNode" || echo "0")
+
+if [ "$MISSING_PARENT" -eq 0 ]; then
+    echo "⚠️ 可能缺少 parentNode 设置"
+    echo "   检查 isInIteration: true 的节点"
+else
+    echo "✅ parentNode 设置正常"
+fi
+
+# 2. 检测使用废弃的 parentId
+echo -e "\n🔍 检测废弃 API..."
+PARENT_ID=$(grep -rn "parentId:" src/ --include="*.ts" 2>/dev/null | grep -v "// legacy\|// deprecated" | head -5)
+
+if [ -n "$PARENT_ID" ]; then
+    echo "❌ 发现废弃的 parentId（应使用 parentNode）:"
+    echo "$PARENT_ID"
+    ((ERRORS++))
+else
+    echo "✅ 未使用废弃 API"
+fi
+
+# 3. 检测 updateNodeInternals
+echo -e "\n🔄 检测 updateNodeInternals..."
+ADD_NODE_COUNT=$(grep -rn "addNode\(" src/ --include="*.ts" 2>/dev/null | wc -l | tr -d ' ')
+UPDATE_INTERNALS=$(grep -rn "updateNodeInternals" src/ --include="*.ts" 2>/dev/null | wc -l | tr -d ' ')
+
+if [ "$ADD_NODE_COUNT" -gt 0 ] && [ "$UPDATE_INTERNALS" -eq 0 ]; then
+    echo "⚠️ 有 addNode 调用但无 updateNodeInternals"
+    echo "   添加节点后可能需要调用 updateNodeInternals"
+else
+    echo "✅ updateNodeInternals 使用正常"
+fi
+
+# 4. 检测节点组件 memo
+echo -e "\n⚡ 检测节点组件优化..."
+NODE_COMPONENTS=$(grep -rln "NodeProps\|: FC.*Node" src/components/ --include="*.tsx" 2>/dev/null)
+UNMEMOIZED=""
+
+for file in $NODE_COMPONENTS; do
+    if ! grep -q "React.memo\|memo(" "$file" 2>/dev/null; then
+        UNMEMOIZED="$UNMEMOIZED\n  - $file"
+    fi
+done
+
+if [ -n "$UNMEMOIZED" ]; then
+    echo "⚠️ 以下节点组件未使用 memo:$UNMEMOIZED"
+else
+    echo "✅ 节点组件已优化"
+fi
+
+# 5. 检测 relation_id 同步
+echo -e "\n🔗 检测双重标识同步..."
+RELATION_ID=$(grep -rn "relation_id" src/ --include="*.ts" 2>/dev/null | wc -l | tr -d ' ')
+
+if [ "$RELATION_ID" -eq 0 ]; then
+    echo "⚠️ 未发现 relation_id 使用"
+    echo "   持久化可能不完整"
+else
+    echo "✅ relation_id 已配置"
+fi
+
+echo -e "\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+if [ $ERRORS -eq 0 ]; then
+    echo "✅ ReactFlow 审计通过"
+    exit 0
+else
+    echo "❌ 发现 $ERRORS 个问题"
+    exit 1
+fi
+```
+
+### 快速检查清单
+
+- [ ] 子节点设置了 `parentNode`（不是 parentId）
+- [ ] 子节点设置了 `expandParent: true`
+- [ ] 添加节点后调用了 `updateNodeInternals`
+- [ ] 第一个子节点更新了 `relation_id`
+- [ ] 节点组件使用了 `React.memo`
+- [ ] 事件处理器使用了 `useCallback`
+
+---
+
+## 🔗 与全局 Skills 协作
+
+| Skill | 协作方式 |
+|-------|----------|
+| `zustand-patterns` | 节点状态存储在 Zustand store |
+| `indexeddb-patterns` | 工作流持久化到 IndexedDB |
+| `code-quality-gates` | 检查 memo 使用、性能优化 |
+
+### 关联文件
+
+- `src/features/workflow-editor/**/*.ts`
+- `src/features/workflow-editor/components/**/*.tsx`
+
+---
+
+**✅ ReactFlow Patterns v2.0.0** | **标准 4 Section 已集成** | **专家路由保留**
