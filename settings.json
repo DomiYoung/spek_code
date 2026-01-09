@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "cleanupPeriodDays": 40,
+  "env": {
+    "_comment": "敏感配置已移至 settings.local.json，请在该文件中配置 API Key"
+  },
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:docs.github.com)",
+      "WebFetch(domain:www.reddit.com)",
+      "WebFetch(domain:blog.x.com)",
+      "WebFetch(domain:github.blog)",
+      "Bash(curl:*)",
+      "WebFetch(domain:mp.weixin.qq.com)",
+      "Skill(sc:research)",
+      "WebFetch(domain:www.zhihu.com)",
+      "WebFetch(domain:www.36kr.com)",
+      "Bash(jq:*)"
+    ],
+    "deny": [],
+    "defaultMode": "default"
+  },
+  "model": "opus",
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "osascript -e \"display notification \\\"$(jq -r .message)\\\" with title \\\"$(jq -r .title)\\\" sound name \\\"Glass\\\"\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [[ \"$( jq -r .tool_input.file_path )\" =~ \\.(ts|tsx|js|jsx)$ ]]; then prettier --write \"$( jq -r .tool_input.file_path )\"; fi"
+          },
+          {
+            "type": "command",
+            "command": "if [[ \"$( jq -r .tool_input.file_path )\" =~ \\.go$ ]]; then gofmt -w \"$( jq -r .tool_input.file_path )\"; fi"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '\"(.tool_input.command) - (.tool_input.description // \"No description\")\"' >> ~/.claude/bash-command-log.txt"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [[ \"$(jq -r .tool_input.command)\" =~ \"git commit\" ]] && [[ \"$(git branch --show-current 2>/dev/null)\" =~ ^(main|master)$ ]]; then echo \"Direct commits to main/master branch are not allowed\"; exit 2; fi"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "input=$(cat); echo \"$(whoami)@$(hostname -s):$(basename \"$(echo \"$input\" | jq -r '.workspace.current_dir')\") [$(echo \"$input\" | jq -r '.model.display_name')]\""
+  },
+  "enabledPlugins": {
+    "security-guidance@claude-plugins-official": true,
+    "atlassian@claude-plugins-official": true,
+    "agent-sdk-dev@claude-plugins-official": true,
+    "superpowers-chrome@superpowers-marketplace": true,
+    "superpowers-lab@superpowers-marketplace": true,
+    "superpowers-developing-for-claude-code@superpowers-marketplace": true
+  },
+  "language": "chinese",
+  "components": {
+    "commands": {
+      "category": "commands",
+      "installed_at": "2025-07-21T22:42:07.192311",
+      "version": "3.0.0"
+    },
+    "core": {
+      "category": "core",
+      "installed_at": "2025-07-21T22:42:07.186132",
+      "version": "3.0.0"
+    }
+  },
+  "feedbackSurveyState": {
+    "lastShownTime": 1754063480740
+  },
+  "framework": {
+    "components": [
+      "core",
+      "commands"
+    ]
+  },
+  "verbose": true
+}

@@ -1,0 +1,43 @@
+# ========================================
+# Claude Code Config - Git Ignore
+# ========================================
+
+# ----- 敏感信息 -----
+settings.local.json
+.env
+*.key
+*credentials*
+*secret*
+
+# ----- 临时/缓存文件 -----
+cache/
+debug/
+logs/
+telemetry/
+todos/
+session-env/
+shell-snapshots/
+plans/
+ide/
+statsig/
+file-history/
+backups/
+plugins/
+projects/
+powerline/
+
+# ----- 历史记录（过大） -----
+history.jsonl
+bash-command-log.txt
+stats-cache.json
+
+# ----- 系统文件 -----
+.DS_Store
+*.swp
+*.swo
+*~
+
+# ----- 元数据 -----
+.superclaude-metadata.json
+anthropic-skills/
+happy-claude-skills/

@@ -1,0 +1,330 @@
+#!/bin/bash
+# Claude Code Production-Grade Best Practice: Explore, Plan, Code, Test Workflow
+# Based on Anthropic's recommended enterprise-level development practices
+# Version: 1.0.0
+
+cat << 'EOF'
+################################################################################
+🏭 PRODUCTION-GRADE EXPLORE, PLAN, CODE, TEST WORKFLOW
+################################################################################
+
+TASK: $@
+DATE: $(date)
+WORKFLOW VERSION: 1.0.0
+
+This workflow implements enterprise-level development practices with:
+- Comprehensive exploration and analysis
+- Detailed technical planning and risk assessment
+- Quality-focused implementation
+- Multi-layered testing strategy
+- Complete documentation and handoff
+
+################################################################################
+🔍 PHASE 1: COMPREHENSIVE EXPLORATION
+################################################################################
+
+I will conduct a thorough analysis using parallel Task agents to:
+
+CODEBASE ANALYSIS:
+□ Identify all files related to the implementation scope
+□ Map dependencies and integration points
+□ Analyze existing patterns and architectural decisions
+□ Review similar features for consistency
+□ Identify reusable components and utilities
+
+TECHNICAL ASSESSMENT:
+□ Evaluate current system architecture
+□ Identify performance implications
+□ Assess security considerations
+□ Review scalability requirements
+□ Check compliance with coding standards
+
+IMPACT ANALYSIS:
+□ Map affected systems and components
+□ Identify breaking change risks
+□ Assess backward compatibility requirements
+□ Evaluate database migration needs
+□ Check API versioning implications
+
+RESOURCE REQUIREMENTS:
+□ Estimate development complexity
+□ Identify required skills and expertise
+□ Assess testing resource needs
+□ Plan deployment requirements
+□ Consider monitoring and observability
+
+################################################################################
+📋 PHASE 2: DETAILED TECHNICAL PLANNING
+################################################################################
+
+Based on comprehensive exploration, I will create an enterprise-grade plan:
+
+1. EXECUTIVE SUMMARY
+   - Business objective and success metrics
+   - Technical scope and deliverables
+   - Timeline and resource allocation
+   - Risk assessment and mitigation strategies
+
+2. TECHNICAL ARCHITECTURE
+   - System design and component interaction
+   - Data flow and state management
+   - API design and contract specifications
+   - Security architecture and threat model
+   - Performance requirements and SLAs
+
+3. IMPLEMENTATION STRATEGY
+   - Development phases and milestones
+   - Feature flags and rollout strategy
+   - Database schema changes and migrations
+   - Configuration management
+   - Dependency management
+
+4. QUALITY ASSURANCE PLAN
+   - Unit testing strategy and coverage targets
+   - Integration testing approach
+   - End-to-end testing scenarios
+   - Performance testing requirements
+   - Security testing checklist
+
+5. DEPLOYMENT STRATEGY
+   - Environment progression (dev → staging → prod)
+   - Deployment automation and rollback plans
+   - Infrastructure requirements
+   - Monitoring and alerting setup
+   - Documentation and runbook creation
+
+6. RISK MANAGEMENT
+   - Technical risks and mitigation plans
+   - Performance bottlenecks and solutions
+   - Security vulnerabilities and safeguards
+   - Operational risks and contingencies
+   - Communication and escalation procedures
+
+7. COMPLIANCE AND STANDARDS
+   - Code quality standards and review process
+   - Security compliance requirements
+   - Performance benchmarks
+   - Documentation standards
+   - Accessibility requirements (if applicable)
+
+################################################################################
+💻 PHASE 3: PRODUCTION-GRADE IMPLEMENTATION
+################################################################################
+
+Implementation will follow enterprise development practices:
+
+CODE QUALITY STANDARDS:
+□ Follow established coding conventions and style guides
+□ Implement comprehensive error handling and logging
+□ Use descriptive naming and clear code organization
+□ Apply SOLID principles and design patterns
+□ Ensure thread safety and concurrency handling
+
+SECURITY IMPLEMENTATION:
+□ Input validation and sanitization
+□ Authentication and authorization checks
+□ Secure data handling and encryption
+□ SQL injection and XSS prevention
+□ Rate limiting and DoS protection
+
+PERFORMANCE OPTIMIZATION:
+□ Efficient algorithms and data structures
+□ Database query optimization
+□ Caching strategy implementation
+□ Resource management and cleanup
+□ Memory and CPU usage optimization
+
+MONITORING AND OBSERVABILITY:
+□ Comprehensive logging with structured formats
+□ Metrics collection and KPI tracking
+□ Distributed tracing implementation
+□ Health checks and readiness probes
+□ Error tracking and alerting
+
+CONFIGURATION MANAGEMENT:
+□ Environment-specific configuration
+□ Feature flags and toggles
+□ Secrets management
+□ Configuration validation
+□ Hot-reload capabilities where applicable
+
+CODE REVIEW CHECKLIST:
+□ Business logic correctness
+□ Error handling completeness
+□ Performance implications
+□ Security considerations
+□ Test coverage adequacy
+□ Documentation quality
+
+################################################################################
+🧪 PHASE 4: COMPREHENSIVE TESTING STRATEGY
+################################################################################
+
+Multi-layered testing approach for production readiness:
+
+UNIT TESTING (Target: >90% coverage):
+□ Test all business logic components
+□ Test error handling and edge cases
+□ Test configuration and environment variations
+□ Mock external dependencies appropriately
+□ Verify performance characteristics
+
+INTEGRATION TESTING:
+□ Test component interactions
+□ Test database integration and transactions
+□ Test external API integrations
+□ Test message queue interactions
+□ Test file system and network operations
+
+SYSTEM TESTING:
+□ End-to-end workflow validation
+□ Cross-browser compatibility (if web)
+□ Mobile responsiveness (if applicable)
+□ Accessibility compliance (WCAG 2.1)
+□ Internationalization and localization
+
+PERFORMANCE TESTING:
+□ Load testing with expected traffic patterns
+□ Stress testing beyond normal capacity
+□ Endurance testing for memory leaks
+□ Scalability testing with increasing load
+□ Latency and throughput measurements
+
+SECURITY TESTING:
+□ Authentication and authorization testing
+□ Input validation and injection testing
+□ Session management verification
+□ HTTPS and certificate validation
+□ Penetration testing (if applicable)
+
+OPERATIONAL TESTING:
+□ Deployment and rollback procedures
+□ Backup and recovery processes
+□ Monitoring and alerting verification
+□ Log aggregation and analysis
+□ Disaster recovery scenarios
+
+ACCEPTANCE TESTING:
+□ Business requirement validation
+□ User experience verification
+□ Accessibility standards compliance
+□ Performance SLA verification
+□ Documentation completeness
+
+################################################################################
+📊 PHASE 5: PRODUCTION DOCUMENTATION & HANDOFF
+################################################################################
+
+Comprehensive documentation for production systems:
+
+TECHNICAL DOCUMENTATION:
+- Architecture Decision Records (ADRs)
+- API documentation with OpenAPI/Swagger
+- Database schema and migration guides
+- Configuration management documentation
+- Deployment and operational procedures
+
+CODE DOCUMENTATION:
+- Inline code comments for complex logic
+- README files with setup and usage instructions
+- Contributing guidelines and coding standards
+- Troubleshooting guides and FAQs
+- Performance tuning recommendations
+
+OPERATIONAL DOCUMENTATION:
+- Monitoring and alerting runbooks
+- Incident response procedures
+- Backup and recovery processes
+- Scaling and capacity planning guides
+- Security policies and procedures
+
+KNOWLEDGE TRANSFER:
+- Code walkthrough sessions
+- Architecture presentation
+- Operational training materials
+- Emergency contact information
+- Handoff checklist completion
+
+PULL REQUEST DESCRIPTION TEMPLATE:
+
+## 🎯 Summary
+Brief description of the implementation and business value
+
+## 🏗️ Architecture & Design
+- Key architectural decisions and rationale
+- Design patterns and principles applied
+- Performance and scalability considerations
+- Security measures implemented
+
+## 🔧 Implementation Details
+- Core components and their responsibilities
+- Database changes and migration strategy
+- API changes and versioning approach
+- Configuration and feature flag usage
+
+## 📋 Testing Strategy
+- Unit test coverage and approach
+- Integration test scenarios
+- Performance testing results
+- Security testing verification
+
+## 🚀 Deployment Plan
+- Deployment steps and dependencies
+- Environment-specific considerations
+- Rollback procedures if needed
+- Monitoring and alerting setup
+
+## 📊 Metrics & Monitoring
+- Key performance indicators (KPIs)
+- Success metrics and acceptance criteria
+- Monitoring dashboards and alerts
+- Log analysis and debugging guides
+
+## 🔒 Security Considerations
+- Security measures implemented
+- Threat model considerations
+- Compliance requirements met
+- Security testing results
+
+## 📚 Documentation
+- Updated documentation links
+- API specification changes
+- Operational procedure updates
+- Training materials created
+
+## ✅ Production Readiness Checklist
+- [ ] All tests pass with >90% coverage
+- [ ] Performance benchmarks met
+- [ ] Security review completed
+- [ ] Documentation updated and reviewed
+- [ ] Monitoring and alerting configured
+- [ ] Deployment procedure tested
+- [ ] Rollback plan verified
+- [ ] Team training completed
+
+## 🔮 Future Considerations
+- Technical debt and improvement opportunities
+- Scalability roadmap
+- Feature enhancement possibilities
+- Maintenance and support requirements
+
+################################################################################
+
+READY FOR ENTERPRISE-GRADE DEVELOPMENT!
+
+This workflow ensures:
+✅ Comprehensive analysis and planning
+✅ High-quality, maintainable code
+✅ Robust testing and validation
+✅ Production-ready deployment
+✅ Complete documentation and handoff
+✅ Long-term maintainability
+
+EOF
+
+echo ""
+echo "🎯 Production Task: $@"
+echo "📅 Started: $(date)"
+echo "🔧 Workflow: Enterprise Explore-Plan-Code-Test"
+echo ""
+echo "Ready to begin comprehensive development workflow!"
