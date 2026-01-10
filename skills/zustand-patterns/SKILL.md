@@ -1,12 +1,9 @@
 ---
 name: zustand-patterns
-type: Pattern
-version: 1.0.0
 description: |
-  Zustand 4.x 状态管理最佳实践。当涉及全局状态、store 设计、immer 中间件、
-  状态订阅时自动触发。
-  关键词：Zustand、store、状态、immer、shallow、订阅、全局状态、useStore。
-  【状态管理核心】包含 store 拆分、性能优化、异步操作。
+  Zustand 4.x 状态管理最佳实践。当涉及全局状态、store 设计、immer 中间件、状态订阅时自动触发。
+  包含 store 拆分、性能优化、异步操作、shallow 比较等核心模式。
+  触发关键词：Zustand、store、状态、immer、shallow、订阅、全局状态、useStore、create、devtools。
 allowed-tools: Read, Grep, Glob
 ---
 

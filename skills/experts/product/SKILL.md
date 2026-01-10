@@ -1,7 +1,5 @@
 ---
 name: product-expert
-type: Expert
-version: 1.0.0
 description: |
   产品经理专家 - 基于 SVPG/Shape Up/JTBD 最佳实践。
   ① 帮我干什么：需求分析、PRD 撰写、优先级排序、验收标准

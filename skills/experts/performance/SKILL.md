@@ -1,7 +1,5 @@
 ---
 name: performance-expert
-type: Expert
-version: 1.0.0
 description: |
   性能优化专家 - 基于数据驱动的代码优化与性能工程。
   ① 帮我干什么：算法优化流程、包管理决策、Core Web Vitals 性能度量

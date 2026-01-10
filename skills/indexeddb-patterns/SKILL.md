@@ -5,7 +5,6 @@ description: |
   Dexie 操作时自动触发。
   关键词：IndexedDB、Dexie、缓存、本地存储、离线、SWR、stale-while-revalidate。
   【性能关键】包含批量操作、事务管理、缓存失效策略。
-version: 2.0.0
 allowed-tools: Read, Grep, Glob
 ---
 

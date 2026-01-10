@@ -4,15 +4,6 @@ description: |
   OIDC/SSO 认证最佳实践。当涉及登录、Token 刷新、401 处理、跨标签页同步时自动触发。
   关键词：OIDC、SSO、Token、认证、登录、401、刷新、oauth、jwt。
   【认证核心】包含 Token 管理、请求队列、跨标签页同步。
-expert-routing:
-  - trigger: "登录.*失败|401.*错误|Token.*过期"
-    expert: "feature-dev:feature-dev"
-    strict-mode: true
-    flags: "--seq --think-hard"
-  - trigger: "SSO.*集成|OIDC.*配置"
-    expert: "feature-dev:feature-dev"
-    strict-mode: true
-    flags: "--context7 --seq"
 allowed-tools: Read, Grep, Glob
 ---
 

@@ -4,7 +4,6 @@ description: |
   TailwindCSS 原子化 CSS 最佳实践。当涉及 utility-first CSS、响应式设计、组件样式时自动触发。
   关键词：tailwind、tw、utility、原子化、className、responsive、dark mode、JIT。
   【原子化CSS】包含响应式设计、暗色模式、组件抽象、性能优化。
-version: 2.0.0
 allowed-tools: Read, Grep, Glob
 ---
 

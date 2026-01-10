@@ -1,7 +1,5 @@
 ---
 name: backend-expert
-type: Expert
-version: 1.0.0
 description: |
   后端开发专家 - 基于 Python/Node.js 生产级最佳实践。
   ① 帮我干什么：API 设计、并发处理、错误处理、性能优化

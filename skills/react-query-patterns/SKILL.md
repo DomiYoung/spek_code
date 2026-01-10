@@ -1,7 +1,5 @@
 ---
 name: react-query-patterns
-type: Pattern
-version: 1.0.0
 description: |
   React Query 5.x 服务端状态管理。当涉及 API 请求、数据缓存、乐观更新、
   缓存失效时自动触发。

@@ -1,7 +1,5 @@
 ---
 name: code-quality-gates
-type: Gate
-version: 2.0.0
 description: |
   代码质量强制门禁。当编写、修改、创建代码时自动触发。
   【强制执行】确保 Claude 遵守 CLAUDE.md 中的代码规范。

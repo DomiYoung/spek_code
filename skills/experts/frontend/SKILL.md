@@ -1,7 +1,5 @@
 ---
 name: frontend-expert
-type: Expert
-version: 1.0.0
 description: |
   前端开发专家 - 基于 React/Vue 生产级最佳实践。
   ① 帮我干什么：组件设计、状态管理、性能优化、类型安全

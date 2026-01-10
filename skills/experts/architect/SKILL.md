@@ -5,7 +5,6 @@ description: |
   可扩展性设计、SOLID 原则时自动触发。
   关键词：架构、设计、SOLID、模块、扩展性、ADR、技术选型、微服务。
   【架构核心】包含 SOLID 原则、架构模式、边界划分、性能设计。
-version: 2.0.0
 allowed-tools: Read, Grep, Glob, Task, mcp__sequential-thinking__sequentialthinking
 ---
 

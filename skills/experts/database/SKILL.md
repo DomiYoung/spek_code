@@ -1,7 +1,5 @@
 ---
 name: database-expert
-type: Expert
-version: 2.0.0
 description: |
   数据库专家。当涉及 Schema 设计、索引优化、迁移脚本、SQL 查询时自动触发。
   关键词：数据库、表设计、索引、SQL、迁移、PostgreSQL、SQLite、外键。

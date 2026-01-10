@@ -4,7 +4,6 @@ description: |
   Radix UI 无障碍组件最佳实践。当涉及 Dialog、Dropdown、Tooltip 等组件时自动触发。
   关键词：radix、dialog、dropdown、tooltip、popover、无障碍、a11y。
   【UI 核心】包含无障碍、组合模式、样式定制。
-version: 2.0.0
 allowed-tools: Read, Grep, Glob
 ---
 

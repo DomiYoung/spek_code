@@ -4,7 +4,6 @@ description: |
   React Router 6.x 路由最佳实践。当涉及路由守卫、权限控制、嵌套路由时自动触发。
   关键词：router、路由、route、navigate、权限、守卫、layout。
   【路由核心】包含路由守卫、权限控制、布局嵌套。
-version: 2.0.0
 allowed-tools: Read, Grep, Glob
 ---
 

@@ -1,32 +1,68 @@
 ---
 name: reactflow-patterns
 description: |
-  ReactFlow 11.x 工作流编辑器专业知识。当涉及节点、边、Handle、迭代节点、
-  画布操作、节点持久化时自动触发。
-  关键词：ReactFlow、节点、边、Handle、parentNode、迭代、workflow、画布、连接。
-  【项目核心】包含迭代节点、子节点持久化等关键业务知识。
-version: 2.0.0
-expert-routing:
-  - trigger: "迭代.*不显示|子节点.*没有|连线.*失败|parentNode.*问题"
-    expert: "feature-dev:feature-dev"
-    strict-mode: true
-    flags: "--chrome --seq --think-hard"
-  - trigger: "添加.*节点|创建.*组件|新增.*节点类型"
-    expert: "feature-dev:feature-dev"
-    strict-mode: true
-    flags: "--type component --framework react --magic"
-  - trigger: "性能.*优化|卡顿|渲染.*慢|重新渲染"
-    expert: "feature-dev:feature-dev"
-    strict-mode: true
-    flags: "--seq --think"
-  - trigger: "持久化.*失败|保存.*不成功|IndexedDB.*问题"
-    expert: "feature-dev:feature-dev"
-    strict-mode: true
-    flags: "--serena --seq"
-allowed-tools: Read, Grep, Glob, Task, mcp__sequential-thinking__sequentialthinking
+  ReactFlow 11.x 工作流编辑器专业知识。当涉及节点、边、Handle、迭代节点、画布操作、节点持久化时自动触发。
+  包含迭代节点、子节点持久化、parentNode、expandParent 等关键业务知识。
+  触发关键词：ReactFlow、节点、边、Handle、parentNode、迭代、workflow、画布、连接、updateNodeInternals。
+allowed-tools: Read, Grep, Glob, Task
 ---
 
 # ReactFlow 11.x 工作流开发指南
+
+> **技术版本**: ReactFlow 11.x | React 18+ | TypeScript 5+
+> **核心理念**: 节点即组件，边即关系，状态即真相
+
+---
+
+## Quick Reference（快速查阅）
+
+### 节点属性速查表
+
+| 属性 | 类型 | 用途 | 示例 |
+|------|------|------|------|
+| `id` | `string` | 唯一标识 | `"node-1"` |
+| `type` | `string` | 节点类型 | `"custom"`, `"default"` |
+| `position` | `{x, y}` | 位置坐标 | `{ x: 100, y: 50 }` |
+| `data` | `object` | 自定义数据 | `{ label: "节点" }` |
+| `parentNode` | `string` | 父节点 ID（11.x） | `"iteration-1"` |
+| `expandParent` | `boolean` | 自动扩展父节点 | `true` |
+| `draggable` | `boolean` | 可拖拽 | `true` |
+| `selectable` | `boolean` | 可选中 | `true` |
+| `hidden` | `boolean` | 隐藏 | `false` |
+
+### 边属性速查表
+
+| 属性 | 类型 | 用途 | 示例 |
+|------|------|------|------|
+| `id` | `string` | 唯一标识 | `"edge-1"` |
+| `source` | `string` | 源节点 ID | `"node-1"` |
+| `target` | `string` | 目标节点 ID | `"node-2"` |
+| `sourceHandle` | `string` | 源连接点 | `"output-0"` |
+| `targetHandle` | `string` | 目标连接点 | `"input-0"` |
+| `type` | `string` | 边类型 | `"smoothstep"` |
+| `animated` | `boolean` | 动画 | `true` |
+
+### Handle 属性速查表
+
+| 属性 | 类型 | 用途 | 示例 |
+|------|------|------|------|
+| `type` | `"source" \| "target"` | 连接类型 | `"source"` |
+| `position` | `Position` | 位置 | `Position.Right` |
+| `id` | `string` | 连接点 ID | `"output-0"` |
+| `isConnectable` | `boolean` | 可连接 | `true` |
+
+### 常用 Hooks
+
+| Hook | 用途 | 返回值 |
+|------|------|--------|
+| `useNodes()` | 获取所有节点 | `Node[]` |
+| `useEdges()` | 获取所有边 | `Edge[]` |
+| `useReactFlow()` | 获取实例方法 | `ReactFlowInstance` |
+| `useNodeId()` | 获取当前节点 ID | `string` |
+| `useStore()` | 访问内部 store | `StoreApi` |
+| `useUpdateNodeInternals()` | 更新节点内部 | `(nodeId) => void` |
+
+---
 
 ## 项目架构
 
@@ -432,6 +468,244 @@ fi
 - [ ] 第一个子节点更新了 `relation_id`
 - [ ] 节点组件使用了 `React.memo`
 - [ ] 事件处理器使用了 `useCallback`
+
+---
+
+## 5. Common Mistakes（常见错误速查）
+
+> 借鉴 makepad-skills 的 ✅/❌ 对照格式，快速识别和修复问题。
+
+### 5.1 节点创建
+
+```typescript
+// ❌ WRONG - 使用废弃的 parentId（ReactFlow 10.x）
+const node = {
+  id: 'child-1',
+  parentId: 'parent-1',  // Error: parentId is deprecated in 11.x
+};
+
+// ✅ CORRECT - 使用 parentNode（ReactFlow 11.x）
+const node = {
+  id: 'child-1',
+  parentNode: 'parent-1',  // Correct for ReactFlow 11.x
+  expandParent: true,      // Always set this
+};
+```
+
+### 5.2 Handle 更新
+
+```typescript
+// ❌ WRONG - 添加节点后不更新 Handle
+actions.addNode(newNode);
+actions.addEdge(newEdge);
+// Handle 位置不会更新，连线可能错位
+
+// ✅ CORRECT - 使用 updateNodeInternals
+actions.addNode(newNode);
+actions.addEdge(newEdge);
+updateNodeInternals(parentNodeId);  // 同步 Handle 位置
+```
+
+### 5.3 节点组件
+
+```typescript
+// ❌ WRONG - 未使用 memo，每次父组件更新都重渲染
+export function CustomNode({ data }: NodeProps) {
+  return <div>{data.label}</div>;
+}
+
+// ✅ CORRECT - 使用 memo 优化性能
+export const CustomNode = memo(({ data }: NodeProps) => {
+  return <div>{data.label}</div>;
+});
+```
+
+### 5.4 事件处理
+
+```typescript
+// ❌ WRONG - 每次渲染创建新函数
+const CustomNode = memo(({ id }) => {
+  const handleClick = () => updateNode(id);  // 每次渲染新引用
+  return <div onClick={handleClick} />;
+});
+
+// ✅ CORRECT - 使用 useCallback 稳定引用
+const CustomNode = memo(({ id }) => {
+  const handleClick = useCallback(() => updateNode(id), [id]);
+  return <div onClick={handleClick} />;
+});
+```
+
+### 5.5 状态访问
+
+```typescript
+// ❌ WRONG - 订阅整个 store，任何变化都触发重渲染
+const { nodes, edges, settings } = useStore();
+
+// ✅ CORRECT - 使用 selector 精确订阅
+const nodes = useStore(state => state.nodes);
+const getNode = useStore(state => state.getNode);
+```
+
+### 错误速查表
+
+| 错误 | 原因 | 修复 |
+|------|------|------|
+| 子节点不在容器内显示 | 缺少 `parentNode` | 添加 `parentNode: parentId` |
+| 刷新后子节点丢失 | 未设置 `relation_id` | 第一个子节点更新 `relation_id` |
+| 连线错位 | 未调用 `updateNodeInternals` | 添加节点后调用 |
+| 节点频繁重渲染 | 未使用 `memo` | 用 `memo` 包裹组件 |
+| Handle 位置错误 | `parentId` vs `parentNode` | 使用 `parentNode`（11.x） |
+| 拖拽后位置不保存 | 未监听 `onNodesChange` | 处理位置变化事件 |
+
+---
+
+## 6. Complete Examples（完整示例）
+
+### 6.1 自定义节点完整模板
+
+```typescript
+import { memo, useCallback } from 'react';
+import { Handle, Position, NodeProps, useReactFlow } from 'reactflow';
+
+interface CustomNodeData {
+  label: string;
+  config: {
+    isInIteration?: boolean;
+    iterationId?: string;
+  };
+}
+
+export const CustomNode = memo(({ id, data, selected }: NodeProps<CustomNodeData>) => {
+  const { updateNodeData } = useReactFlow();
+
+  const handleLabelChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    updateNodeData(id, { label: e.target.value });
+  }, [id, updateNodeData]);
+
+  return (
+    <div className={`custom-node ${selected ? 'selected' : ''}`}>
+      {/* 输入 Handle */}
+      <Handle
+        type="target"
+        position={Position.Left}
+        id="input-0"
+        isConnectable={true}
+      />
+
+      {/* 节点内容 */}
+      <div className="node-header">
+        <input
+          value={data.label}
+          onChange={handleLabelChange}
+          className="node-label-input"
+        />
+      </div>
+
+      {/* 输出 Handle */}
+      <Handle
+        type="source"
+        position={Position.Right}
+        id="output-0"
+        isConnectable={true}
+      />
+    </div>
+  );
+});
+
+CustomNode.displayName = 'CustomNode';
+```
+
+### 6.2 迭代节点添加子节点
+
+```typescript
+import { useReactFlow, useUpdateNodeInternals } from 'reactflow';
+import { useWorkflowStore } from '../state/workflowStore';
+
+export function useAddIterationChild() {
+  const { getNodes } = useReactFlow();
+  const updateNodeInternals = useUpdateNodeInternals();
+  const { addNode, updateNode } = useWorkflowStore();
+
+  return useCallback((iterationId: string) => {
+    const nodes = getNodes();
+    const iterationNode = nodes.find(n => n.id === iterationId);
+    if (!iterationNode) return;
+
+    // 计算子节点数量
+    const childCount = nodes.filter(
+      n => n.parentNode === iterationId
+    ).length;
+
+    // 生成新节点 ID
+    const newNodeId = `child-${Date.now()}`;
+
+    // 1️⃣ 创建子节点（设置 parentNode）
+    const newNode = {
+      id: newNodeId,
+      type: 'custom',
+      position: {
+        x: 50 + childCount * 200,  // 相对于父节点
+        y: 100,
+      },
+      parentNode: iterationId,     // ⚠️ ReactFlow 11.x
+      expandParent: true,          // ⚠️ 必须设置
+      data: {
+        label: `步骤 ${childCount + 1}`,
+        config: {
+          isInIteration: true,
+          iterationId,
+        },
+      },
+    };
+
+    addNode(newNode);
+
+    // 2️⃣ 更新 relation_id（第一个子节点）
+    if (childCount === 0) {
+      updateNode(iterationId, {
+        config: {
+          ...iterationNode.data.config,
+          relation_id: Number(newNodeId),
+        },
+      });
+    }
+
+    // 3️⃣ 同步 ReactFlow 内部状态
+    requestAnimationFrame(() => {
+      updateNodeInternals(iterationId);
+    });
+
+    return newNodeId;
+  }, [getNodes, addNode, updateNode, updateNodeInternals]);
+}
+```
+
+### 6.3 节点注册
+
+```typescript
+// nodeTypes.ts - 注册所有节点类型
+import { CustomNode } from './CustomNode';
+import { IterationNode } from './IterationNode';
+import { StartNode } from './StartNode';
+import { EndNode } from './EndNode';
+
+// ⚠️ 必须在组件外定义，避免重新创建
+export const nodeTypes = {
+  custom: CustomNode,
+  iteration: IterationNode,
+  start: StartNode,
+  end: EndNode,
+} as const;
+
+// 使用
+<ReactFlow
+  nodes={nodes}
+  edges={edges}
+  nodeTypes={nodeTypes}  // 传入节点类型映射
+  // ...
+/>
+```
 
 ---
 

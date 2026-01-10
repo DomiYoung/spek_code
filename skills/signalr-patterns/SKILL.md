@@ -5,7 +5,6 @@ description: |
   消息队列时自动触发。
   关键词：SignalR、WebSocket、实时、消息、连接、断线、重连、Hub。
   【实时通信核心】包含连接管理、错误处理、消息可靠性。
-version: 2.0.0
 allowed-tools: Read, Grep, Glob
 ---
 

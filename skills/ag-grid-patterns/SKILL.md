@@ -4,7 +4,6 @@ description: |
   AG-Grid Enterprise 企业级表格最佳实践。当涉及大数据表格、复杂表格、单元格渲染时自动触发。
   关键词：ag-grid、gridOptions、columnDefs、cellRenderer、rowData、enterprise、表格。
   【高性能表格】包含列配置、单元格渲染、筛选排序、性能优化、企业功能。
-version: 2.0.0
 allowed-tools: Read, Grep, Glob
 ---
 

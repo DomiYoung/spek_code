@@ -1,7 +1,5 @@
 ---
 name: review-quality-gates
-type: Gate
-version: 2.0.0
 description: |
   最终质量审核门禁。当任务完成、准备提交、创建 PR 时自动触发。
   【强制执行】确保代码通过 lint、类型检查、构建测试。

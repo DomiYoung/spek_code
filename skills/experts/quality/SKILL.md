@@ -1,7 +1,5 @@
 ---
 name: quality-expert
-type: Expert
-version: 2.0.0
 description: |
   质量保障专家。当涉及代码审计、知识库审核、测试覆盖、架构验收时自动触发。
   关键词：审计、审核、测试、覆盖率、质量、review、audit、QA。

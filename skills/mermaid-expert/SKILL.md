@@ -5,15 +5,6 @@ description: |
   ER 图、用户旅程图等。自动检测图表需求并生成最优语法。
   关键词：Mermaid、流程图、序列图、类图、状态图、图表、可视化、diagram。
   【可视化核心】项目文档、架构图、流程说明的标准工具。
-expert-routing:
-  - trigger: "流程图|序列图|类图|状态图|甘特图|ER图"
-    expert: "feature-dev:feature-dev"
-    strict-mode: true
-    flags: "--mermaid"
-  - trigger: "架构图|系统设计|组件关系"
-    expert: "feature-dev:code-architect"
-    strict-mode: true
-    flags: "--mermaid --think"
 allowed-tools: Read, Write, Edit
 ---
 

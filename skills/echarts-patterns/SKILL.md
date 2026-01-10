@@ -4,7 +4,6 @@ description: |
   ECharts 数据可视化最佳实践。当涉及图表、数据可视化、统计图时自动触发。
   关键词：echarts、chart、图表、饼图、柱状图、折线图、可视化、统计。
   【数据可视化】包含图表配置、响应式、主题定制、性能优化。
-version: 2.0.0
 allowed-tools: Read, Grep, Glob
 ---
 

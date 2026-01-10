@@ -1,3 +1,11 @@
+---
+name: pre-dev-check
+description: |
+  开发前检查。每个开发任务开始前自动执行，复用已有资源并避免历史踩坑。
+  关键词：开发前、检查、复用、踩坑、开始任务。
+allowed-tools: Read, Grep
+---
+
 # Pre-Development Check（开发前检查）
 
 > **触发时机**：每个开发任务开始前自动执行
