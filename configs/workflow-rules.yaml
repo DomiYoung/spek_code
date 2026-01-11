@@ -1,0 +1,182 @@
+# 工作流路由规则配置
+# 两段式路由：Stage A (决策树硬门槛) + Stage B (打分路由)
+version: 1
+
+# ============================================
+# Stage A: 强制升级规则（决策树）
+# 优先级从上到下，命中即返回
+# ============================================
+force_upgrade:
+  # 直接升级到 Spec-Kit（不看分数）
+  to_spec_kit:
+    any_true:
+      - breaking_change           # Breaking Change
+      - schema_migration          # Schema/数据迁移
+      - external_api_contract     # 对外 API 契约变化
+      - auth_audit_compliance     # 权限/鉴权/审计/合规
+      - money_core_business       # 资金/结算/订单等高风险
+      - cross_service_chain       # 跨服务/跨模块链路
+
+  # 直接升级到 planning-with-files（不看分数）
+  to_planning:
+    any_true:
+      - multi_tool_calls          # 需要 >5 次工具调用
+      - multi_stage_execution     # 多阶段执行
+      - need_persistent_progress  # 需要持久化进度
+
+  # 直接降级到 TodoWrite（不看分数）
+  to_todowrite:
+    any_true:
+      - analysis_only             # 纯代码分析/理解
+      - docs_or_style_only        # 纯文档/样式
+
+# ============================================
+# Stage B: 打分规则
+# 只在 Stage A 未命中时启用
+# ============================================
+scoring:
+  # 复杂度维度：只取最高项（避免重复加分）
+  complexity:
+    pick: max  # max | sum
+    items:
+      - id: new_feature_or_refactor
+        label: "新功能/重构/Breaking Change"
+        score: 10
+        detect: "flags.breaking_change || flags.new_feature || flags.major_refactor"
+
+      - id: many_files_or_lines
+        label: ">5 文件 或 >200 行"
+        score: 8
+        detect: "changedFiles > 5 || changedLines > 200"
+
+      - id: api_or_schema_change
+        label: "API/架构/Schema 变更"
+        score: 7
+        detect: "flags.api_change || flags.schema_change || flags.arch_change"
+
+      - id: mid_files_change
+        label: "3-5 文件功能变更"
+        score: 5
+        detect: "changedFiles >= 3 && changedFiles <= 5"
+
+      - id: small_bug_fix
+        label: "简单 Bug (<3 文件)"
+        score: 2
+        detect: "changedFiles < 3 && flags.bug_fix"
+
+      - id: docs_or_style
+        label: "纯样式/文档"
+        score: 1
+        detect: "flags.docs_only || flags.style_only"
+
+      - id: analysis_only
+        label: "代码分析/理解（非实现）"
+        score: 0
+        detect: "flags.analysis_only"
+
+  # 风险维度：可叠加，但封顶 10 分
+  risk:
+    pick: sum
+    cap: 10
+    items:
+      - id: auth_audit_compliance
+        label: "权限/鉴权/审计/合规"
+        score: 7
+        detect: "flags.auth_audit_compliance"
+
+      - id: schema_migration
+        label: "Schema/迁移/数据修复"
+        score: 7
+        detect: "flags.schema_migration"
+
+      - id: external_api_contract
+        label: "对外 API 契约变化"
+        score: 7
+        detect: "flags.external_api_contract"
+
+      - id: money_core_business
+        label: "资金/结算/订单等高风险业务"
+        score: 7
+        detect: "flags.money_core_business"
+
+      - id: concurrency_tx
+        label: "并发/事务/幂等/消息可靠性"
+        score: 5
+        detect: "flags.concurrency_tx"
+
+  # 最终分计算方式
+  final:
+    mode: max  # max(complexity, risk) - 推荐
+    # mode: sum_capped  # min(10, complexity + risk)
+
+# ============================================
+# 工作流路由表
+# ============================================
+routing:
+  workflows:
+    - range: "score >= 7"
+      workflow: Spec-Kit
+      dir: ".specify/specs/{feature}/"
+      description: "完整规格流程"
+
+    - range: "score >= 5 && score <= 6"
+      workflow: planning-with-files
+      dir: ".planning/"
+      description: "文件持久化规划"
+
+    - range: "score >= 3 && score <= 4"
+      workflow: planning-with-files-lite
+      dir: ".planning/"
+      description: "轻量规划（仅 task_plan.md）"
+
+    - range: "score <= 2"
+      workflow: TodoWrite
+      dir: ""
+      description: "内存规划"
+
+# ============================================
+# Task Master 启用条件
+# ============================================
+task_master:
+  enabled_when_any:
+    - "subtasks >= 5"                    # 子任务 ≥ 5
+    - "flags.need_rollback_or_gray"      # 需要回滚/灰度
+    - "flags.cross_module_validation"    # 跨模块联动验证
+    - "flags.multi_role_collab"          # 多角色协作
+    - "flags.has_acceptance_checklist"   # 有验收清单
+
+# ============================================
+# Mode 判定
+# ============================================
+mode:
+  research:
+    when_any:
+      - "flags.need_external_evidence"   # 需要外部证据
+      - "flags.need_comparison"          # 需要对比方案/竞品
+      - "flags.time_sensitive_info"      # 涉及最新信息/政策/版本
+
+  think:
+    when_any:
+      - "flags.design_tradeoff"          # 纯设计权衡
+      - "flags.arch_decision"            # 架构决策
+
+  default: "默认"
+
+# ============================================
+# 降级规则
+# ============================================
+fallback:
+  # 当 .specify/ 不存在但需要 Spec-Kit 时
+  spec_kit_unavailable:
+    default_action: "降级到 planning-with-files + 详细 task_plan.md"
+    ask_user: false  # 不问用户，直接降级（避免卡住）
+
+# ============================================
+# 噪音过滤（在打分前排除）
+# ============================================
+noise_filter:
+  exclude_from_scoring:
+    - "flags.auto_generated"             # 自动生成的代码
+    - "flags.format_only"                # 纯格式化
+    - "flags.dependency_update_minor"    # 依赖小版本更新
+    - "flags.lock_file_only"             # 只改 lock 文件
