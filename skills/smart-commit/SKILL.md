@@ -11,21 +11,42 @@ description: |
 allowed-tools: Bash, Read, Grep, Glob
 ---
 
-# Git 智能提交（知识图谱版）
+# Git 智能提交（RAG 友好版 v2.0）
+
+> 基于 [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/) 官方规范，增强 RAG/语义检索支持
+
+## 🔴 强制规则（全局生效）
+
+**无论任何项目，执行 git commit 时必须：**
+
+1. 使用 RAG 友好格式（见下方模板）
+2. 包含 `[tags]` 和 `[files]` 元数据
+3. 中文描述用户价值
+4. 禁止敏感词
+
+**如果发现 commit 未遵循此格式，必须：**
+1. 使用 `git commit --amend` 修正
+2. 或 `git reset --soft HEAD~1` 后重新提交
 
 ## 🎯 核心原则
 
-1. **全中文输出**：标题和正文均使用中文
-2. **知识图谱视角**：分析节点、关系、影响
-3. **用户价值导向**：说明 WHY 而非 HOW
-4. **禁止敏感词**：绝对不出现 AI/agent/claude/bot/GPT 等
+1. **Conventional Commits 兼容**：严格遵循官方规范
+2. **RAG 友好**：结构化元数据便于语义检索和知识图谱构建
+3. **全中文描述**：标题和正文使用中文（type/scope 保持英文小写）
+4. **用户价值导向**：说明 WHY 而非 HOW
+5. **禁止敏感词**：绝对不出现 AI/agent/claude/bot/GPT 等
 
 ## 触发场景
 
-- 用户说"提交"、"commit"、"推送"
+**自动触发（无需用户显式调用）：**
+- 执行任何 `git commit` 命令
+- 执行任何 `git push` 命令
+- 用户说"提交"、"推送"
+
+**手动触发：**
+- 用户说"帮我生成 commit message"
 - 完成功能开发后保存代码
 - 修复 bug 后提交变更
-- 用户说"帮我生成 commit message"
 
 ## 自动化流程
 
@@ -83,28 +104,63 @@ git log --oneline -3  # 参考最近提交风格
 
 ### Step 4: Commit Message 生成
 
-#### 📋 知识图谱格式（强制）
+#### 📋 官方规范格式（Conventional Commits 1.0.0）
+
+```
+<type>[optional scope][!]: <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+**官方规范要点**：
+- `type` 和 `scope` 必须小写英文
+- `!` 表示 Breaking Change（可选）
+- `body` 与 header 之间必须空一行
+- `footer` 遵循 [git trailer 格式](https://git-scm.com/docs/git-interpret-trailers)
+
+#### 📋 RAG 友好扩展格式（推荐）
 
 ```
 <type>(<scope>): <用户价值描述（中文）>
 
+[tags]: <关键词1>, <关键词2>, <关键词3>
+[refs]: #<issue-id> (可选)
+[files]:
+  + <新增文件路径>
+  ~ <修改文件路径>
+  - <删除文件路径>
+
 核心改动：<关键变更点，1-2句话>
 影响范围：<涉及模块/组件>
 技术背景：<为什么这样做>
-相关文件：<主要修改文件统计>
+
+BREAKING CHANGE: <破坏性变更说明> (可选)
 ```
+
+**RAG 元数据字段说明**：
+
+| 字段 | 格式 | 用途 | 示例 |
+|------|------|------|------|
+| `[tags]` | 逗号分隔关键词 | 语义检索、分类过滤 | `attachment, video, clipboard` |
+| `[refs]` | `#issue-id` 或 URL | 关联追溯 | `#123`, `JIRA-456` |
+| `[files]` | `+`新增 `~`修改 `-`删除 | 变更可视化、影响分析 | `+ utils/helper.ts` |
 
 #### 📝 格式规范
 
 | 字段 | 要求 |
 |------|------|
 | **type** | 小写英文，见上表 |
-| **scope** | 小写英文，见上表 |
-| **标题** | 中文，≤50 字符，说明用户价值 |
+| **scope** | 小写英文，见上表，可选 |
+| **description** | 中文，≤50 字符，说明用户价值 |
+| **[tags]** | 3-5 个语义关键词，便于 RAG 检索 |
+| **[refs]** | 关联的 Issue/PR/Ticket |
+| **[files]** | 结构化文件清单，`+/-/~` 符号 |
 | **核心改动** | 关键变更点，技术层面 |
 | **影响范围** | 涉及的模块/文件/组件 |
 | **技术背景** | 为什么做这个改动 |
-| **相关文件** | 新增 X 文件，修改 Y 文件 |
+| **BREAKING CHANGE** | 破坏性变更说明（官方 footer）|
 
 #### 🔴 禁止词（绝对禁止）
 
@@ -116,40 +172,68 @@ Anthropic, anthropic, Copilot, copilot, Assistant, assistant,
 
 #### ✅ 正确示例
 
+**示例 1: 新功能（RAG 友好格式）**
+
 ```bash
 git commit -m "$(cat <<'EOF'
-feat(ui): 添加测试环境标识组件，帮助用户区分测试和正式环境
+feat(chat): 增强附件系统，支持视频预览与剪贴板复制
 
-核心改动：创建 EnvBadge 组件，通过 VITE_APP_BASE_URL 检测环境类型
-影响范围：App.tsx 入口 + 新增 env-badge 组件目录
-技术背景：appflowytest 和 appflowy 两个部署地址需要视觉区分
-相关文件：新增 EnvBadge.tsx，修改 App.tsx (2 files)
+[tags]: attachment, video, clipboard, preview, copy
+[refs]: #issue-123
+[files]:
+  + src/features/chat/utils/attachmentMapper.ts
+  + src/features/chat/utils/clipboardUtils.ts
+  ~ src/features/chat/components/AttachmentCard.tsx
+  ~ src/features/chat/components/MessageBubble.tsx
+
+核心改动：附件卡片视频预览 + 消息复制支持附件文件
+影响范围：moss-chat-signalr, runlog, api
+技术背景：提升聊天附件交互体验，完善任务链控制能力
 EOF
 )"
 ```
+
+**示例 2: Bug 修复**
 
 ```bash
 git commit -m "$(cat <<'EOF'
 fix(editor): 修复刷新后子节点丢失问题，确保数据持久化
 
+[tags]: refresh, node, persistence, yjs, sync
+[files]:
+  ~ src/components/IterationNode.tsx
+  ~ src/stores/workflowStore.ts
+
 核心改动：在 refreshNodes 函数中添加子节点状态恢复逻辑
 影响范围：IterationNode 组件 + workflowStore
 技术背景：刷新时 Yjs 同步未包含子节点状态导致数据丢失
-相关文件：修改 IterationNode.tsx, workflowStore.ts (2 files)
 EOF
 )"
 ```
 
+**示例 3: Breaking Change**
+
 ```bash
 git commit -m "$(cat <<'EOF'
-style(ui): 优化环境标识为顶部居中横幅样式，提升可见性
+feat(api)!: 重构任务链 API，优化继续运行接口
 
-核心改动：将右下角胶囊改为顶部居中横幅，添加🔧图标和"环境"文字
-影响范围：EnvBadge 组件样式
-技术背景：右下角标识太小容易被忽略，顶部横幅更醒目
-相关文件：EnvBadge.tsx (1 file)
+[tags]: api, taskchain, breaking, refactor
+[files]:
+  ~ src/api/workflowEditor/list.ts
+
+核心改动：continueTaskChainRun 路径从 body 传参改为 URL 路径参数
+影响范围：workflowEditor API
+技术背景：RESTful 规范要求资源 ID 放在 URL 路径中
+
+BREAKING CHANGE: continueTaskChainRun(logId) API 签名变更，logId 不再可选
 EOF
 )"
+```
+
+**示例 4: 简洁格式（小改动）**
+
+```bash
+git commit -m "docs: 更新 README 安装说明"
 ```
 
 #### ❌ 错误示例
@@ -257,3 +341,48 @@ git push origin $(git branch --show-current)
 2. `refactor`: 重构/优化代码
 3. `feat`: 新增功能
 4. `fix`: 修复问题
+
+## 🔍 RAG 检索优化指南
+
+### 为什么需要 RAG 友好格式？
+
+| 场景 | 传统格式问题 | RAG 友好格式优势 |
+|------|-------------|-----------------|
+| **语义搜索** | "附件" 搜不到 "attachment" | `[tags]` 统一关键词 |
+| **影响分析** | 不知道改了哪些文件 | `[files]` 结构化清单 |
+| **变更追溯** | 无法关联 Issue | `[refs]` 直接链接 |
+| **知识图谱** | 缺少节点关系 | 核心改动/影响范围 明确描述 |
+
+### [tags] 关键词选择原则
+
+1. **领域词汇**：`attachment`, `workflow`, `auth`, `permission`
+2. **技术栈**：`react`, `zustand`, `signalr`, `yjs`
+3. **变更类型**：`breaking`, `deprecate`, `migrate`
+4. **功能特性**：`clipboard`, `preview`, `upload`, `cache`
+
+### 解析正则（供工具使用）
+
+```javascript
+// 解析 commit message 的 RAG 元数据
+const COMMIT_REGEX = {
+  header: /^(\w+)(?:\(([^)]+)\))?(!)?:\s*(.+)$/,
+  tags: /^\[tags\]:\s*(.+)$/m,
+  refs: /^\[refs\]:\s*(.+)$/m,
+  files: /^\[files\]:\n((?:\s+[+~-]\s+.+\n?)+)/m,
+  breaking: /^BREAKING CHANGE:\s*(.+)$/m,
+};
+
+// 文件变更类型
+const FILE_CHANGE_TYPE = {
+  '+': 'added',
+  '~': 'modified', 
+  '-': 'deleted',
+};
+```
+
+## 📅 版本历史
+
+| 版本 | 日期 | 更新内容 |
+|------|------|---------|
+| v2.0 | 2026-01-11 | RAG 友好格式，增加 `[tags]`/`[refs]`/`[files]` 元数据 |
+| v1.0 | 2025-12-01 | 知识图谱版，核心改动/影响范围/技术背景 |
