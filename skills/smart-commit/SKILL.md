@@ -1,10 +1,13 @@
 ---
 name: smart-commit
 description: |
-  Git 智能提交助手（知识图谱版）。当涉及 git commit、提交代码、推送变更时自动触发。
-  【自动化】分析变更 → 推断 type/scope → 生成知识图谱格式 commit message。
-  关键词：commit、提交、推送、git add、push、保存代码、提交代码。
-  与 commit-quality-gates 协作，提供完整的提交自动化。
+  Git 智能提交助手 - 自动生成 commit message。
+  Use when:
+  - git commit、提交代码
+  - 分析变更生成提交信息
+  - 推送代码
+  触发词：commit、提交、推送、git add、push
+  Related Skills: code-quality-gates, review-quality-gates, speckit.taskstoissues
 allowed-tools: Bash, Read, Grep, Glob
 ---
 

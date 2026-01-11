@@ -1,9 +1,13 @@
 ---
 name: quality-expert
 description: |
-  质量保障专家。当涉及代码审计、知识库审核、测试覆盖、架构验收时自动触发。
-  关键词：审计、审核、测试、覆盖率、质量、review、audit、QA。
-  【审计员定位】不生产代码，只负责拒绝垃圾。
+  质量保障专家 - 代码审计、测试覆盖。
+  Use when:
+  - 代码审计、架构验收
+  - 测试覆盖率分析
+  - 质量审核、QA
+  触发词：审计、审核、测试、覆盖率、质量、review、QA
+  Related Skills: code-quality-gates, review-quality-gates, webapp-testing
 allowed-tools: Read, Grep, Bash
 ---
 

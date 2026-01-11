@@ -1,6 +1,12 @@
 ---
 name: speckit.taskstoissues
-description: Convert existing tasks into actionable, dependency-ordered GitHub issues for the feature based on available design artifacts.
+description: |
+  任务转 Issue 工具 - Spec-Kit GitHub 集成。
+  Use when:
+  - 将 tasks.md 转为 GitHub Issues
+  - 创建 Issue 并设置依赖
+  触发词：issues、GitHub Issue、创建 issue
+  Related Skills: speckit.tasks, smart-commit
 globs:
   - ".specify/**/*"
   - "**/tasks.md"

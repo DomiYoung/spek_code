@@ -1,9 +1,13 @@
 ---
 name: radix-ui-patterns
 description: |
-  Radix UI 无障碍组件最佳实践。当涉及 Dialog、Dropdown、Tooltip 等组件时自动触发。
-  关键词：radix、dialog、dropdown、tooltip、popover、无障碍、a11y。
-  【UI 核心】包含无障碍、组合模式、样式定制。
+  Radix UI 无障碍组件专家。
+  Use when:
+  - 使用 Dialog、Dropdown、Tooltip 等
+  - 无障碍（a11y）组件开发
+  - Headless 组件组合
+  触发词：radix、dialog、dropdown、tooltip、popover、a11y、无障碍
+  Related Skills: shadcn-ui-patterns, react-hook-form-patterns, framer-motion-patterns
 allowed-tools: Read, Grep, Glob
 ---
 

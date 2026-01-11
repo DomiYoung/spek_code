@@ -1,6 +1,12 @@
 ---
 name: speckit.constitution
-description: Create or update the project constitution from interactive or provided principle inputs, ensuring all dependent templates stay in sync.
+description: |
+  项目宪法创建工具 - Spec-Kit 基础设施。
+  Use when:
+  - 创建/更新项目宪法（constitution.md）
+  - 定义项目原则、约束、技术栈
+  触发词：constitution、项目原则、技术栈定义
+  Related Skills: speckit.specify, speckit.plan, experts/architect
 globs:
   - ".specify/**/*"
   - "**/constitution.md"

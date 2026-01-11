@@ -1,6 +1,13 @@
 ---
 name: webapp-testing
-description: Toolkit for interacting with and testing local web applications using Playwright. Supports verifying frontend functionality, debugging UI behavior, capturing browser screenshots, and viewing browser logs.
+description: |
+  Web 应用测试工具 - Playwright 自动化测试。
+  Use when:
+  - 测试前端功能、UI 行为
+  - 截图、浏览器日志
+  - E2E 测试脚本
+  触发词：测试、Playwright、E2E、截图、自动化测试
+  Related Skills: speckit.implement, code-quality-gates, speckit.checklist
 license: Complete terms in LICENSE.txt
 ---
 

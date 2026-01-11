@@ -8,6 +8,7 @@ description: |
   - Breaking Change、Schema 迁移、鉴权支付等高风险变更
   - 用户说"写 spec"、"功能设计"、"需求文档"
   触发词：spec、规范、需求、新功能、功能设计、PRD、.specify
+  Related Skills: speckit.plan, speckit.tasks, speckit.clarify, brainstorm
 globs:
   - ".specify/**/*"
   - "**/spec.md"

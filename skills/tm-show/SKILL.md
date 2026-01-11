@@ -1,6 +1,12 @@
 ---
 name: tm-show
-description: Task Master - 查看任务详情
+description: |
+  Task Master - 查看任务详情。
+  Use when:
+  - 查看指定任务详情
+  - 了解任务上下文
+  触发词：查看任务、任务详情、show task
+  Related Skills: tm-next, tm-complete, speckit.tasks
 globs:
   - ".taskmaster/**/*"
   - "**/tasks.md"

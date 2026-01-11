@@ -1,9 +1,13 @@
 ---
 name: lowcode-engine-patterns
 description: |
-  低代码引擎配置驱动开发最佳实践。当涉及表单配置、列表配置、动态组件时自动触发。
-  关键词：lowcode、配置驱动、动态表单、slot、组件工厂、配置化、schema。
-  【配置驱动】包含表单生成、列表生成、插槽系统、数据流管理。
+  低代码引擎专家 - 配置驱动开发。
+  Use when:
+  - 动态表单、配置化组件
+  - 低代码平台开发
+  - Schema 驱动渲染
+  触发词：lowcode、配置驱动、动态表单、schema、组件工厂
+  Related Skills: react-hook-form-patterns, reactflow-patterns, zustand-patterns
 allowed-tools: Read, Grep, Glob
 ---
 

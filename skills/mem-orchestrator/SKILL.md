@@ -1,6 +1,12 @@
 ---
 name: mem-orchestrator
-description: 编排器模式 - 部署子代理执行任务，自己只负责协调、路由和验证
+description: |
+  编排器模式 - 子代理协调。
+  Use when:
+  - 部署子代理执行任务
+  - 协调、路由、验证
+  触发词：编排、orchestrator、子代理、协调
+  Related Skills: workflow-orchestrator, expert-router, planning-with-files
 globs:
   - "**/*"
 ---

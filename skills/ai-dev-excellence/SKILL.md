@@ -1,9 +1,13 @@
 ---
 name: ai-dev-excellence
 description: |
-  AI 辅助开发卓越指南。当涉及 AI 编程、Prompt 工程、Claude/GPT 最佳实践时自动触发。
-  关键词：AI开发、Claude、OpenAI、GPT、Prompt工程、LLM、Agent、代码质量。
-  【AI开发卓越】包含 Prompt 工程、AI 编程模式、代码质量、架构设计、20年资深水准。
+  AI 辅助开发卓越指南 - Prompt 工程。
+  Use when:
+  - AI 编程、Prompt 工程
+  - Claude/GPT 最佳实践
+  - LLM Agent 开发
+  触发词：AI开发、Claude、Prompt、LLM、Agent、AI编程
+  Related Skills: google-dev-quality, experts/architect, mcp-builder
 allowed-tools: Read, Grep, Glob, WebFetch, WebSearch
 ---
 

@@ -1,10 +1,13 @@
 ---
 name: workflow-orchestrator
 description: |
-  工作流编排器 - 作为"元规划层"，在每个任务开始时自动执行。
-  计算任务权重、检测发散性思维、选择工作流、路由到对应 Skill。
-  适用于所有项目，是全局通用的任务分发器。
-  触发关键词：任务开始、代码变更、功能实现、设计咨询、权重评估、工作流选择。
+  工作流编排器 - 任务权重评估与分发。
+  Use when:
+  - 每个任务开始时自动执行
+  - 计算任务权重、选择工作流
+  - 路由到对应 Skill
+  触发词：任务开始、权重评估、工作流选择
+  Related Skills: speckit.specify, planning-with-files, brainstorm
 ---
 
 # Workflow Orchestrator（工作流编排器）

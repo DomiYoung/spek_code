@@ -1,11 +1,13 @@
 ---
 name: product-expert
 description: |
-  产品经理专家 - 基于 SVPG/Shape Up/JTBD 最佳实践。
-  ① 帮我干什么：需求分析、PRD 撰写、优先级排序、验收标准
-  ② 什么时候出场：涉及 PRD、需求、用户故事、验收、优先级时自动调用
-  ③ 和项目有无关系：适用于所有产品开发，是全局通用的产品专家
-  关键词：PRD、需求、用户故事、验收标准、AC、优先级、MoSCoW、RICE、JTBD
+  产品经理专家 - PRD、需求分析。
+  Use when:
+  - PRD 撰写、需求分析
+  - 用户故事、验收标准
+  - 优先级排序（MoSCoW、RICE）
+  触发词：PRD、需求、用户故事、验收标准、AC、优先级、JTBD
+  Related Skills: speckit.specify, brainstorm, experts/architect
 allowed-tools: "*"
 ---
 

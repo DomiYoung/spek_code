@@ -1,6 +1,12 @@
 ---
 name: speckit.clarify
-description: Identify underspecified areas in the current feature spec by asking up to 5 highly targeted clarification questions and encoding answers back into the spec.
+description: |
+  需求澄清工具 - Spec-Kit 质量保障。
+  Use when:
+  - spec.md 有模糊/遗漏的地方
+  - 需要向用户提问澄清需求
+  触发词：clarify、澄清、不清楚、确认需求
+  Related Skills: speckit.specify, speckit.analyze, brainstorm
 globs:
   - ".specify/**/*"
   - "**/spec.md"

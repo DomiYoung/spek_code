@@ -1,6 +1,13 @@
 ---
 name: doc-coauthoring
-description: Guide users through a structured workflow for co-authoring documentation. Use when user wants to write documentation, proposals, technical specs, decision docs, or similar structured content. This workflow helps users efficiently transfer context, refine content through iteration, and verify the doc works for readers. Trigger when user mentions writing docs, creating proposals, drafting specs, or similar documentation tasks.
+description: |
+  文档协作工作流 - 结构化写作。
+  Use when:
+  - 写文档、提案、技术规范
+  - 决策文档、结构化内容
+  - 协作式文档创建
+  触发词：写文档、提案、技术规范、决策文档、co-authoring
+  Related Skills: speckit.specify, internal-comms, brainstorm
 ---
 
 # Doc Co-Authoring Workflow

@@ -1,10 +1,12 @@
 ---
 name: expert-router
 description: |
-  专家路由系统 - 智能匹配任务到最合适的领域专家。
-  根据任务语义自动识别并路由到对应专家 Skill，采用 1% 原则：如果有 1% 的可能性某个专家适用，必须调用它。
-  适用于所有项目，是全局通用的专家调配系统。
-  触发关键词：专家路由、领域匹配、frontend、backend、architect、troubleshoot、analyze。
+  专家路由系统 - 智能匹配任务到专家。
+  Use when:
+  - 识别并路由到对应专家 Skill
+  - 1% 原则：可能适用就调用
+  触发词：专家路由、领域匹配、哪个专家
+  Related Skills: skill-composer, workflow-orchestrator, brainstorm
 allowed-tools: "*"
 ---
 

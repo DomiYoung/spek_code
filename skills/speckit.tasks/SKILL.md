@@ -1,6 +1,12 @@
 ---
 name: speckit.tasks
-description: Generate an actionable, dependency-ordered tasks.md for the feature based on available design artifacts.
+description: |
+  任务拆解工具 - Spec-Kit 执行阶段。
+  Use when:
+  - 根据 plan.md 生成任务列表
+  - 拆解开发任务、排序依赖
+  触发词：tasks、任务拆解、任务列表、tasks.md
+  Related Skills: speckit.plan, speckit.implement, speckit.taskstoissues
 globs:
   - ".specify/**/*"
   - "**/tasks.md"

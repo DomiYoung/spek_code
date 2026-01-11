@@ -1,6 +1,12 @@
 ---
 name: speckit.plan
-description: Execute the implementation planning workflow using the plan template to generate design artifacts.
+description: |
+  实现计划生成工具 - Spec-Kit 设计阶段。
+  Use when:
+  - 根据 spec.md 生成实现计划
+  - 设计架构、接口、数据模型
+  触发词：plan、实现计划、架构设计、plan.md
+  Related Skills: speckit.specify, speckit.tasks, experts/architect
 globs:
   - ".specify/**/*"
   - "**/plan.md"

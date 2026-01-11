@@ -1,6 +1,12 @@
 ---
 name: tm-next
-description: Task Master - 获取下一个可执行任务
+description: |
+  Task Master - 获取下一个任务。
+  Use when:
+  - 获取下一个可执行任务
+  - 查看任务队列
+  触发词：下一个任务、next task、任务队列
+  Related Skills: tm-complete, tm-show, speckit.tasks
 globs:
   - ".taskmaster/**/*"
   - "**/tasks.md"

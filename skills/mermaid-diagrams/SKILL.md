@@ -1,9 +1,13 @@
 ---
 name: mermaid-diagrams
 description: |
-  Mermaid 代码生成图表最佳实践。当涉及流程图、时序图、类图、架构图时自动触发。
-  关键词：mermaid、flowchart、sequenceDiagram、classDiagram、架构图、流程图、时序图。
-  【代码绘图】包含流程图、时序图、类图、状态图、ER图、甘特图。
+  Mermaid 代码图表 - 流程图、时序图。
+  Use when:
+  - 生成 Mermaid 代码图表
+  - 流程图、时序图、类图
+  - 架构图、ER 图
+  触发词：mermaid、flowchart、时序图、类图、架构图
+  Related Skills: mermaid-expert, obsidian-markdown, json-canvas
 allowed-tools: Read, Grep, Glob, Write
 ---
 

@@ -1,9 +1,13 @@
 ---
 name: mxgraph-patterns
 description: |
-  MxGraph/DrawIO 底层引擎最佳实践。当涉及图形编辑、单元格操作、编解码时自动触发。
-  关键词：mxgraph、mxCell、mxGraph、drawio、图形、编辑器。
-  【图形核心】包含单元格操作、事件处理、XML 编解码。
+  MxGraph/DrawIO 图形引擎专家。
+  Use when:
+  - 图形编辑器开发
+  - 单元格操作、事件处理
+  - XML 编解码
+  触发词：mxgraph、mxCell、drawio、图形编辑器
+  Related Skills: reactflow-patterns, bpmn-workflow-patterns, json-canvas
 allowed-tools: Read, Grep, Glob
 ---
 

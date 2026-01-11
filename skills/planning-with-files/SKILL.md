@@ -8,6 +8,7 @@ description: |
   - 研究性任务需要记录发现和进度
   - 任务可能跨 Session 需要持久化状态
   触发词：规划、计划、多步骤、复杂任务、进度跟踪、.planning
+  Related Skills: brainstorm, speckit.specify, workflow-orchestrator
 globs:
   - ".planning/**/*"
   - "**/task_plan.md"

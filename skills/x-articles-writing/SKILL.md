@@ -1,9 +1,13 @@
 ---
 name: x-articles-writing
 description: |
-  Translate Chinese content into professional, native English for X (Twitter) long-form articles.
-  Produces publication-ready English that reads as if written by a native speaker, not translated.
-  Trigger: X article, Twitter article, translate to English, Chinese to English article, 翻译成英文, 写X文章.
+  X/Twitter 英文长文写作 - 中译英。
+  Use when:
+  - 写 X/Twitter 长文
+  - 中文内容翻译成英文
+  - 专业英文发布
+  触发词：X article、Twitter article、translate to English、写X文章
+  Related Skills: wechat-article-writing, internal-comms, doc-coauthoring
 ---
 
 # X Articles Writing

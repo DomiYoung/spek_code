@@ -1,6 +1,12 @@
 ---
 name: speckit.implement
-description: Execute the implementation plan by processing and executing all tasks defined in tasks.md
+description: |
+  任务执行工具 - Spec-Kit 实现阶段。
+  Use when:
+  - 执行 tasks.md 中的任务
+  - 按顺序实现功能代码
+  触发词：implement、实现、执行任务、开始开发
+  Related Skills: speckit.tasks, code-quality-gates, webapp-testing
 globs:
   - ".specify/**/*"
   - "**/tasks.md"

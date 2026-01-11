@@ -1,8 +1,13 @@
 ---
 name: component-reuse
 description: |
-  组件复用专家。开发新功能前自动检查可复用资源，避免重复造轮子。
-  关键词：复用、组件、服务、Hook、创建组件、新增、实现。
+  组件复用专家 - 避免重复造轮子。
+  Use when:
+  - 开发新功能前检查可复用资源
+  - 创建组件、服务、Hook
+  - 复用现有代码
+  触发词：复用、组件、服务、Hook、创建组件
+  Related Skills: experts/frontend, shadcn-ui-patterns, zustand-patterns
 allowed-tools: Read, Grep, Glob
 ---
 

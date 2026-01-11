@@ -1,9 +1,13 @@
 ---
 name: google-dev-quality
 description: |
-  Google 开发指南与质量标准。当涉及 Material Design、Android 开发、Web 性能、代码质量时自动触发。
-  关键词：Material Design、Android、Google、性能、Core Web Vitals、代码审查、最佳实践。
-  【开发质量】包含设计系统、性能优化、代码规范、测试策略、可访问性。
+  Google 开发质量标准 - Material Design、性能。
+  Use when:
+  - Material Design 3 设计
+  - Core Web Vitals 性能优化
+  - Google 代码规范
+  触发词：Material Design、Google、Core Web Vitals、代码审查
+  Related Skills: ai-dev-excellence, experts/performance, experts/frontend
 allowed-tools: Read, Grep, Glob, WebFetch, WebSearch
 ---
 

@@ -1,6 +1,12 @@
 ---
 name: speckit.checklist
-description: Generate a custom checklist for the current feature based on user requirements.
+description: |
+  检查清单生成工具 - Spec-Kit 验收标准。
+  Use when:
+  - 生成功能验收清单
+  - 创建自定义检查项
+  触发词：checklist、检查清单、验收标准、测试点
+  Related Skills: speckit.specify, webapp-testing, review-quality-gates
 globs:
   - ".specify/**/*"
   - "**/checklists/*.md"

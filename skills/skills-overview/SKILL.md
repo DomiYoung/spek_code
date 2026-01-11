@@ -1,9 +1,13 @@
 ---
 name: skills-overview
 description: |
-  Skills 系统架构总览。提供所有 Skills 的协作关系和执行流程。
-  当用户询问 Skills 系统、Claude 能力、或需要理解工作流程时触发。
-  关键词：Skills、能力、工作流程、架构、协作、系统。
+  Skills 系统架构总览 - 能力索引。
+  Use when:
+  - 了解 Skills 系统架构
+  - 查询 Claude 能力
+  - 理解工作流程
+  触发词：Skills、能力、工作流程、架构、系统总览
+  Related Skills: skill-composer, workflow-orchestrator, expert-router
 allowed-tools: Read
 ---
 

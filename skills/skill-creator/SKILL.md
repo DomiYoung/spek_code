@@ -1,6 +1,13 @@
 ---
 name: skill-creator
-description: Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Claude's capabilities with specialized knowledge, workflows, or tool integrations.
+description: |
+  Skill 创建指南 - 创建/更新 Skills。
+  Use when:
+  - 创建新 Skill
+  - 更新现有 Skill
+  - 扩展 Claude 能力
+  触发词：创建 Skill、新建 Skill、Skill 模板
+  Related Skills: skill-composer, workflow-orchestrator
 license: Complete terms in LICENSE.txt
 ---
 

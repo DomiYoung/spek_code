@@ -1,9 +1,13 @@
 ---
 name: interaction-design-science
 description: |
-  交互设计科学与人机交互 (HCI) 最佳实践。当涉及用户体验、交互模式、可用性时自动触发。
-  关键词：交互设计、HCI、可用性、用户体验、UX、认知负荷、费茨定律、心理模型。
-  【交互科学】包含认知心理学、交互模式、可用性原则、设计定律、用户研究。
+  交互设计科学专家 - HCI、可用性。
+  Use when:
+  - 交互设计、用户体验
+  - 认知负荷、费茨定律
+  - 可用性原则、用户研究
+  触发词：交互设计、HCI、可用性、UX、认知负荷、心理模型
+  Related Skills: frontend-design, experts/frontend, h5-responsive
 allowed-tools: Read, Grep, Glob, WebFetch, WebSearch
 ---
 

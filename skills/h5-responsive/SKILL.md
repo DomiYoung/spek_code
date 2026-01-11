@@ -1,9 +1,13 @@
 ---
 name: h5-responsive
 description: |
-  H5 移动端响应式开发最佳实践。当涉及移动适配、响应式布局、rem、vw、媒体查询时自动触发。
-  关键词：响应式、mobile、移动端、rem、vw、vh、媒体查询、@media、viewport、适配。
-  【移动适配】包含布局方案、单位选择、断点设计、触摸优化。
+  H5 移动端响应式专家 - 移动适配。
+  Use when:
+  - 移动端适配、响应式布局
+  - rem、vw、媒体查询
+  - 触摸优化
+  触发词：响应式、mobile、移动端、rem、vw、@media、viewport
+  Related Skills: tailwindcss-patterns, shadcn-ui-patterns, experts/frontend
 allowed-tools: Read, Grep, Glob
 ---
 

@@ -1,6 +1,13 @@
 ---
 name: wechat-article-writing
-description: 微信公众号文章写作助手。遵循「Domi的AI生活信札」系列风格，创作面向技术人群的深度思考型文章。当用户需要写公众号文章、写微信文章、创作技术随笔、写信札系列时触发。关键词：公众号、微信文章、信札、技术随笔、AI思考。
+description: |
+  微信公众号文章写作 - 信札风格。
+  Use when:
+  - 写公众号文章、微信文章
+  - 技术随笔、信札系列
+  - 深度思考型文章
+  触发词：公众号、微信文章、信札、技术随笔
+  Related Skills: x-articles-writing, internal-comms, doc-coauthoring
 ---
 
 # 微信公众号文章写作

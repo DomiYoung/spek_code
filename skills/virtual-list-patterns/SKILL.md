@@ -1,9 +1,13 @@
 ---
 name: virtual-list-patterns
 description: |
-  虚拟列表最佳实践（react-virtuoso、react-window）。当涉及长列表、滚动性能时自动触发。
-  关键词：virtuoso、virtual、滚动、列表、性能、react-window、长列表。
-  【性能核心】包含虚拟化、动态高度、无限滚动。
+  虚拟列表专家 - react-virtuoso、react-window。
+  Use when:
+  - 长列表性能优化
+  - 虚拟滚动、动态高度
+  - 无限滚动实现
+  触发词：虚拟列表、virtuoso、react-window、滚动、长列表、性能
+  Related Skills: reactflow-patterns, experts/performance, ag-grid-patterns
 allowed-tools: Read, Grep, Glob
 ---
 

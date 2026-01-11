@@ -1,6 +1,12 @@
 ---
 name: tm-complete
-description: Task Master - 完成任务并自动获取下一个
+description: |
+  Task Master - 完成任务。
+  Use when:
+  - 标记任务完成
+  - 自动获取下一个任务
+  触发词：完成任务、任务完成、done
+  Related Skills: tm-next, tm-show, speckit.tasks
 globs:
   - ".taskmaster/**/*"
   - "**/tasks.md"

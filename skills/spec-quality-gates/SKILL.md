@@ -1,10 +1,13 @@
 ---
 name: spec-quality-gates
 description: |
-  Spec-Kit 文档质量验证。当 Spec-Kit 流程完成后自动触发。
-  验证 spec.md、plan.md、tasks.md 的完整性和质量。
-  关键词：Spec、规范、文档验证、speckit、plan、tasks、验收标准。
-  【文档质量核心】确保 Spec 文档可执行、可验证。
+  Spec-Kit 文档质量验证 - 规范完整性检查。
+  Use when:
+  - Spec-Kit 流程完成后验证
+  - 检查 spec/plan/tasks 完整性
+  - 文档质量审核
+  触发词：Spec 验证、文档质量、规范检查
+  Related Skills: speckit.analyze, speckit.specify, speckit.checklist
 allowed-tools: Read, Grep
 ---
 

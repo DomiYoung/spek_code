@@ -1,6 +1,12 @@
 ---
 name: mem-plan
-description: 创建 LLM 友好的分阶段计划，可在新上下文中连续执行
+description: |
+  LLM 友好计划生成 - 分阶段执行。
+  Use when:
+  - 创建可跨 Session 执行的计划
+  - 分阶段任务规划
+  触发词：计划、分阶段、跨 Session
+  Related Skills: planning-with-files, workflow-orchestrator, mem-orchestrator
 globs:
   - "**/*"
   - ".planning/**/*"

@@ -1,9 +1,12 @@
 ---
 name: tool-activation-banner
 description: |
-  工具调用高亮提示。确保 Claude 在使用核心工具时显示醒目横幅。
-  【强制规则】使用 Feature-Dev、Context7、Spec-Kit、Sequential 时必须显示。
-  每次调用 MCP 工具或 Slash Command 时自动触发。
+  工具调用高亮提示 - 显示醒目横幅。
+  Use when:
+  - 使用核心工具时显示横幅
+  - Feature-Dev、Context7、Spec-Kit、Sequential
+  触发词：工具调用、MCP 工具、横幅
+  Related Skills: workflow-orchestrator, skill-composer
 allowed-tools: "*"
 ---
 

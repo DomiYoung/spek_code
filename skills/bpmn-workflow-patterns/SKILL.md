@@ -1,9 +1,13 @@
 ---
 name: bpmn-workflow-patterns
 description: |
-  BPMN-JS 流程建模最佳实践。当涉及工作流设计、流程图、审批流程时自动触发。
-  关键词：bpmn、workflow、流程图、审批流、diagram、modeler、流程设计。
-  【流程建模】包含流程设计器、节点配置、流程执行、属性面板。
+  BPMN-JS 流程建模专家 - 工作流设计。
+  Use when:
+  - 工作流设计、审批流程
+  - BPMN 流程图
+  - 流程设计器开发
+  触发词：bpmn、workflow、流程图、审批流、流程设计
+  Related Skills: reactflow-patterns, mxgraph-patterns, mermaid-expert
 allowed-tools: Read, Grep, Glob
 ---
 

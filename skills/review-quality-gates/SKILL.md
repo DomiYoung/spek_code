@@ -1,10 +1,13 @@
 ---
 name: review-quality-gates
 description: |
-  最终质量审核门禁。当任务完成、准备提交、创建 PR 时自动触发。
-  【强制执行】确保代码通过 lint、类型检查、构建测试。
-  关键词：完成、提交、commit、PR、合并、审核、review、发布。
-  每次交付前必须通过审核，未通过不允许提交。
+  最终质量审核门禁 - 提交前检查。
+  Use when:
+  - 任务完成、准备提交
+  - 创建 PR、代码审核
+  - lint、类型检查、构建测试
+  触发词：完成、提交、PR、合并、审核、review
+  Related Skills: code-quality-gates, smart-commit, speckit.checklist
 allowed-tools: Bash, Read, Grep
 ---
 

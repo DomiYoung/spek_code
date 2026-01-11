@@ -1,6 +1,13 @@
 ---
 name: frontend-design
-description: Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, artifacts, posters, or applications (examples include websites, landing pages, dashboards, React components, HTML/CSS layouts, or when styling/beautifying any web UI). Generates creative, polished code and UI design that avoids generic AI aesthetics.
+description: |
+  前端设计专家 - 高质量 UI 设计。
+  Use when:
+  - 创建网页、组件、Landing Page
+  - UI 设计、样式美化
+  - 避免 AI 通用风格
+  触发词：设计、UI、Landing Page、网页设计、美化
+  Related Skills: tailwindcss-patterns, shadcn-ui-patterns, framer-motion-patterns
 license: Complete terms in LICENSE.txt
 ---
 

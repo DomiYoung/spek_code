@@ -1,6 +1,12 @@
 ---
 name: speckit.analyze
-description: Perform a non-destructive cross-artifact consistency and quality analysis across spec.md, plan.md, and tasks.md after task generation.
+description: |
+  交叉分析工具 - Spec-Kit 一致性检查。
+  Use when:
+  - 检查 spec/plan/tasks 之间的一致性
+  - 质量分析、遗漏检测
+  触发词：analyze、分析、一致性、检查
+  Related Skills: speckit.specify, speckit.plan, speckit.tasks, spec-quality-gates
 globs:
   - ".specify/**/*"
 ---

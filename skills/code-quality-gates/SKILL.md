@@ -1,10 +1,13 @@
 ---
 name: code-quality-gates
 description: |
-  代码质量强制门禁。当编写、修改、创建代码时自动触发。
-  【强制执行】确保 Claude 遵守 CLAUDE.md 中的代码规范。
-  关键词：写代码、创建组件、实现功能、修复Bug、编辑文件、添加函数。
-  每次代码变更前后必须执行检查，违反红线立即停止。
+  代码质量门禁 - 强制执行代码规范。
+  Use when:
+  - 编写、修改、创建代码时
+  - 代码审查、规范检查
+  - 违反红线检测
+  触发词：代码质量、lint、规范检查、代码审查
+  Related Skills: speckit.implement, review-quality-gates, webapp-testing
 allowed-tools: Read, Grep, Bash
 ---
 
