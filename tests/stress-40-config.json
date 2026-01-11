@@ -1,0 +1,542 @@
+{
+  "test_name": "40轮长对话衰减压力测试",
+  "total_rounds": 40,
+  "phases": {
+    "baseline": {
+      "rounds": "1-5",
+      "description": "建立基线"
+    },
+    "distraction_1": {
+      "rounds": "6-10",
+      "description": "第一次干扰（无关对话）"
+    },
+    "regression_1": {
+      "rounds": "11-15",
+      "description": "第一次回归测试"
+    },
+    "sustained": {
+      "rounds": "16-20",
+      "description": "持续工作"
+    },
+    "distraction_2": {
+      "rounds": "21-25",
+      "description": "第二次干扰"
+    },
+    "regression_2": {
+      "rounds": "26-30",
+      "description": "第二次回归测试"
+    },
+    "stress": {
+      "rounds": "31-35",
+      "description": "高压混合测试"
+    },
+    "final_regression": {
+      "rounds": "36-40",
+      "description": "最终回归测试"
+    }
+  },
+  "rounds": [
+    {
+      "round": 1,
+      "phase": "baseline",
+      "type": "task",
+      "prompt": "帮我实现一个用户登录功能，需要 JWT 认证",
+      "expected": [
+        "决策卡片",
+        "权重≥7",
+        "oidc-auth-patterns",
+        "Spec-Kit"
+      ],
+      "critical": true
+    },
+    {
+      "round": 2,
+      "phase": "baseline",
+      "type": "continue",
+      "prompt": "继续，先设计数据库表结构",
+      "expected": [
+        "保持Spec-Kit",
+        "postgresql-design"
+      ],
+      "critical": false
+    },
+    {
+      "round": 3,
+      "phase": "baseline",
+      "type": "continue",
+      "prompt": "好的，接下来实现 API 接口",
+      "expected": [
+        "工作流一致性"
+      ],
+      "critical": false
+    },
+    {
+      "round": 4,
+      "phase": "baseline",
+      "type": "task",
+      "prompt": "这里有个 bug，状态更新后组件没有重新渲染",
+      "expected": [
+        "识别新任务",
+        "决策卡片",
+        "zustand-patterns"
+      ],
+      "critical": true
+    },
+    {
+      "round": 5,
+      "phase": "baseline",
+      "type": "task",
+      "prompt": "帮我优化一下这个页面的性能",
+      "expected": [
+        "决策卡片",
+        "experts/performance",
+        "LCP/CLS指标"
+      ],
+      "critical": true
+    },
+    {
+      "round": 6,
+      "phase": "distraction_1",
+      "type": "offtopic",
+      "prompt": "今天天气怎么样？",
+      "expected": [
+        "识别为非任务"
+      ],
+      "critical": false
+    },
+    {
+      "round": 7,
+      "phase": "distraction_1",
+      "type": "offtopic",
+      "prompt": "给我讲个笑话",
+      "expected": [
+        "识别为非任务"
+      ],
+      "critical": false
+    },
+    {
+      "round": 8,
+      "phase": "distraction_1",
+      "type": "offtopic",
+      "prompt": "你觉得 AI 会取代程序员吗？",
+      "expected": [
+        "识别为讨论"
+      ],
+      "critical": false
+    },
+    {
+      "round": 9,
+      "phase": "distraction_1",
+      "type": "offtopic",
+      "prompt": "推荐一本编程书籍",
+      "expected": [
+        "识别为非任务"
+      ],
+      "critical": false
+    },
+    {
+      "round": 10,
+      "phase": "distraction_1",
+      "type": "offtopic",
+      "prompt": "解释一下什么是闭包",
+      "expected": [
+        "识别为知识问答"
+      ],
+      "critical": false
+    },
+    {
+      "round": 11,
+      "phase": "regression_1",
+      "type": "task",
+      "prompt": "帮我实现一个文件上传功能",
+      "expected": [
+        "决策卡片",
+        "权重评估",
+        "工作流选择"
+      ],
+      "critical": true,
+      "regression_check": "干扰后是否恢复决策卡片机制"
+    },
+    {
+      "round": 12,
+      "phase": "regression_1",
+      "type": "task",
+      "prompt": "节点之间的连线不显示，帮我看看",
+      "expected": [
+        "决策卡片",
+        "reactflow-patterns"
+      ],
+      "critical": true,
+      "regression_check": "是否检查 Skill"
+    },
+    {
+      "round": 13,
+      "phase": "regression_1",
+      "type": "explore",
+      "prompt": "这个功能有几种实现方式？你觉得哪种更好？",
+      "expected": [
+        "识别explore意图",
+        "brainstorm",
+        "多方案对比"
+      ],
+      "critical": true,
+      "regression_check": "是否触发脑暴"
+    },
+    {
+      "round": 14,
+      "phase": "regression_1",
+      "type": "task",
+      "prompt": "画一个系统架构图",
+      "expected": [
+        "mermaid-expert",
+        "正确语法"
+      ],
+      "critical": true,
+      "regression_check": "是否使用 Skill"
+    },
+    {
+      "round": 15,
+      "phase": "regression_1",
+      "type": "task",
+      "prompt": "帮我检查一下代码质量",
+      "expected": [
+        "code-quality-gates",
+        "审计命令"
+      ],
+      "critical": true,
+      "regression_check": "是否运行审计"
+    },
+    {
+      "round": 16,
+      "phase": "sustained",
+      "type": "task",
+      "prompt": "创建一个 Zustand store 来管理用户状态",
+      "expected": [
+        "zustand-patterns",
+        "store设计规范"
+      ],
+      "critical": true
+    },
+    {
+      "round": 17,
+      "phase": "sustained",
+      "type": "continue",
+      "prompt": "添加一个 selector 来获取当前用户信息",
+      "expected": [
+        "保持 zustand 上下文"
+      ],
+      "critical": false
+    },
+    {
+      "round": 18,
+      "phase": "sustained",
+      "type": "task",
+      "prompt": "实现 SignalR 实时消息推送",
+      "expected": [
+        "决策卡片",
+        "signalr-patterns"
+      ],
+      "critical": true
+    },
+    {
+      "round": 19,
+      "phase": "sustained",
+      "type": "continue",
+      "prompt": "添加断线重连机制",
+      "expected": [
+        "保持 signalr 上下文"
+      ],
+      "critical": false
+    },
+    {
+      "round": 20,
+      "phase": "sustained",
+      "type": "task",
+      "prompt": "用 React Query 封装 API 请求",
+      "expected": [
+        "react-query-patterns"
+      ],
+      "critical": true
+    },
+    {
+      "round": 21,
+      "phase": "distraction_2",
+      "type": "offtopic",
+      "prompt": "你会下象棋吗？",
+      "expected": [
+        "识别为非任务"
+      ],
+      "critical": false
+    },
+    {
+      "round": 22,
+      "phase": "distraction_2",
+      "type": "offtopic",
+      "prompt": "帮我写一首关于编程的诗",
+      "expected": [
+        "识别为创意任务"
+      ],
+      "critical": false
+    },
+    {
+      "round": 23,
+      "phase": "distraction_2",
+      "type": "offtopic",
+      "prompt": "什么是量子计算？",
+      "expected": [
+        "识别为知识问答"
+      ],
+      "critical": false
+    },
+    {
+      "round": 24,
+      "phase": "distraction_2",
+      "type": "offtopic",
+      "prompt": "推荐一个好用的 VSCode 插件",
+      "expected": [
+        "识别为非任务"
+      ],
+      "critical": false
+    },
+    {
+      "round": 25,
+      "phase": "distraction_2",
+      "type": "offtopic",
+      "prompt": "你最喜欢什么编程语言？",
+      "expected": [
+        "识别为讨论"
+      ],
+      "critical": false
+    },
+    {
+      "round": 26,
+      "phase": "regression_2",
+      "type": "task",
+      "prompt": "实现一个复杂的表单验证，包含多步骤和条件逻辑",
+      "expected": [
+        "决策卡片",
+        "权重≥7",
+        "react-hook-form-patterns"
+      ],
+      "critical": true,
+      "regression_check": "长时间干扰后是否恢复"
+    },
+    {
+      "round": 27,
+      "phase": "regression_2",
+      "type": "task",
+      "prompt": "这个表格数据量很大，需要虚拟滚动",
+      "expected": [
+        "决策卡片",
+        "virtual-list-patterns或ag-grid"
+      ],
+      "critical": true,
+      "regression_check": "是否检查相关 Skill"
+    },
+    {
+      "round": 28,
+      "phase": "regression_2",
+      "type": "explore",
+      "prompt": "数据缓存应该放在前端还是后端？有什么权衡？",
+      "expected": [
+        "识别explore",
+        "brainstorm",
+        "多方案分析"
+      ],
+      "critical": true,
+      "regression_check": "是否触发脑暴"
+    },
+    {
+      "round": 29,
+      "phase": "regression_2",
+      "type": "task",
+      "prompt": "重构这个模块，拆分成更小的组件",
+      "expected": [
+        "决策卡片",
+        "权重评估"
+      ],
+      "critical": true,
+      "regression_check": "重构任务是否正确评估"
+    },
+    {
+      "round": 30,
+      "phase": "regression_2",
+      "type": "task",
+      "prompt": "添加 IndexedDB 离线缓存支持",
+      "expected": [
+        "决策卡片",
+        "indexeddb-patterns"
+      ],
+      "critical": true,
+      "regression_check": "是否使用专门 Skill"
+    },
+    {
+      "round": 31,
+      "phase": "stress",
+      "type": "rapid",
+      "prompt": "快速修复：按钮点击没反应",
+      "expected": [
+        "快速评估",
+        "识别简单bug"
+      ],
+      "critical": false
+    },
+    {
+      "round": 32,
+      "phase": "stress",
+      "type": "rapid",
+      "prompt": "样式问题：边距不对",
+      "expected": [
+        "识别为简单样式问题",
+        "权重低"
+      ],
+      "critical": false
+    },
+    {
+      "round": 33,
+      "phase": "stress",
+      "type": "task",
+      "prompt": "实现 OAuth2 第三方登录，支持 Google 和 GitHub",
+      "expected": [
+        "决策卡片",
+        "权重≥7",
+        "oidc-auth-patterns"
+      ],
+      "critical": true
+    },
+    {
+      "round": 34,
+      "phase": "stress",
+      "type": "rapid",
+      "prompt": "console 有个警告，帮我看看",
+      "expected": [
+        "快速诊断"
+      ],
+      "critical": false
+    },
+    {
+      "round": 35,
+      "phase": "stress",
+      "type": "task",
+      "prompt": "设计一个插件系统架构",
+      "expected": [
+        "决策卡片",
+        "权重≥7",
+        "experts/architect"
+      ],
+      "critical": true
+    },
+    {
+      "round": 36,
+      "phase": "final_regression",
+      "type": "task",
+      "prompt": "帮我实现一个工作流编辑器，支持节点拖拽和连线",
+      "expected": [
+        "决策卡片",
+        "权重≥7",
+        "reactflow-patterns",
+        "Spec-Kit"
+      ],
+      "critical": true,
+      "regression_check": "40轮后复杂任务处理"
+    },
+    {
+      "round": 37,
+      "phase": "final_regression",
+      "type": "explore",
+      "prompt": "这个编辑器的状态管理方案，你有什么建议？",
+      "expected": [
+        "brainstorm",
+        "多方案对比",
+        "zustand/redux对比"
+      ],
+      "critical": true,
+      "regression_check": "是否仍能触发脑暴"
+    },
+    {
+      "round": 38,
+      "phase": "final_regression",
+      "type": "task",
+      "prompt": "性能分析一下这个页面，找出瓶颈",
+      "expected": [
+        "experts/performance",
+        "具体指标",
+        "工具推荐"
+      ],
+      "critical": true,
+      "regression_check": "是否使用性能专家 Skill"
+    },
+    {
+      "round": 39,
+      "phase": "final_regression",
+      "type": "task",
+      "prompt": "画一个完整的系统架构图，包含前后端和数据流",
+      "expected": [
+        "mermaid-expert",
+        "正确语法",
+        "完整图表"
+      ],
+      "critical": true,
+      "regression_check": "是否使用 mermaid Skill"
+    },
+    {
+      "round": 40,
+      "phase": "final_regression",
+      "type": "task",
+      "prompt": "最后，帮我做一个完整的代码审查，检查所有文件",
+      "expected": [
+        "code-quality-gates",
+        "review-quality-gates",
+        "完整审计"
+      ],
+      "critical": true,
+      "regression_check": "最终回归：是否完整遵守规则"
+    }
+  ],
+  "critical_checkpoints": [
+    1,
+    4,
+    5,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    18,
+    20,
+    26,
+    27,
+    28,
+    29,
+    30,
+    33,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40
+  ],
+  "regression_checkpoints": [
+    11,
+    12,
+    13,
+    14,
+    15,
+    26,
+    27,
+    28,
+    29,
+    30,
+    36,
+    37,
+    38,
+    39,
+    40
+  ],
+  "scoring": {
+    "total_critical": 23,
+    "total_regression": 15
+  }
+}
