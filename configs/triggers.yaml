@@ -6,6 +6,7 @@ updated: "2026-01-08"
 
 # ============================================
 # 知识记录触发器 (Knowledge Recording Triggers)
+# 简化版：知识直接写入 Skills SKILL.md + Evolution Marker
 # ============================================
 knowledge_triggers:
   # 踩坑记录触发条件
@@ -20,31 +21,9 @@ knowledge_triggers:
       - type: "keyword"
         keywords: ["踩坑", "坑", "记录这个", "下次注意"]
         action: "auto_record"
-    target: "~/.ai-knowledge/global/pitfalls.md"
-    template: "~/.claude/templates/pitfalls.md"
-
-  # 架构决策记录
-  decision_recording:
-    conditions:
-      - type: "action"
-        actions: ["技术选型", "架构变更", "Breaking Change"]
-        action: "prompt_record"
-      - type: "keyword"
-        keywords: ["决定用", "选择", "采用方案"]
-        action: "prompt_record"
-    target: "~/.ai-knowledge/projects/{project}/decisions.md"
-    template: "~/.claude/templates/decisions.md"
-
-  # 组件模式记录
-  pattern_recording:
-    conditions:
-      - type: "reuse_count"
-        threshold: 2
-        action: "auto_record"
-      - type: "keyword"
-        keywords: ["复用", "抽象", "通用组件"]
-        action: "prompt_record"
-    target: "~/.ai-knowledge/domains/{domain}/patterns.md"
+    # 写入对应技术的 SKILL.md，不再使用 ~/.ai-knowledge
+    target: "skills/{tech}-patterns/SKILL.md"
+    marker: "Evolution Marker"
 
 # ============================================
 # 专家路由触发器 (Expert Routing Triggers)
@@ -107,41 +86,28 @@ skill_triggers:
       - "src/hooks/"
     skill: "skills/patterns/component-reuse/SKILL.md"
 
-  # 开发前检查（复用 + 踩坑）
-  pre_dev_check:
-    condition: "task_start AND weight >= 2"
-    description: "开发前自动检查可复用资源和相关踩坑"
-    sequence:
-      - "component_reuse_check"
-      - "pitfall_reminder"
-    knowledge_sources:
-      - "~/.ai-knowledge/global/pitfalls.md"
-      - "~/.ai-knowledge/domains/{domain}/pitfalls.md"
-      - "~/.ai-knowledge/projects/{project}/pitfalls.md"
-    skill: "skills/workflow/pre-dev-check/SKILL.md"
-
 # ============================================
-# Session 生命周期触发器
+# Session 生命周期触发器（简化版）
+# claude-mem 自动处理会话历史，无需手动配置
 # ============================================
 session_lifecycle:
   on_start:
     actions:
       - read: "~/.claude/templates/SESSION.md"
-      - read: "~/.ai-knowledge/global/pitfalls.md"
-      - call: "mcp__serena__list_memories"
       - call: "mcp__task-master-ai__next_task"
+      # claude-mem 自动注入上下文（Hooks 自动）
 
   on_checkpoint:  # 每30分钟
     interval: "30min"
     actions:
-      - call: "mcp__serena__write_memory"
       - update: "SESSION.md progress"
+      # claude-mem 自动保存（Hooks 自动）
 
   on_end:
     actions:
       - eval: "knowledge_value_assessment"
-      - write: "session_summary to Serena"
       - cleanup: "temp files"
+      # claude-mem 自动保存会话摘要（Hooks 自动）
 
 # ============================================
 # 质量门禁触发器

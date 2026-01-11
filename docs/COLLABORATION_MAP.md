@@ -77,17 +77,17 @@
                                   │
                                   ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│  Layer 4: 记忆层（三套系统）                                                  │
-│  ┌────────────────────┐ ┌────────────────────┐ ┌────────────────────┐       │
-│  │  本地知识进化        │ │  claude-mem        │ │  Serena Memory     │       │
-│  │  ~/.ai-knowledge/   │ │  SQLite+Chroma     │ │  符号化存储         │       │
-│  │  ├── pitfalls.md   │ │  ├── observations  │ │  ├── list_memories │       │
-│  │  ├── decisions.md  │ │  ├── summaries     │ │  ├── read_memory   │       │
-│  │  └── patterns.md   │ │  └── search API    │ │  └── write_memory  │       │
-│  │                     │ │                    │ │                    │       │
-│  │  触发：知识四问      │ │  触发：Hooks自动   │ │  触发：Session周期 │       │
-│  │  写入：SKILL.md     │ │  写入：被动捕获    │ │  写入：检查点/结束  │       │
-│  └────────────────────┘ └────────────────────┘ └────────────────────┘       │
+│  Layer 4: 记忆层（两套系统）                                                  │
+│  ┌────────────────────────────────┐ ┌────────────────────────────────┐       │
+│  │  claude-mem                     │ │  Skills SKILL.md               │       │
+│  │  SQLite+Chroma                  │ │  按技术分类存储                 │       │
+│  │  ├── observations               │ │  ├── zustand-patterns/SKILL.md │       │
+│  │  ├── summaries                  │ │  ├── reactflow-patterns/SKILL.md│      │
+│  │  └── search API                 │ │  └── + Evolution Marker        │       │
+│  │                                 │ │                                 │       │
+│  │  触发：Hooks 自动（无需干预）    │ │  触发：知识四问 → 2+ YES        │       │
+│  │  写入：被动捕获                  │ │  写入：对应 SKILL.md            │       │
+│  └────────────────────────────────┘ └────────────────────────────────┘       │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -128,13 +128,12 @@ triggers.yaml 定义: "on_start → read pitfalls.md"
                    实际行为: 不会自动读取
 ```
 
-### 🔴 断点 3: 三套记忆系统未集成
+### 🔴 断点 3: 记忆系统简化后状态
 
 | 系统 | 写入时机 | 读取时机 | 集成状态 |
 |------|---------|---------|---------|
-| 本地知识进化 | 知识四问后手动写 | 无自动读取 | ❌ 孤立 |
-| claude-mem | Hooks 自动捕获 | MCP tools 搜索 | ⚠️ 已安装但未触发 |
-| Serena Memory | Session 周期写入 | Session 开始读取 | ⚠️ 依赖 MCP 调用 |
+| claude-mem | Hooks 自动捕获 | MCP tools 搜索 | ✅ 已运行 |
+| Skills SKILL.md | 知识四问后写入 | 按需读取 | ✅ 已集成 |
 
 ### 🔴 断点 4: 工作流选择后无自动执行
 
@@ -161,8 +160,7 @@ workflow-orchestrator 输出: "使用 Spec-Kit"
 │ Hooks 脚本      │  ✅ 有脚本   │  ❌ 未注册    │  ❌ 不生效     │
 │ Skills          │  ✅ 65+ 个   │  ⚠️ 手动调用  │  ⚠️ 部分生效   │
 │ MCP Servers     │  ✅ 已配置   │  ✅ 自动可用  │  ✅ 生效       │
-│ 知识库          │  ✅ 有目录   │  ❌ 无自动读写 │  ❌ 不生效     │
-│ claude-mem      │  ✅ 已安装   │  ⚠️ 需启动    │  ⚠️ 待验证     │
+│ claude-mem      │  ✅ 已安装   │  ✅ 自动运行  │  ✅ 生效       │
 └─────────────────┴──────────────┴──────────────┴────────────────┘
 ```
 
@@ -183,13 +181,12 @@ workflow-orchestrator 输出: "使用 Spec-Kit"
 **现状**: Python 脚本存在但未在 `.claude/hooks.json` 注册
 **方案**: 创建 `hooks.json` 将脚本注册为 Claude Code hooks
 
-### 问题 3: 记忆系统各自为政
+### 问题 3: 记忆系统已简化
 
-**现状**: 三套记忆系统没有统一读写协议
-**方案**:
-- 定义统一的 Session 生命周期
-- Session 开始 → 读取所有记忆源
-- Session 结束 → 按规则写入对应系统
+**现状**: 已简化为两套系统（claude-mem + Skills SKILL.md）
+**状态**: ✅ 已解决
+- claude-mem: Hooks 自动运行，无需干预
+- Skills SKILL.md: 知识四问后写入对应技术的 SKILL.md + Evolution Marker
 
 ### 问题 4: 工作流选择后需手动执行
 
@@ -206,9 +203,8 @@ workflow-orchestrator 输出: "使用 Spec-Kit"
 |-------|------|---------|-------|
 | P0 | Hooks 未注册 | 创建 hooks.json | 小 |
 | P0 | triggers 无引擎 | 合并到 CLAUDE.md | 中 |
-| P1 | 记忆系统未集成 | 统一 Session 协议 | 中 |
+| ~~P1~~ | ~~记忆系统未集成~~ | ~~统一 Session 协议~~ | ✅ 已简化 |
 | P1 | 工作流不自动执行 | 添加执行指令 | 小 |
-| P2 | 知识库无自动读取 | Session 开始时加载 | 中 |
 
 ---
 
