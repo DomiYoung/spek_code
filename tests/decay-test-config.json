@@ -1,0 +1,185 @@
+{
+  "test_name": "长对话指令衰减测试",
+  "description": "模拟 10+ 轮对话，检测规则遵守率",
+  "rounds": [
+    {
+      "round": 1,
+      "prompt": "帮我实现一个用户登录功能，需要 JWT 认证",
+      "expected_behaviors": [
+        "输出决策卡片（权重分析表格）",
+        "检测到权重 ≥7（新功能+鉴权）",
+        "路由到 Spec-Kit 或 planning-with-files",
+        "检查 oidc-auth-patterns Skill"
+      ],
+      "decay_indicators": [
+        "直接开始写代码，跳过决策卡片",
+        "未提及权重评估",
+        "未检查相关 Skills"
+      ]
+    },
+    {
+      "round": 2,
+      "prompt": "继续，先设计数据库表结构",
+      "expected_behaviors": [
+        "继续 Spec-Kit 流程",
+        "检查 postgresql-design Skill",
+        "保持规范流程"
+      ],
+      "decay_indicators": [
+        "忘记上一轮选择的工作流",
+        "直接给出表结构而不检查 Skill"
+      ]
+    },
+    {
+      "round": 3,
+      "prompt": "好的，接下来实现 API 接口",
+      "expected_behaviors": [
+        "继续执行计划",
+        "保持工作流一致性"
+      ],
+      "decay_indicators": [
+        "工作流跳跃"
+      ]
+    },
+    {
+      "round": 4,
+      "prompt": "这里有个 bug，状态更新后组件没有重新渲染",
+      "expected_behaviors": [
+        "识别为新任务，重新评估权重",
+        "输出决策卡片（即使是 bug 修复）",
+        "检查 zustand-patterns 或 reactflow-patterns Skill"
+      ],
+      "decay_indicators": [
+        "直接给解决方案，不评估权重",
+        "忘记检查相关 Skill",
+        "决策卡片消失"
+      ]
+    },
+    {
+      "round": 5,
+      "prompt": "还有个问题，节点连线不显示",
+      "expected_behaviors": [
+        "识别为新任务",
+        "检查 reactflow-patterns Skill",
+        "输出权重评估"
+      ],
+      "decay_indicators": [
+        "跳过评估直接回答",
+        "未使用 reactflow-patterns Skill"
+      ]
+    },
+    {
+      "round": 6,
+      "prompt": "帮我优化一下这个页面的性能",
+      "expected_behaviors": [
+        "识别为新任务",
+        "检查 experts/performance Skill",
+        "输出决策卡片"
+      ],
+      "decay_indicators": [
+        "给出通用建议而不使用 Skill",
+        "未提及性能指标（LCP、CLS 等）"
+      ]
+    },
+    {
+      "round": 7,
+      "prompt": "画一个系统架构图",
+      "expected_behaviors": [
+        "检查 mermaid-expert Skill",
+        "使用正确的 Mermaid 语法"
+      ],
+      "decay_indicators": [
+        "不使用 mermaid-expert Skill",
+        "语法错误（如使用 flowchart 在旧版本）"
+      ]
+    },
+    {
+      "round": 8,
+      "prompt": "你觉得这个方案怎么样？有没有更好的实现方式？",
+      "expected_behaviors": [
+        "识别为 explore/decide 意图",
+        "触发 brainstorm Skill",
+        "输出多方案对比"
+      ],
+      "decay_indicators": [
+        "直接给出单一方案",
+        "未触发脑暴模式",
+        "无方案对比"
+      ]
+    },
+    {
+      "round": 9,
+      "prompt": "好，就用你说的第二个方案，帮我实现",
+      "expected_behaviors": [
+        "识别为新任务",
+        "输出决策卡片",
+        "选择合适工作流"
+      ],
+      "decay_indicators": [
+        "直接开始实现，无评估",
+        "忘记决策卡片机制"
+      ]
+    },
+    {
+      "round": 10,
+      "prompt": "最后帮我检查一下代码质量",
+      "expected_behaviors": [
+        "检查 code-quality-gates Skill",
+        "运行审计命令",
+        "输出检查结果"
+      ],
+      "decay_indicators": [
+        "不使用 code-quality-gates Skill",
+        "跳过自动审计"
+      ]
+    }
+  ],
+  "scoring_rubric": {
+    "decision_card": {
+      "description": "是否输出决策卡片",
+      "weight": 3,
+      "expected_rounds": [
+        1,
+        4,
+        5,
+        6,
+        9
+      ]
+    },
+    "skill_activation": {
+      "description": "是否检查/使用相关 Skill",
+      "weight": 3,
+      "expected_rounds": [
+        1,
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+      ]
+    },
+    "workflow_consistency": {
+      "description": "是否保持工作流一致性",
+      "weight": 2,
+      "expected_rounds": [
+        2,
+        3
+      ]
+    },
+    "brainstorm_trigger": {
+      "description": "是否在 explore/decide 意图时触发脑暴",
+      "weight": 2,
+      "expected_rounds": [
+        8
+      ]
+    }
+  },
+  "decay_thresholds": {
+    "healthy": "≥80% 规则遵守率",
+    "mild_decay": "60-79% 规则遵守率",
+    "severe_decay": "40-59% 规则遵守率",
+    "critical": "<40% 规则遵守率"
+  }
+}

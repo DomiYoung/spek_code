@@ -1,0 +1,40 @@
+{
+  "hooks": [
+    {
+      "name": "anti-decay-reminder",
+      "event": "UserPromptSubmit",
+      "trigger": "每 5 轮对话",
+      "action": "注入强化提醒：'REMINDER: 遵守决策卡片机制，检查可用 Skills'",
+      "implementation": "\n#!/usr/bin/env python3\nimport json\nimport sys\n\n# 读取 Session 历史，统计轮数\n# 每 5 轮注入一次强化提醒\n\ndata = json.load(sys.stdin)\n# TODO: 实现轮数统计逻辑\n\noutput = {\n    \"hookSpecificOutput\": {\n        \"hookEventName\": \"UserPromptSubmit\",\n        \"additionalContext\": \"🔄 ANTI-DECAY REMINDER: 确保输出决策卡片，检查相关 Skills。\"\n    }\n}\nprint(json.dumps(output))\n"
+    },
+    {
+      "name": "precompact-preserve",
+      "event": "PreCompact",
+      "trigger": "context window 即将压缩",
+      "action": "在压缩前保存关键规则到 SESSION.md",
+      "implementation": "\n#!/usr/bin/env python3\n# PreCompact Hook: 在压缩前保存关键上下文\n# 确保核心规则不会在压缩中丢失\n"
+    }
+  ],
+  "anti_decay_strategies": [
+    {
+      "strategy": "递归强化",
+      "description": "每个新任务必须输出完整的决策卡片",
+      "implementation": "在 workflow-orchestrator SKILL.md 中已实现"
+    },
+    {
+      "strategy": "Session 持久化",
+      "description": "将工作流状态写入 SESSION.md 或 .planning/",
+      "implementation": "使用 planning-with-files Skill"
+    },
+    {
+      "strategy": "Hook 强制提醒",
+      "description": "UserPromptSubmit Hook 持续注入规则提醒",
+      "implementation": "skill-hint.py 已实现"
+    },
+    {
+      "strategy": "Evolution Marker",
+      "description": "Session 结束时强制执行知识四问",
+      "implementation": "skill-evolution.py 已实现"
+    }
+  ]
+}
