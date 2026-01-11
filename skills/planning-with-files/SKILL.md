@@ -1,6 +1,13 @@
 ---
 name: planning-with-files
-description: Manus 风格的文件持久化规划，用于中等复杂度任务（权重 3-6）
+description: |
+  文件持久化规划工具 - 用于中等复杂度任务。
+  Use when:
+  - 任务权重 3-6 分（多文件变更但非架构级）
+  - 需要 >5 次工具调用的多步骤任务
+  - 研究性任务需要记录发现和进度
+  - 任务可能跨 Session 需要持久化状态
+  触发词：规划、计划、多步骤、复杂任务、进度跟踪、.planning
 globs:
   - ".planning/**/*"
   - "**/task_plan.md"

@@ -1,6 +1,13 @@
 ---
 name: speckit.specify
-description: Create or update the feature specification from a natural language feature description.
+description: |
+  功能规范创建工具 - Spec-Kit 核心流程。
+  Use when:
+  - 创建新功能需要写规范文档
+  - 任务权重 ≥7（复杂功能、架构变更）
+  - Breaking Change、Schema 迁移、鉴权支付等高风险变更
+  - 用户说"写 spec"、"功能设计"、"需求文档"
+  触发词：spec、规范、需求、新功能、功能设计、PRD、.specify
 globs:
   - ".specify/**/*"
   - "**/spec.md"

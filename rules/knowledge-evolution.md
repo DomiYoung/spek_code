@@ -39,6 +39,49 @@
 | `version-adaptation` | 框架版本升级适配 |
 | `self-correction` | 修正错误规则 |
 | `personalization` | 个人偏好模式 |
+| `description-improvement` | Skill 触发条件优化 |
+
+---
+
+## Description 进化规则
+
+> **核心原则**：让 Skill 自己"举手"，而非硬编码触发。
+
+### 何时更新 description
+
+| 场景 | 行动 |
+|------|------|
+| Skill 应激活但未激活 | 添加漏掉的触发词到 description |
+| 用户手动调用 Skill | 说明 description 不够清晰，需改进 |
+| 发现新的使用场景 | 扩展 "Use when" 条件 |
+
+### description 最佳格式
+
+```yaml
+description: |
+  一句话说明 Skill 功能。
+  Use when:
+  - 具体场景 1
+  - 具体场景 2
+  - 具体场景 3
+  触发词：关键词1、关键词2、关键词3
+```
+
+### 示例
+
+```yaml
+# 之前（模糊）
+description: Zustand 状态管理最佳实践
+
+# 之后（精确）
+description: |
+  Zustand 4.x 状态管理最佳实践。
+  Use when:
+  - 创建/修改 store、状态管理、全局状态
+  - 文件路径包含 stores/、*Store.ts
+  - 状态更新、订阅、中间件问题
+  触发词：Zustand、store、状态、immer、shallow、useStore
+```
 
 ---
 
