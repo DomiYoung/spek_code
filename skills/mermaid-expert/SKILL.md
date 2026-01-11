@@ -1,10 +1,13 @@
 ---
 name: mermaid-expert
 description: |
-  Mermaid.js 图表语法专家。支持流程图、序列图、类图、状态图、甘特图、
-  ER 图、用户旅程图等。自动检测图表需求并生成最优语法。
-  关键词：Mermaid、流程图、序列图、类图、状态图、图表、可视化、diagram。
-  【可视化核心】项目文档、架构图、流程说明的标准工具。
+  Mermaid.js 图表语法专家 - 流程图、时序图、类图等。
+  Use when:
+  - 画流程图、时序图、类图、状态图、甘特图
+  - 生成 Mermaid 代码
+  - 在文档中嵌入图表
+  触发词：Mermaid、流程图、时序图、类图、diagram、画图、架构图
+  Related Skills: obsidian-markdown, json-canvas, experts/architect
 allowed-tools: Read, Write, Edit
 ---
 

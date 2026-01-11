@@ -1,6 +1,13 @@
 ---
 name: obsidian-bases
-description: Create and edit Obsidian Bases files (.base) with filters, formulas, views, and database-like queries. Use when working with .base files, creating database views, filtered lists, or data aggregation in Obsidian.
+description: |
+  Obsidian Bases 数据库专家 - 创建和编辑 .base 数据库视图文件。
+  Use when:
+  - 创建/编辑 .base 文件
+  - 构建数据库视图、过滤列表、数据聚合
+  - 使用公式和查询笔记
+  触发词：.base、数据库视图、过滤、聚合、查询笔记、Obsidian 数据库
+  Related Skills: obsidian-markdown, json-canvas
 ---
 
 # Obsidian Bases Skill

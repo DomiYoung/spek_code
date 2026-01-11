@@ -1,6 +1,13 @@
 ---
 name: obsidian-markdown
-description: Create and edit Obsidian Flavored Markdown files (.md) with wikilinks, callouts, embeds, frontmatter, and all Obsidian-specific syntax extensions. Use when working with Obsidian notes, markdown files in vaults, or when the user mentions Obsidian markdown syntax.
+description: |
+  Obsidian Flavored Markdown 专家 - 创建和编辑 .md 笔记文件。
+  Use when:
+  - 创建/编辑 Obsidian 笔记
+  - 使用 wikilinks、callouts、embeds、frontmatter
+  - 在 vault 中管理 markdown 文件
+  触发词：Obsidian、笔记、vault、wikilink、callout、[[链接]]、frontmatter
+  Related Skills: obsidian-bases, json-canvas, mermaid-expert
 ---
 
 # Obsidian Flavored Markdown Skill
