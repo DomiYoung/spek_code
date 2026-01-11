@@ -41,3 +41,4 @@ stats-cache.json
 .superclaude-metadata.json
 anthropic-skills/
 happy-claude-skills/
+firebase-debug.log

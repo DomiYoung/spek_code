@@ -1,5 +1,9 @@
 ---
+name: tm-next
 description: Task Master - 获取下一个可执行任务
+globs:
+  - ".taskmaster/**/*"
+  - "**/tasks.md"
 ---
 
 # Task Master: 获取下一个任务

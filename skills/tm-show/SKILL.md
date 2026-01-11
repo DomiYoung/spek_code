@@ -1,5 +1,9 @@
 ---
+name: tm-show
 description: Task Master - 查看任务详情
+globs:
+  - ".taskmaster/**/*"
+  - "**/tasks.md"
 ---
 
 # Task Master: 查看任务详情

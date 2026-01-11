@@ -1,14 +1,9 @@
 ---
+name: speckit.tasks
 description: Generate an actionable, dependency-ordered tasks.md for the feature based on available design artifacts.
-handoffs: 
-  - label: Analyze For Consistency
-    agent: speckit.analyze
-    prompt: Run a project analysis for consistency
-    send: true
-  - label: Implement Project
-    agent: speckit.implement
-    prompt: Start the implementation in phases
-    send: true
+globs:
+  - ".specify/**/*"
+  - "**/tasks.md"
 ---
 
 ## User Input
@@ -86,7 +81,7 @@ Every task MUST strictly follow this format:
 4. **[Story] label**: REQUIRED for user story phase tasks only
    - Format: [US1], [US2], [US3], etc. (maps to user stories from spec.md)
    - Setup phase: NO story label
-   - Foundational phase: NO story label  
+   - Foundational phase: NO story label
    - User Story phases: MUST have story label
    - Polish phase: NO story label
 5. **Description**: Clear action with exact file path
@@ -101,31 +96,6 @@ Every task MUST strictly follow this format:
 - ❌ WRONG: `T001 [US1] Create model` (missing checkbox)
 - ❌ WRONG: `- [ ] [US1] Create User model` (missing Task ID)
 - ❌ WRONG: `- [ ] T001 [US1] Create model` (missing file path)
-
-### Task Organization
-
-1. **From User Stories (spec.md)** - PRIMARY ORGANIZATION:
-   - Each user story (P1, P2, P3...) gets its own phase
-   - Map all related components to their story:
-     - Models needed for that story
-     - Services needed for that story
-     - Endpoints/UI needed for that story
-     - If tests requested: Tests specific to that story
-   - Mark story dependencies (most stories should be independent)
-
-2. **From Contracts**:
-   - Map each contract/endpoint → to the user story it serves
-   - If tests requested: Each contract → contract test task [P] before implementation in that story's phase
-
-3. **From Data Model**:
-   - Map each entity to the user story(ies) that need it
-   - If entity serves multiple stories: Put in earliest story or Setup phase
-   - Relationships → service layer tasks in appropriate story phase
-
-4. **From Setup/Infrastructure**:
-   - Shared infrastructure → Setup phase (Phase 1)
-   - Foundational/blocking tasks → Foundational phase (Phase 2)
-   - Story-specific setup → within that story's phase
 
 ### Phase Structure
 

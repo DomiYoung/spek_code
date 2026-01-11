@@ -1,5 +1,9 @@
 ---
+name: tm-complete
 description: Task Master - 完成任务并自动获取下一个
+globs:
+  - ".taskmaster/**/*"
+  - "**/tasks.md"
 ---
 
 # Task Master: 完成任务
