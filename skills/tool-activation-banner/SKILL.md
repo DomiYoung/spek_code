@@ -2,7 +2,7 @@
 name: tool-activation-banner
 description: |
   工具调用高亮提示。确保 Claude 在使用核心工具时显示醒目横幅。
-  【强制规则】使用 Feature-Dev、Context7、Spec-Kit、Serena、Sequential 时必须显示。
+  【强制规则】使用 Feature-Dev、Context7、Spec-Kit、Sequential 时必须显示。
   每次调用 MCP 工具或 Slash Command 时自动触发。
 allowed-tools: "*"
 ---
@@ -23,7 +23,6 @@ allowed-tools: "*"
 ▶ 🛠️🛠️ FEATURE-DEV: frontend + backend | 多专家协作
 ▶ 📋 SPEC-KIT: specify | 需求规范阶段
 ▶ 📚 CONTEXT7: react-query | 官方文档查询
-▶ 🔍 SERENA: find_symbol | 语义代码分析
 ▶ 🧠 SEQUENTIAL: 深度推理 | 复杂问题分析
 ▶ 📊 TASK MASTER: get_tasks | 任务管理
 ```
@@ -53,7 +52,6 @@ allowed-tools: "*"
 | `feature-dev:code-architect` | `▶ 🏗️ CODE-ARCHITECT: [design]` | 架构设计 |
 | `/speckit.*` | `▶ 📋 SPEC-KIT: [phase]` | Spec 流程 |
 | `mcp__context7__*` | `▶ 📚 CONTEXT7: [topic]` | 文档查询 |
-| `mcp__serena__*` | `▶ 🔍 SERENA: [operation]` | 代码分析 |
 | `mcp__sequential-thinking__*` | `▶ 🧠 SEQUENTIAL: [purpose]` | 深度推理 |
 | `mcp__task-master-ai__*` | `▶ 📊 TASK MASTER: [operation]` | 任务管理 |
 

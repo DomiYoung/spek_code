@@ -271,11 +271,30 @@ Explore（读懂）→ Plan（想清楚）→ Code（小步迭代）→ Commit�
 
 | 条件 | 工作流 | 执行步骤 |
 |------|--------|---------|
-| 权重 ≥7 | **Spec-Kit** | task.md → implementation_plan.md → 审批 → 执行 → walkthrough.md |
+| 权重 ≥7 | **Spec-Kit（自动串联）** | 自动执行: speckit.constitution → speckit.specify → speckit.plan → speckit.tasks → speckit.implement |
 | 发散性思维 ✓ | **Brainstorm** | 脑暴 → 方案对比 → 用户选择 → 再评估权重 |
-| 权重 5-6 | **Spec-Kit（轻量）** | task.md → 简化 plan → 执行 |
-| 权重 3-4 | **Task-Only** | task.md → 执行 → 更新 |
-| 权重 1-2 | **Direct** | 直接执行 |
+| 权重 5-6 | **planning-with-files** | 创建 .planning/task_plan.md → 执行 → 更新 |
+| 权重 3-4 | **planning-with-files-lite** | 仅 task_plan.md → 执行 |
+| 权重 1-2 | **TodoWrite** | 直接执行 |
+
+### Spec-Kit 自动串联流程（权重≥7 时自动执行）
+
+```
+权重 ≥7 检测到
+      │
+      ▼
+┌─────────────────────────────────────────────────────────┐
+│  1. speckit.constitution → 读取/更新项目宪法             │
+│  2. speckit.specify → 生成功能规范                       │
+│  3. speckit.clarify → 澄清不明确需求（如需要）           │
+│  4. speckit.plan → 生成实现计划                          │
+│  5. speckit.tasks → 任务分解                             │
+│  6. speckit.implement → 执行实现                         │
+│  7. speckit.checklist → 验收检查清单                     │
+└─────────────────────────────────────────────────────────┘
+```
+
+> **注意**: 用户说「跳过 Spec-Kit」「直接开始」时可跳过自动串联。
 
 ---
 
@@ -491,13 +510,13 @@ Explore（读懂）→ Plan（想清楚）→ Code（小步迭代）→ Commit�
 | `上下文记忆.关键决策` | 做决策时 | 记录决策和理由 |
 | `状态更新日志` | 每次变更 | 时间戳 + 描述 |
 
-### 与 Serena Memory 的关系
+### 与 claude-mem 的关系
 
-| 维度 | SESSION.md | Serena Memory |
-|------|-----------|---------------|
-| **格式** | 人类可读 Markdown | 符号化存储 |
+| 维度 | SESSION.md | claude-mem |
+|------|-----------|-------------|
+| **格式** | 人类可读 Markdown | SQLite + Chroma |
 | **持久化** | 文件级（需手动保存） | 自动跨会话 |
-| **用途** | 进度追踪、上下文恢复 | 代码符号、重构记忆 |
+| **用途** | 进度追踪、上下文恢复 | 工具调用历史、会话上下文 |
 | **谁读** | 人 + AI | 主要 AI |
 
 **结论**：两者互补，不是替代关系。

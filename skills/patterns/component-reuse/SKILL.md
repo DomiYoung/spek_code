@@ -70,8 +70,7 @@ find src/utils -name "*.ts" -type f
 
 ### 无可复用资源 ❌
 需要新建，建议参考：
-- 项目模式: ~/.ai-knowledge/projects/{project}/patterns.md
-- 领域模式: ~/.ai-knowledge/domains/{domain}/patterns.md
+- 技术模式: skills/{tech}-patterns/SKILL.md
 ```
 
 ---

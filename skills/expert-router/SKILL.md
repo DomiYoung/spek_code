@@ -254,7 +254,7 @@ workflow-orchestrator
 
 ## Memory 标记格式
 
-复杂任务时写入 Serena memory：
+复杂任务时记录决策：
 
 ```markdown
 === Expert Router 决策记录 ===

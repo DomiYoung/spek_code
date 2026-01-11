@@ -24,7 +24,7 @@ allowed-tools: Read, Grep, Bash
 | 规则 | 检查项 | 自动审计规则 |
 |------|--------|-------------|
 | **Read First** | 已读取目标文件 | 禁止直接 Write/Edit 未读过的文件 |
-| **Pattern Check** | 已检查现有代码模式 | 使用 Serena 或 Grep 搜索 |
+| **Pattern Check** | 已检查现有代码模式 | 使用 Grep 搜索 |
 | **Understand First** | 理解现有代码结构再修改 | 代码审查验证 |
 
 ### 写代码时必须
@@ -171,7 +171,7 @@ setUser({ ...user, name: 'new name' });
 
 ```
 1. Read 目标文件 → 理解现有结构
-2. Grep/Serena 搜索 → 检查现有模式
+2. Grep 搜索 → 检查现有模式
 3. 编写代码 → 遵循项目规范
 4. tsc --noEmit → 类型检查通过
 5. pnpm lint → Lint 检查通过

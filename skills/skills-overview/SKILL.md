@@ -135,7 +135,6 @@ allowed-tools: Read
 |------|----------|----------|
 | 复杂度 ≥ 3 | Sequential Thinking | 🧠 SEQUENTIAL |
 | 涉及框架 API | Context7 | 📚 CONTEXT7 |
-| 需要代码分析 | Serena | 🔍 SERENA |
 | 任务管理 | Task Master | 📊 TASK MASTER |
 | Feature Dev 专家 | 自动选择 | 🛠️ FEATURE-DEV |
 | Spec-Kit 流程 | 自动选择 | 📋 SPEC-KIT |
@@ -160,7 +159,6 @@ allowed-tools: Read
 🛠️ FEATURE-DEV - Feature Dev 专家模式
 📋 SPEC-KIT    - Spec-Kit 规范流程
 📚 CONTEXT7   - 官方文档查询
-🔍 SERENA     - 语义代码分析
 🧠 SEQUENTIAL - 深度推理模式
 📊 TASK MASTER - 任务管理
 ```

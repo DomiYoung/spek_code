@@ -1,19 +1,55 @@
 # Skill 路由表
 
-> **完整覆盖 46 个 Skills**，按领域分类。
+> **完整覆盖 74 个 Skills**，按领域分类。
 > **1% 原则**：如果有 1% 的可能性某个 skill 适用，必须调用它。
 
 ---
 
-## 工作流/规划
+## 工作流/规划（自动触发）
+
+| 关键词 | 触发 Skill | 触发方式 |
+|--------|-----------|---------|
+| 每个任务开始 | `workflow-orchestrator` | 自动 |
+| 权重 ≥7 | `speckit.constitution` → `speckit.specify` → `speckit.plan` → `speckit.tasks` → `speckit.implement` | 自动串联 |
+| 权重 3-6 | `planning-with-files` | 自动 |
+| 脑暴、方案对比 | `brainstorm` | 语义检测 |
+| 记忆编排 | `mem-orchestrator` | 自动 |
+| 记忆规划 | `mem-plan` | 自动 |
+
+## Spec-Kit 系列（权重≥7 自动串联）
+
+| 阶段 | Skill | 说明 |
+|------|-------|------|
+| 1. 宪法 | `speckit.constitution` | 项目原则 |
+| 2. 规范 | `speckit.specify` | 需求规范 |
+| 3. 澄清 | `speckit.clarify` | 需求澄清 |
+| 4. 规划 | `speckit.plan` | 实现规划 |
+| 5. 任务 | `speckit.tasks` | 任务分解 |
+| 6. 分析 | `speckit.analyze` | 代码分析 |
+| 7. 实现 | `speckit.implement` | 执行实现 |
+| 8. 清单 | `speckit.checklist` | 检查清单 |
+| 9. Issues | `speckit.taskstoissues` | 转 Issues |
+
+## Task Master 系列
 
 | 关键词 | 触发 Skill | 确认方式 |
 |--------|-----------|---------|
-| 复杂任务、多步骤 | `planning-with-files` | 检查是否 >3 步 |
-| 新功能、创建、Spec | `speckit.specify` (Command) | 权重 ≥7 |
-| 脑暴、方案对比、你觉得 | `brainstorm` | 发散性思维检测 |
-| Skill 创建 | `skill-creator` | 检查是否创建 Skill |
-| Skills 系统、能力 | `skills-overview` | 检查系统说明 |
+| 下一个任务 | `tm-next` | 任务管理 |
+| 完成任务 | `tm-complete` | 任务完成 |
+| 显示任务 | `tm-show` | 任务列表 |
+
+## 专家系统
+
+| 关键词 | 触发 Skill | 确认方式 |
+|--------|-----------|---------|
+| 专家路由 | `expert-router` | 自动 |
+| 前端专家 | `experts/frontend` | 语义匹配 |
+| 后端专家 | `experts/backend` | 语义匹配 |
+| 架构师 | `experts/architect` | 语义匹配 |
+| 数据库专家 | `experts/database` | 语义匹配 |
+| 性能专家 | `experts/performance` | 语义匹配 |
+| 质量专家 | `experts/quality` | 语义匹配 |
+| 产品经理 | `experts/product` | 语义匹配 |
 
 ## 质量门禁
 
@@ -91,6 +127,8 @@
 | PPT、pptx、演示 | `pptx` | 检查演示文稿 |
 | Excel、xlsx、电子表格 | `xlsx` | 检查表格处理 |
 | JSON Canvas、.canvas | `json-canvas` | 检查 Canvas 文件 |
+| 微信文章 | `wechat-article-writing` | 检查公众号 |
+| X/Twitter 文章 | `x-articles-writing` | 检查推文 |
 
 ## 开发工具
 
@@ -100,6 +138,8 @@
 | Web Artifact、多组件 | `web-artifacts-builder` | 检查复杂 Artifact |
 | Webapp 测试、Playwright | `webapp-testing` | 检查前端测试 |
 | 工具高亮、MCP 调用 | `tool-activation-banner` | 检查工具提示 |
+| Skill 创建 | `skill-creator` | 检查是否创建 Skill |
+| Skills 系统、能力 | `skills-overview` | 检查系统说明 |
 
 ## 设计/交互
 
@@ -116,6 +156,19 @@
 | 文档共创、协作 | `doc-coauthoring` | 检查文档协作 |
 | 内部沟通、状态报告 | `internal-comms` | 检查内部通讯 |
 
+## Obsidian 相关
+
+| 关键词 | 触发 Skill | 确认方式 |
+|--------|-----------|---------|
+| Obsidian Bases | `obsidian-bases` | 检查 Bases 功能 |
+| Obsidian Markdown | `obsidian-markdown` | 检查 MD 格式 |
+
+## 复用检查
+
+| 关键词 | 触发 Skill | 确认方式 |
+|--------|-----------|---------|
+| 组件复用、重复检查 | `patterns/component-reuse` | 开发前检查 |
+
 ---
 
 ## 路由输出格式
@@ -126,6 +179,6 @@
 ╠════════════════════════════════════════════════════════╣
 ║  匹配关键词: [xxx]                                      ║
 ║  触发 Skill: [skill-name]                               ║
-║  Skill 路径: ~/.claude/skills/[skill-name]/SKILL.md     ║
+║  Skill 路径: skills/[skill-name]/SKILL.md               ║
 ╚════════════════════════════════════════════════════════╝
 ```
