@@ -1,6 +1,13 @@
 ---
 name: pptx
-description: "Presentation creation, editing, and analysis. When Claude needs to work with presentations (.pptx files) for: (1) Creating new presentations, (2) Modifying or editing content, (3) Working with layouts, (4) Adding comments or speaker notes, or any other presentation tasks"
+description: |
+  PPT 演示文稿专家 - 创建、编辑、分析 .pptx 文件。
+  Use when:
+  - 创建/编辑 PPT 演示文稿
+  - 处理布局、speaker notes
+  - 添加图表、图片
+  触发词：PPT、pptx、演示、幻灯片、presentation、slide
+  Related Skills: docx, xlsx, mermaid-expert, echarts-patterns
 license: Proprietary. LICENSE.txt has complete terms
 ---
 

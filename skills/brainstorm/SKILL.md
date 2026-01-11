@@ -1,10 +1,13 @@
 ---
 name: brainstorm
 description: |
-  脑暴专家 - 发散性思维和方案探索工具。
-  多方案对比、架构决策、创意探索。当用户意图为 explore（寻求多种可能方案）或 decide（在已知方案中选择）时激活。
-  适用于所有项目，是通用的思维工具。
-  触发关键词：脑暴、brainstorm、方案对比、架构决策、哪种更好、有几种方式、探索、决策。
+  脑暴专家 - 发散思维、多方案对比。
+  Use when:
+  - 寻求多种可能方案（explore 意图）
+  - 在方案中做选择（decide 意图）
+  - 架构决策、技术选型对比
+  触发词：脑暴、方案对比、你觉得、建议、哪种更好、有几种、探索
+  Related Skills: experts/architect, mermaid-expert, planning-with-files
 ---
 
 # Brainstorm（脑暴专家）

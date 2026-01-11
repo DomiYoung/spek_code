@@ -1,10 +1,13 @@
 ---
 name: signalr-patterns
 description: |
-  SignalR 8.x 实时通信最佳实践。当涉及 WebSocket、实时消息、断线重连、
-  消息队列时自动触发。
-  关键词：SignalR、WebSocket、实时、消息、连接、断线、重连、Hub。
-  【实时通信核心】包含连接管理、错误处理、消息可靠性。
+  SignalR 8.x 实时通信专家 - WebSocket、消息推送。
+  Use when:
+  - 实现实时通信、WebSocket
+  - 断线重连、消息可靠性
+  - Hub 连接管理
+  触发词：SignalR、WebSocket、实时、消息推送、断线重连、Hub
+  Related Skills: react-query-patterns, zustand-patterns, oidc-auth-patterns
 allowed-tools: Read, Grep, Glob
 ---
 

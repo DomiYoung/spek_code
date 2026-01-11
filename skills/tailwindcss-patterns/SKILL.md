@@ -1,9 +1,13 @@
 ---
 name: tailwindcss-patterns
 description: |
-  TailwindCSS 原子化 CSS 最佳实践。当涉及 utility-first CSS、响应式设计、组件样式时自动触发。
-  关键词：tailwind、tw、utility、原子化、className、responsive、dark mode、JIT。
-  【原子化CSS】包含响应式设计、暗色模式、组件抽象、性能优化。
+  TailwindCSS 原子化 CSS 专家 - utility-first 样式。
+  Use when:
+  - 使用 Tailwind 写样式
+  - 响应式设计、暗色模式
+  - 组件样式抽象
+  触发词：Tailwind、tw、utility、原子化、className、响应式、dark mode
+  Related Skills: shadcn-ui-patterns, framer-motion-patterns, h5-responsive
 allowed-tools: Read, Grep, Glob
 ---
 

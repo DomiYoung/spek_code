@@ -1,9 +1,13 @@
 ---
 name: react-hook-form-patterns
 description: |
-  React Hook Form + Zod 表单最佳实践。当涉及表单验证、提交、错误处理时自动触发。
-  关键词：react-hook-form、表单、form、validation、zod、schema、submit。
-  【表单核心】包含验证、错误处理、性能优化。
+  React Hook Form + Zod 表单专家 - 表单验证、提交。
+  Use when:
+  - 创建复杂表单、多步骤表单
+  - 表单验证、Zod schema
+  - 错误处理、性能优化
+  触发词：表单、form、validation、zod、react-hook-form、提交、验证
+  Related Skills: zustand-patterns, shadcn-ui-patterns, radix-ui-patterns
 allowed-tools: Read, Grep, Glob
 ---
 

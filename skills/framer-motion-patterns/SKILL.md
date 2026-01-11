@@ -1,9 +1,13 @@
 ---
 name: framer-motion-patterns
 description: |
-  Framer Motion 动画最佳实践。当涉及动画、过渡、手势、布局动画时自动触发。
-  关键词：framer-motion、动画、animate、transition、motion、gesture、layout。
-  【动效核心】包含入场/退场动画、手势交互、性能优化。
+  Framer Motion 动画专家 - 过渡、手势、布局动画。
+  Use when:
+  - 实现动画、过渡效果
+  - 手势交互、拖拽
+  - 布局动画、列表动画
+  触发词：动画、animate、transition、motion、gesture、framer-motion
+  Related Skills: reactflow-patterns, shadcn-ui-patterns, tailwindcss-patterns
 allowed-tools: Read, Grep, Glob
 ---
 

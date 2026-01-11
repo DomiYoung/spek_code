@@ -1,10 +1,13 @@
 ---
 name: indexeddb-patterns
 description: |
-  IndexedDB/Dexie 缓存最佳实践。当涉及本地存储、缓存策略、离线数据、
-  Dexie 操作时自动触发。
-  关键词：IndexedDB、Dexie、缓存、本地存储、离线、SWR、stale-while-revalidate。
-  【性能关键】包含批量操作、事务管理、缓存失效策略。
+  IndexedDB/Dexie 离线缓存专家 - 本地存储、缓存策略。
+  Use when:
+  - 实现本地存储、离线缓存
+  - 使用 Dexie、IndexedDB
+  - SWR 缓存策略
+  触发词：IndexedDB、Dexie、本地存储、离线、缓存、SWR
+  Related Skills: zustand-patterns, react-query-patterns, signalr-patterns
 allowed-tools: Read, Grep, Glob
 ---
 

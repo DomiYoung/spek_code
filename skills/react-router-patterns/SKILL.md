@@ -1,9 +1,13 @@
 ---
 name: react-router-patterns
 description: |
-  React Router 6.x 路由最佳实践。当涉及路由守卫、权限控制、嵌套路由时自动触发。
-  关键词：router、路由、route、navigate、权限、守卫、layout。
-  【路由核心】包含路由守卫、权限控制、布局嵌套。
+  React Router 6.x 路由专家 - 路由守卫、权限控制。
+  Use when:
+  - 配置路由、嵌套路由
+  - 路由守卫、权限控制
+  - 布局嵌套、导航
+  触发词：路由、router、route、navigate、权限、守卫、layout
+  Related Skills: oidc-auth-patterns, zustand-patterns, react-query-patterns
 allowed-tools: Read, Grep, Glob
 ---
 

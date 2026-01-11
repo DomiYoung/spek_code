@@ -1,9 +1,13 @@
 ---
 name: zustand-patterns
 description: |
-  Zustand 4.x 状态管理最佳实践。当涉及全局状态、store 设计、immer 中间件、状态订阅时自动触发。
-  包含 store 拆分、性能优化、异步操作、shallow 比较等核心模式。
-  触发关键词：Zustand、store、状态、immer、shallow、订阅、全局状态、useStore、create、devtools。
+  Zustand 4.x 状态管理专家 - store 设计、性能优化。
+  Use when:
+  - 创建/修改 store、状态管理
+  - 使用 immer、shallow、devtools
+  - 解决状态订阅、重渲染问题
+  触发词：Zustand、store、状态、immer、shallow、useStore、全局状态
+  Related Skills: reactflow-patterns, react-query-patterns, indexeddb-patterns
 allowed-tools: Read, Grep, Glob
 ---
 

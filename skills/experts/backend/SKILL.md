@@ -1,11 +1,13 @@
 ---
 name: backend-expert
 description: |
-  后端开发专家 - 基于 Python/Node.js 生产级最佳实践。
-  ① 帮我干什么：API 设计、并发处理、错误处理、性能优化
-  ② 什么时候出场：涉及 FastAPI、Flask、Node.js、Express、数据库、API 时自动调用
-  ③ 和项目有无关系：适用于所有后端项目，是全局通用的后端专家
-  关键词：API、FastAPI、Flask、Node.js、Express、Python、async、并发、事务
+  后端开发专家 - Python/Node.js 最佳实践。
+  Use when:
+  - API 设计、并发处理
+  - FastAPI、Flask、Express 开发
+  - 错误处理、事务管理
+  触发词：API、FastAPI、Flask、Node.js、Express、后端、并发、事务
+  Related Skills: postgresql-design, experts/database, oidc-auth-patterns, signalr-patterns
 allowed-tools: "*"
 ---
 

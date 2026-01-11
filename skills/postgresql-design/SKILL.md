@@ -1,8 +1,13 @@
 ---
 name: postgresql-design
 description: |
-  PostgreSQL 数据库设计最佳实践。当涉及 PostgreSQL 数据库设计、规范化、外键约束、索引优化、迁移策略时自动触发。
-  关键词：PostgreSQL、数据库设计、规范化、外键、索引、迁移、Schema。
+  PostgreSQL 数据库设计专家 - Schema、索引、迁移。
+  Use when:
+  - 设计数据库表结构
+  - 规范化、外键、索引优化
+  - 数据库迁移
+  触发词：PostgreSQL、数据库、表设计、Schema、索引、迁移、SQL
+  Related Skills: xlsx, experts/database, experts/architect
 allowed-tools: Read, Grep, Bash
 ---
 

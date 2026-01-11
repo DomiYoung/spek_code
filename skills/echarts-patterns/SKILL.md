@@ -1,9 +1,13 @@
 ---
 name: echarts-patterns
 description: |
-  ECharts 数据可视化最佳实践。当涉及图表、数据可视化、统计图时自动触发。
-  关键词：echarts、chart、图表、饼图、柱状图、折线图、可视化、统计。
-  【数据可视化】包含图表配置、响应式、主题定制、性能优化。
+  ECharts 数据可视化专家 - 图表、统计图。
+  Use when:
+  - 创建数据可视化图表
+  - 饼图、柱状图、折线图
+  - 图表响应式、主题定制
+  触发词：ECharts、图表、饼图、柱状图、折线图、可视化、统计图
+  Related Skills: xlsx, pptx, mermaid-expert
 allowed-tools: Read, Grep, Glob
 ---
 

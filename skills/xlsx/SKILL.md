@@ -1,6 +1,13 @@
 ---
 name: xlsx
-description: "Comprehensive spreadsheet creation, editing, and analysis with support for formulas, formatting, data analysis, and visualization. When Claude needs to work with spreadsheets (.xlsx, .xlsm, .csv, .tsv, etc) for: (1) Creating new spreadsheets with formulas and formatting, (2) Reading or analyzing data, (3) Modify existing spreadsheets while preserving formulas, (4) Data analysis and visualization in spreadsheets, or (5) Recalculating formulas"
+description: |
+  Excel 电子表格专家 - 创建、编辑、分析 .xlsx 文件。
+  Use when:
+  - 创建/编辑 Excel 表格
+  - 公式、格式、数据分析
+  - 图表可视化
+  触发词：Excel、xlsx、表格、spreadsheet、公式、数据分析
+  Related Skills: docx, pptx, echarts-patterns, postgresql-design
 license: Proprietary. LICENSE.txt has complete terms
 ---
 

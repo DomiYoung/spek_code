@@ -1,11 +1,13 @@
 ---
 name: performance-expert
 description: |
-  性能优化专家 - 基于数据驱动的代码优化与性能工程。
-  ① 帮我干什么：算法优化流程、包管理决策、Core Web Vitals 性能度量
-  ② 什么时候出场：涉及性能、优化、卡顿、慢、内存、加载、包大小时自动调用
-  ③ 和项目有无关系：适用于所有前端项目，是全局通用的性能优化专家
-  关键词：性能、优化、卡顿、慢、内存、加载、LCP、FID、CLS、INP、TTFB、bundle、包大小
+  性能优化专家 - 数据驱动的性能工程。
+  Use when:
+  - 性能分析、优化
+  - Core Web Vitals（LCP、CLS、INP）
+  - 包大小优化、加载速度
+  触发词：性能、优化、卡顿、慢、LCP、CLS、bundle、包大小、加载
+  Related Skills: experts/frontend, react-query-patterns, virtual-list-patterns
 allowed-tools: "*"
 ---
 

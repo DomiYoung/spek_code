@@ -1,9 +1,13 @@
 ---
 name: shadcn-ui-patterns
 description: |
-  shadcn/ui 组件库最佳实践。当涉及 Radix UI、可访问性组件、复制粘贴组件时自动触发。
-  关键词：shadcn、radix、headless、accessible、copy-paste、cn、cva。
-  【现代组件库】包含组件定制、主题系统、可访问性、表单处理。
+  shadcn/ui 组件库专家 - Radix、可访问性组件。
+  Use when:
+  - 使用 shadcn/ui 组件
+  - Radix UI、headless 组件
+  - 可访问性、主题定制
+  触发词：shadcn、Radix、headless、accessible、cn、cva
+  Related Skills: tailwindcss-patterns, react-hook-form-patterns, framer-motion-patterns
 allowed-tools: Read, Grep, Glob
 ---
 

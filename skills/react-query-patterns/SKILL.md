@@ -1,10 +1,13 @@
 ---
 name: react-query-patterns
 description: |
-  React Query 5.x 服务端状态管理。当涉及 API 请求、数据缓存、乐观更新、
-  缓存失效时自动触发。
-  关键词：React Query、useQuery、useMutation、缓存、staleTime、invalidate、API。
-  【服务端状态核心】包含缓存策略、乐观更新、错误重试。
+  React Query 5.x 服务端状态管理专家 - API 请求、缓存。
+  Use when:
+  - 封装 API 请求、数据缓存
+  - 乐观更新、缓存失效
+  - useQuery、useMutation 配置
+  触发词：React Query、useQuery、useMutation、缓存、staleTime、API 请求
+  Related Skills: zustand-patterns, signalr-patterns, indexeddb-patterns
 allowed-tools: Read, Grep, Glob
 ---
 

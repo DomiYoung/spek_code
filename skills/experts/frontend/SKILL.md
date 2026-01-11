@@ -1,11 +1,13 @@
 ---
 name: frontend-expert
 description: |
-  前端开发专家 - 基于 React/Vue 生产级最佳实践。
-  ① 帮我干什么：组件设计、状态管理、性能优化、类型安全
-  ② 什么时候出场：涉及 React、Vue、CSS、UI、组件、样式、响应式、动画时自动调用
-  ③ 和项目有无关系：适用于所有前端项目，是全局通用的前端专家
-  关键词：React、Vue、CSS、UI、组件、样式、响应式、动画、TypeScript、Hooks
+  前端开发专家 - React/Vue 最佳实践。
+  Use when:
+  - 组件设计、状态管理
+  - React/Vue 开发问题
+  - UI、样式、响应式
+  触发词：React、Vue、组件、UI、样式、Hooks、TypeScript、前端
+  Related Skills: zustand-patterns, react-query-patterns, shadcn-ui-patterns, tailwindcss-patterns
 allowed-tools: "*"
 ---
 

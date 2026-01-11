@@ -1,9 +1,13 @@
 ---
 name: reactflow-patterns
 description: |
-  ReactFlow 11.x 工作流编辑器专业知识。当涉及节点、边、Handle、迭代节点、画布操作、节点持久化时自动触发。
-  包含迭代节点、子节点持久化、parentNode、expandParent 等关键业务知识。
-  触发关键词：ReactFlow、节点、边、Handle、parentNode、迭代、workflow、画布、连接、updateNodeInternals。
+  ReactFlow 11.x 工作流编辑器专家 - 节点、边、画布操作。
+  Use when:
+  - 创建/编辑工作流编辑器
+  - 处理节点、边、Handle、连线问题
+  - 迭代节点、parentNode、expandParent
+  触发词：ReactFlow、节点、边、Handle、画布、连线、workflow、拖拽
+  Related Skills: zustand-patterns, framer-motion-patterns, virtual-list-patterns
 allowed-tools: Read, Grep, Glob, Task
 ---
 

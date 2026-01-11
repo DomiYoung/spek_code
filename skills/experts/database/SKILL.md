@@ -1,9 +1,13 @@
 ---
 name: database-expert
 description: |
-  数据库专家。当涉及 Schema 设计、索引优化、迁移脚本、SQL 查询时自动触发。
-  关键词：数据库、表设计、索引、SQL、迁移、PostgreSQL、SQLite、外键。
-  【生产级标准】确保数据完整性和查询性能。
+  数据库专家 - Schema 设计、查询优化。
+  Use when:
+  - 数据库表设计、索引优化
+  - SQL 查询、迁移脚本
+  - 数据完整性、外键约束
+  触发词：数据库、表设计、索引、SQL、迁移、外键、Schema
+  Related Skills: postgresql-design, experts/backend, xlsx
 allowed-tools: Read, Grep, Bash
 ---
 

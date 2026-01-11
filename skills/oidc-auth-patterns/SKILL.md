@@ -1,9 +1,13 @@
 ---
 name: oidc-auth-patterns
 description: |
-  OIDC/SSO 认证最佳实践。当涉及登录、Token 刷新、401 处理、跨标签页同步时自动触发。
-  关键词：OIDC、SSO、Token、认证、登录、401、刷新、oauth、jwt。
-  【认证核心】包含 Token 管理、请求队列、跨标签页同步。
+  OIDC/SSO 认证专家 - 登录、Token 管理。
+  Use when:
+  - 实现登录、认证、授权
+  - Token 刷新、401 处理
+  - OAuth2、JWT、SSO
+  触发词：认证、登录、OIDC、SSO、Token、OAuth、JWT、401
+  Related Skills: react-router-patterns, signalr-patterns, zustand-patterns
 allowed-tools: Read, Grep, Glob
 ---
 

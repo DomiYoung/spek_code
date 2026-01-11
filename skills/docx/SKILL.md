@@ -1,6 +1,13 @@
 ---
 name: docx
-description: "Comprehensive document creation, editing, and analysis with support for tracked changes, comments, formatting preservation, and text extraction. When Claude needs to work with professional documents (.docx files) for: (1) Creating new documents, (2) Modifying or editing content, (3) Working with tracked changes, (4) Adding comments, or any other document tasks"
+description: |
+  Word 文档专家 - 创建、编辑、分析 .docx 文件。
+  Use when:
+  - 创建/编辑 Word 文档
+  - 处理 tracked changes、comments
+  - 提取文档内容、格式保留
+  触发词：Word、docx、文档、tracked changes、修订、批注
+  Related Skills: pptx, xlsx, pdf, mermaid-expert
 license: Proprietary. LICENSE.txt has complete terms
 ---
 

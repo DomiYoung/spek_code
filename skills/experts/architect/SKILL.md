@@ -1,10 +1,13 @@
 ---
 name: architect
 description: |
-  高级系统架构师专家。当涉及系统设计、架构决策、模块划分、技术选型、
-  可扩展性设计、SOLID 原则时自动触发。
-  关键词：架构、设计、SOLID、模块、扩展性、ADR、技术选型、微服务。
-  【架构核心】包含 SOLID 原则、架构模式、边界划分、性能设计。
+  系统架构师专家 - 架构设计、技术选型。
+  Use when:
+  - 系统架构设计、模块划分
+  - 技术选型、SOLID 原则
+  - 可扩展性、微服务设计
+  触发词：架构、设计、SOLID、模块、技术选型、微服务、ADR
+  Related Skills: experts/performance, experts/database, postgresql-design, mermaid-expert
 allowed-tools: Read, Grep, Glob, Task, mcp__sequential-thinking__sequentialthinking
 ---
 
