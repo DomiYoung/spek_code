@@ -94,9 +94,9 @@
 |------|-------------|
 | 复杂 Bug 调试 | `--chrome --think-hard` |
 | 新功能开发 | `--c7 --think` |
-| 架构分析 | `--think-hard --serena` |
+| 架构分析 | `--think-hard` |
 | 性能优化 | `--chrome --performance` |
-| 批量重构 | `--morph --serena` |
+| 批量重构 | `--morph` |
 | 深度研究 | `--research --think-hard` |
 
 📖 **详细流程**: `@configs/decision-trees/mode-tree.md`

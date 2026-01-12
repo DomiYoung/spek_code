@@ -43,7 +43,7 @@ workflow-router: 自动激活（检测到"理解"关键词）
 ├─ 任务类型: 分析
 ├─ 权重评估: 0（纯分析）
 ├─ 专家选择: analyze
-├─ MCP 标志: --think-hard --serena
+├─ MCP 标志: --think-hard
 ├─ Spec-Kit: ❌ 跳过
 └─ Task Master: ❌ 跳过
     ↓

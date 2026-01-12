@@ -66,9 +66,9 @@
 
 决策树 3 (标志):
 ├─ 架构级分析？ → YES
-└─ → --think-hard --serena
+└─ → --think-hard
 
-最终执行: feature-dev:code-explorer --think-hard --serena src/模块路径
+最终执行: feature-dev:code-explorer --think-hard src/模块路径
 ```
 
 ## 示例 4: 性能优化

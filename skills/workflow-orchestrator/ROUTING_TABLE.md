@@ -51,6 +51,25 @@
 | 质量专家 | `experts/quality` | 语义匹配 |
 | 产品经理 | `experts/product` | 语义匹配 |
 
+## 底层原理
+
+| 关键词 | 触发 Skill | 确认方式 |
+|--------|-----------|---------|
+| 事件循环、渲染、重排、重绘、合成层、V8、GC、CORS、CSP | `fundamentals/browser` | 语义匹配 |
+| 闭包、原型链、this、Promise、微任务、宏任务、Hoisting、TDZ、作用域链 | `fundamentals/javascript` | 语义匹配 |
+| DNS、TCP、TLS、HTTP2、HTTP3、TTFB、缓存、CDN、WebSocket、SSE | `fundamentals/network` | 语义匹配 |
+| 层叠、特异性、BFC、z-index、stacking context、盒模型、选择器、CSS 优先级 | `fundamentals/css` | 语义匹配 |
+| React、Fiber、reconciliation、Hooks、useEffect、useLayoutEffect、StrictMode、Concurrent | `fundamentals/react` | 语义匹配 |
+| TypeScript、tsconfig、类型推断、泛型、结构类型、声明合并、类型收窄、d.ts | `fundamentals/typescript` | 语义匹配 |
+| .NET、CLR、GC、JIT、IL、Assembly、ThreadPool、async/await、deadlock | `fundamentals/dotnet` | 语义匹配 |
+| Unix、Linux、POSIX、fork、exec、signal、fd、系统调用、虚拟内存 | `fundamentals/unix` | 语义匹配 |
+| macOS、XNU、launchd、SIP、codesign、notarization、sandbox、keychain、entitlements | `fundamentals/macos` | 语义匹配 |
+| SQL、索引、执行计划、事务、隔离级别、锁、MVCC、WAL、B-Tree | `fundamentals/database` | 语义匹配 |
+| Python、CPython、GIL、字节码、引用计数、GC、asyncio、协程、解释器 | `fundamentals/python` | 语义匹配 |
+| Node、Node.js、libuv、Node 事件循环、worker_threads、stream、背压、perf_hooks | `fundamentals/node` | 语义匹配 |
+| Vue、reactivity、ref、reactive、computed、watch、nextTick、patch、hydration | `fundamentals/vue` | 语义匹配 |
+| Chrome、Chromium、Blink、GPU 进程、渲染进程、Site Isolation、sandbox | `fundamentals/chrome` | 语义匹配 |
+
 ## 质量门禁
 
 | 关键词 | 触发 Skill | 确认方式 |

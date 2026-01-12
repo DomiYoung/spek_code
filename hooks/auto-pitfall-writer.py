@@ -2,7 +2,7 @@
 """
 自动踩坑记录 Hook
 
-在特定条件下自动提示记录踩坑经验：
+在特定条件下自动提示记录踩坑经验到 Skills SKILL.md：
 1. 检测到 Bug 修复类任务完成
 2. 对话中出现"踩坑"、"记录"等关键词
 3. 同一错误模式出现多次
@@ -66,18 +66,18 @@ def main():
             # 输出提示（不阻止操作）
             print("", file=sys.stderr)
             print("═" * 50, file=sys.stderr)
-            print("🧠 KI Manager 提示", file=sys.stderr)
+            print("🧠 知识沉淀提示", file=sys.stderr)
             print("═" * 50, file=sys.stderr)
             print(f"检测到关键词: \"{keyword}\"", file=sys.stderr)
             print("", file=sys.stderr)
-            print("如果这是一个值得记录的经验，请使用：", file=sys.stderr)
-            print("  1. 说「记录到 pitfalls」触发 ki-manager", file=sys.stderr)
-            print("  2. 或手动添加到对应的 pitfalls.md", file=sys.stderr)
+            print("如果这是一个值得记录的经验，请评估知识四问：", file=sys.stderr)
+            print("  1. 可复用？ - 其他项目/场景可能遇到", file=sys.stderr)
+            print("  2. 费力？   - 花了 >15 分钟调试", file=sys.stderr)
+            print("  3. 有帮助？ - 能避免重复踩坑", file=sys.stderr)
+            print("  4. 未文档化？- 官方文档没有说明", file=sys.stderr)
             print("", file=sys.stderr)
-            print("知识库位置：", file=sys.stderr)
-            print("  📁 全局: ~/.ai-knowledge/global/pitfalls.md", file=sys.stderr)
-            print("  📁 领域: ~/.ai-knowledge/domains/{domain}/pitfalls.md", file=sys.stderr)
-            print("  📁 项目: ~/.ai-knowledge/projects/{project}/pitfalls.md", file=sys.stderr)
+            print("2+ YES → 写入对应 skills/{tech}-patterns/SKILL.md", file=sys.stderr)
+            print("格式: 添加 Evolution Marker", file=sys.stderr)
             print("═" * 50, file=sys.stderr)
         
         # 始终允许操作继续

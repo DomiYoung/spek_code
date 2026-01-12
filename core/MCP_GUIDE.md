@@ -13,7 +13,6 @@ Quick reference for choosing the right MCP server. **Use the best tool for each 
 | **Morphllm** | Pattern edits | Bulk transforms, style enforcement | Symbol operations |
 | **Playwright** | Browser automation | E2E tests, visual validation | Static analysis |
 | **Sequential** | Multi-step reasoning | Complex debugging, architecture | Simple tasks |
-| **Serena** | Semantic code | Symbol ops, project memory | Text replacements |
 | **Tavily** | Web search | Current info, research | Training knowledge |
 
 ---
@@ -54,7 +53,7 @@ Quick reference for choosing the right MCP server. **Use the best tool for each 
 - Token efficiency matters (30-50% savings)
 - <10 files, straightforward transforms
 
-**NOT For**: Symbol renames (use Serena), semantic operations
+**NOT For**: Symbol renames, semantic operations
 
 ---
 
@@ -101,20 +100,6 @@ Quick reference for choosing the right MCP server. **Use the best tool for each 
 
 ---
 
-## Serena
-
-**Trigger Keywords**: rename symbol, find references, `list_memories`, `read_memory`, project memory
-
-**Choose When**:
-- Symbol operations with dependency tracking
-- Session persistence needed
-- Large codebase (>50 files)
-- Multi-language LSP integration
-
-**NOT For**: Pattern-based bulk edits (use Morphllm)
-
----
-
 ## Tavily
 
 **Trigger Keywords**: research, current info, news, `--research`
@@ -141,7 +126,7 @@ Hop 5: Validation → Cross-reference critical claims
 
 **Integration Pipeline**:
 ```
-Tavily (search) → Sequential (analyze gaps) → Tavily (refine) → Sequential (synthesize) → Serena (store)
+Tavily (search) → Sequential (analyze gaps) → Tavily (refine) → Sequential (synthesize)
 ```
 
 ---
@@ -150,8 +135,8 @@ Tavily (search) → Sequential (analyze gaps) → Tavily (refine) → Sequential
 
 | Scenario | Pipeline |
 |----------|----------|
-| Debug complex issue | Sequential → Serena → Context7 |
+| Debug complex issue | Sequential → Context7 |
 | Build UI feature | Magic → Playwright (test) → Context7 (docs) |
-| Refactor codebase | Serena (analyze) → Morphllm (transform) |
-| Research topic | Tavily → Sequential → Serena (memory) |
+| Refactor codebase | Morphllm (transform) |
+| Research topic | Tavily → Sequential |
 | Implement with docs | Context7 → Sequential → Magic/Morphllm |

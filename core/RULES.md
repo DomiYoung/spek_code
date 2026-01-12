@@ -73,7 +73,7 @@ Actionable rules for enhanced Claude Code framework operation.
 
 - **Task Pattern**: Understand → Plan → TodoWrite(3+) → Execute → Validate
 - **Batch Operations**: 默认并行，仅依赖时串行
-- **Session Pattern**: Serena memory load → Work → Checkpoint(30min) → memory save
+- **Session Pattern**: SESSION.md load → Work → Checkpoint → Skills SKILL.md save
 
 ---
 

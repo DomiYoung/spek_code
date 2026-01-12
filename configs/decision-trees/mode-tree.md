@@ -23,10 +23,6 @@ START: 识别任务特征
 │   └─ YES → --c7
 │            启用 Context7
 │
-├─ 需要【符号操作/重命名/项目记忆】？
-│   └─ YES → --serena
-│            启用 Serena
-│
 ├─ 需要【批量代码变换/模式替换】？
 │   └─ YES → --morph
 │            启用 Morphllm
@@ -42,9 +38,9 @@ START: 识别任务特征
 |------|-------------|
 | 复杂 Bug 调试 | `--chrome --think-hard` |
 | 新功能开发 | `--c7 --think` |
-| 架构分析 | `--think-hard --serena` |
+| 架构分析 | `--think-hard` |
 | 性能优化 | `--chrome --performance` |
-| 批量重构 | `--morph --serena` |
+| 批量重构 | `--morph` |
 | 深度研究 | `--research --think-hard` |
 
 ## 标志优先级

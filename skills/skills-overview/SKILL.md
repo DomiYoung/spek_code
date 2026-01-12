@@ -130,6 +130,20 @@ allowed-tools: Read
 | `signalr-patterns` | 知识 | SignalR 实时通信 |
 | `indexeddb-patterns` | 知识 | IndexedDB/Dexie 缓存 |
 | `spec-quality-gates` | 知识 | Spec 文档质量验证 |
+| `fundamentals/browser` | 知识 | 浏览器底层原理诊断 |
+| `fundamentals/javascript` | 知识 | JavaScript 语言机制诊断 |
+| `fundamentals/network` | 知识 | 网络协议与缓存诊断 |
+| `fundamentals/css` | 知识 | CSS 渲染与布局诊断 |
+| `fundamentals/react` | 知识 | React 渲染机制诊断 |
+| `fundamentals/typescript` | 知识 | TypeScript 类型系统诊断 |
+| `fundamentals/dotnet` | 知识 | .NET 运行时与 GC 诊断 |
+| `fundamentals/unix` | 知识 | Unix 进程与系统调用诊断 |
+| `fundamentals/macos` | 知识 | macOS 系统机制诊断 |
+| `fundamentals/database` | 知识 | 数据库执行与事务诊断 |
+| `fundamentals/python` | 知识 | Python 解释器与 GIL 诊断 |
+| `fundamentals/node` | 知识 | Node.js 事件循环与 V8 诊断 |
+| `fundamentals/vue` | 知识 | Vue 响应式与渲染诊断 |
+| `fundamentals/chrome` | 知识 | Chrome/Chromium 架构诊断 |
 
 ## MCP 工具集成
 

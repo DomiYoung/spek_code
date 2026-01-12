@@ -20,10 +20,47 @@ allowed-tools: "*"
 ## Quick Start
 
 ```
-任务输入 → 关键词匹配 → 专家选择 → 路由执行 → 横幅输出
+任务输入 → 语义匹配 → 专家选择 → 横幅输出 → 读取技能 → 证据输出 → 路由执行
 ```
 
 **必须输出专家横幅**，然后执行专家 Skill。
+**必须输出“Skill 调用链证据卡片”**，否则禁止进入分析/修复。
+
+---
+
+## Skill 调用链证据（强制）
+
+> **目的**：让用户能看到“真的读了哪些 Skill”，不是口头承诺。
+
+### 执行规则
+
+1. **先读后说**：每个激活的 Skill 必须先读取 `SKILL.md`，再输出证据卡片。
+2. **多 Skill 必须并行列出**：主专家 + 协作专家全部列出。
+3. **证据必须可定位**：每个 Skill 至少给出 1 条证据锚点（标题/小节/反模式名）。
+4. **不得伪造证据**：未读取则标记 `MISSING` 并说明原因。
+5. **证据卡片先于分析**：没有卡片就不能开始分析/实现。
+
+### 证据卡片格式（固定）
+
+> 证据卡片遵循 `tool-activation-banner` 的“Skill 调用链（证据）”格式。
+
+```
+╔═══════════════════════════════════════════════════════╗
+║  🔍 SKILL 调用链（证据）                               ║
+╠═══════════════════════════════════════════════════════╣
+║  触发症状: [用户描述/异常现象]                          ║
+║  主 Skill: experts/frontend ✅ 已读取                 ║
+║  协作 Skill: fundamentals/react ✅ 已读取             ║
+║            fundamentals/browser ✅ 已读取            ║
+║  读取证据:                                            ║
+║   - skills/experts/frontend/SKILL.md → 反模式: useEffect 清理函数遗漏
+║   - skills/fundamentals/react/references/MECHANICS.md → Effects 时序
+║   - skills/fundamentals/browser/references/MECHANICS.md → 事件循环/渲染流水线
+║  诊断路径: React 渲染机制 → 事件循环 → 根因定位        ║
+╚═══════════════════════════════════════════════════════╝
+```
+
+> **提示**：证据锚点必须来自已读文件的标题/小节名/清单条目，避免“泛化描述”。
 
 ---
 
@@ -50,6 +87,25 @@ allowed-tools: "*"
 | `signalr` | WebSocket, 实时, 消息推送, 断线重连 | SignalR 8.x | `signalr-patterns` |
 | `mermaid` | 流程图, 时序图, 类图, 图表, diagram | Mermaid.js | `mermaid-expert` |
 | `database` | IndexedDB, Dexie, 本地存储, 缓存 | 浏览器存储 | `indexeddb-patterns` |
+
+### 原理专家（主动诊断）
+
+| 专家 ID | 触发关键词 | 专业领域 | 对应 Skill |
+|---------|-----------|---------|------------|
+| `fundamentals-browser` | 事件循环, 渲染, 重排, 重绘, 合成层, V8, GC, CORS, CSP | 浏览器底层原理 | `fundamentals/browser` |
+| `fundamentals-javascript` | 闭包, 原型链, this, Promise, 微任务, 宏任务, Hoisting, TDZ, 作用域链 | JS 语言机制 | `fundamentals/javascript` |
+| `fundamentals-network` | DNS, TCP, TLS, HTTP2, HTTP3, TTFB, 缓存, CDN, WebSocket, SSE | 网络协议与缓存 | `fundamentals/network` |
+| `fundamentals-css` | 层叠, 特异性, BFC, z-index, stacking context, 盒模型, 选择器 | CSS 渲染与布局 | `fundamentals/css` |
+| `fundamentals-react` | React, Fiber, reconciliation, Hooks, useEffect, useLayoutEffect, StrictMode, Concurrent | React 渲染机制 | `fundamentals/react` |
+| `fundamentals-typescript` | TypeScript, tsconfig, 类型推断, 泛型, 结构类型, 声明合并, 类型收窄, d.ts | TypeScript 类型系统 | `fundamentals/typescript` |
+| `fundamentals-dotnet` | .NET, CLR, GC, JIT, IL, Assembly, ThreadPool, async/await, deadlock | .NET 运行时原理 | `fundamentals/dotnet` |
+| `fundamentals-unix` | Unix, Linux, POSIX, 进程, 线程, fork, exec, signal, fd, 系统调用 | Unix 内核机制 | `fundamentals/unix` |
+| `fundamentals-macos` | macOS, XNU, launchd, SIP, codesign, notarization, sandbox, keychain, entitlements | macOS 系统原理 | `fundamentals/macos` |
+| `fundamentals-database` | SQL, 索引, 执行计划, 事务, 隔离级别, 锁, MVCC, WAL, B-Tree | 数据库引擎原理 | `fundamentals/database` |
+| `fundamentals-python` | Python, CPython, GIL, 字节码, 引用计数, GC, asyncio, 协程, 解释器 | Python 解释器原理 | `fundamentals/python` |
+| `fundamentals-node` | Node, Node.js, libuv, Node 事件循环, worker_threads, stream, 背压, perf_hooks | Node 运行时原理 | `fundamentals/node` |
+| `fundamentals-vue` | Vue, reactivity, ref, reactive, computed, watch, nextTick, patch, hydration | Vue 响应式与渲染 | `fundamentals/vue` |
+| `fundamentals-chrome` | Chrome, Chromium, Blink, GPU 进程, 渲染进程, Browser 进程, Site Isolation, sandbox | Chrome 架构原理 | `fundamentals/chrome` |
 
 ### 分析专家
 
@@ -79,6 +135,9 @@ allowed-tools: "*"
 ├─────────────────────────────────────────────────────────────────┤
 │  Step 3: 横幅输出                                                │
 │  └── 显示专家调用横幅（遵循 tool-activation-banner 规范）          │
+├─────────────────────────────────────────────────────────────────┤
+│  Step 3.5: 证据卡片                                               │
+│  └── 输出 Skill 调用链证据卡片                                    │
 ├─────────────────────────────────────────────────────────────────┤
 │  Step 4: 路由执行                                                │
 │  └── 调用对应的 Skill 或 Task agent                              │
@@ -134,11 +193,20 @@ allowed-tools: "*"
 1. troubleshoot  → Bug 修复优先（用户体验第一）
 2. security      → 安全问题其次（不可妥协）
 3. performance   → 性能问题第三
-4. 领域专家      → 特定技术栈
-5. 通用专家      → frontend/backend
+4. fundamentals → 原理机制定位
+5. 领域专家      → 特定技术栈
+6. 通用专家      → frontend/backend
 ```
 
+补充规则：用户**显式询问原理/机制**时，fundamentals 可作为主专家；否则默认作为辅助专家并行调用。
+
 ### 多专家协作规则
+
+**强制协作触发器**（命中任意一条 → 必须至少搭配 1 个 fundamentals Skill）：
+- 前端渲染/时序/性能问题 → fundamentals-react + fundamentals-browser（至少其一）
+- 异步顺序/事件循环/Promise → fundamentals-javascript（必须）
+- 样式/布局/层叠问题 → fundamentals-css（优先）
+- 网络/缓存/TTFB/跨域 → fundamentals-network（必须）
 
 | 场景 | 主专家 | 辅助专家 |
 |------|--------|---------|
@@ -146,10 +214,21 @@ allowed-tools: "*"
 | API 安全漏洞 | security | backend |
 | 工作流节点 Bug | reactflow | troubleshoot |
 | 状态管理优化 | zustand | performance |
+| 性能原理溯因 | performance | fundamentals-browser |
+| 异步时序/事件循环 | frontend | fundamentals-javascript |
+| 类型推断异常 | frontend | fundamentals-typescript |
+| SQL 慢查询/锁 | database | fundamentals-database |
+| 系统权限/资源 | backend | fundamentals-unix |
+| Node 事件循环阻塞 | backend | fundamentals-node |
+| Python 线程/性能 | backend | fundamentals-python |
+| Vue 响应式异常 | frontend | fundamentals-vue |
+| Chrome 渲染异常 | frontend | fundamentals-chrome |
 
 ---
 
 ## 与其他 Skill 的协作
+
+**多 Skill 协作要求**：当激活 ≥ 2 个 Skill，必须先调用 `skill-composer` 进行组合规划，再进入执行。
 
 ```
 workflow-orchestrator
@@ -164,7 +243,8 @@ workflow-orchestrator
                               ├── backend  ──→ feature-dev:feature-dev
                               ├── architect ──→ feature-dev:code-architect
                               ├── analyze  ──→ feature-dev:code-explorer
-                              └── 领域专家 ──→ 对应 patterns Skill
+                              ├── 领域专家 ──→ 对应 patterns Skill
+                              └── 原理专家 ──→ fundamentals/*
 ```
 
 ---
@@ -248,6 +328,7 @@ workflow-orchestrator
 | 规则 | 状态 | 说明 |
 |------|------|------|
 | 必须输出横幅 | ❌ **Forbidden** to skip | 调用专家前必须显示横幅 |
+| 必须输出证据卡片 | ❌ **Forbidden** to skip | 未给出证据卡片不得开始分析/实现 |
 | 1% 原则 | ❌ **Forbidden** to skip | 有可能适用就必须调用 |
 | 领域 Skill 优先 | ✅ **Required** | 有专门 Skill 时优先使用 |
 | 记录到 Memory | ⚠️ **Recommended** | 复杂任务记录专家选择理由 |

@@ -29,6 +29,10 @@ START: 分析任务关键词
 │   └─ YES → 🔍 troubleshoot 模式
 │            feature-dev:feature-dev
 │
+├─ 包含【原理/机制/底层/为什么/解释原理】？
+│   └─ YES → 🧱 fundamentals 专家
+│            fundamentals/*（按领域关键词选择）
+│
 ├─ 包含【分析/理解/架构/设计/评估】？
 │   └─ YES → 📊 analyze 模式
 │            feature-dev:code-explorer
@@ -47,6 +51,7 @@ START: 分析任务关键词
 | 安全, 认证, 漏洞 | security | `feature-dev:feature-dev` |
 | 性能, 优化, 卡顿 | performance | `feature-dev:feature-dev` |
 | Bug, 报错, 崩溃 | troubleshoot | `feature-dev:feature-dev` |
+| 原理, 机制, 底层, 为什么 | fundamentals | `fundamentals/*` |
 | 分析, 架构, 设计 | analyze | `feature-dev:code-explorer` |
 | 默认 | implement | `feature-dev:feature-dev` |
 

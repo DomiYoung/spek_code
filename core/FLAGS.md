@@ -42,10 +42,6 @@ Behavioral flags for Claude Code to enable specific execution modes and tool sel
 - Trigger: Bulk code transformations, pattern-based edits, style enforcement
 - Behavior: Enable Morphllm for efficient multi-file pattern application
 
-**--serena**
-- Trigger: Symbol operations, project memory needs, large codebase navigation
-- Behavior: Enable Serena for semantic understanding and session persistence
-
 **--play / --playwright**
 - Trigger: Browser testing, E2E scenarios, visual validation, accessibility testing
 - Behavior: Enable Playwright for real browser automation and testing
@@ -60,7 +56,7 @@ Behavioral flags for Claude Code to enable specific execution modes and tool sel
 
 **--frontend-verify**
 - Trigger: UI testing requests, frontend debugging, layout validation, component verification
-- Behavior: Enable Playwright + Chrome DevTools + Serena for comprehensive frontend verification and debugging
+- Behavior: Enable Playwright + Chrome DevTools for comprehensive frontend verification and debugging
 
 **--all-mcp**
 - Trigger: Maximum complexity scenarios, multi-domain problems

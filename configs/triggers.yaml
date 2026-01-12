@@ -1,8 +1,8 @@
 # triggers.yaml - 自动触发规则配置
 # 定义何时自动记录到知识库、调用专家、执行 Hooks
 
-version: "1.0"
-updated: "2026-01-08"
+version: "1.1"
+updated: "2026-01-12"
 
 # ============================================
 # 知识记录触发器 (Knowledge Recording Triggers)
@@ -21,7 +21,7 @@ knowledge_triggers:
       - type: "keyword"
         keywords: ["踩坑", "坑", "记录这个", "下次注意"]
         action: "auto_record"
-    # 写入对应技术的 SKILL.md，不再使用 ~/.ai-knowledge
+    # 写入对应技术的 SKILL.md
     target: "skills/{tech}-patterns/SKILL.md"
     marker: "Evolution Marker"
 
@@ -57,6 +57,90 @@ expert_routing:
       - actions: ["Spec-Kit完成", "任务验收"]
     skill: "skills/experts/product/SKILL.md"
 
+  # 底层原理 - 浏览器
+  fundamentals_browser:
+    triggers:
+      - keywords: ["事件循环", "渲染", "重排", "重绘", "合成层", "V8", "GC", "内存泄漏", "CORS", "CSP"]
+    skill: "skills/fundamentals/browser/SKILL.md"
+
+  # 底层原理 - JavaScript
+  fundamentals_javascript:
+    triggers:
+      - keywords: ["闭包", "原型链", "this", "Promise", "微任务", "宏任务", "Hoisting", "TDZ", "作用域链"]
+    skill: "skills/fundamentals/javascript/SKILL.md"
+
+  # 底层原理 - TypeScript
+  fundamentals_typescript:
+    triggers:
+      - keywords: ["TypeScript", "tsconfig", "类型推断", "泛型", "结构类型", "声明合并", "类型收窄", "d.ts"]
+    skill: "skills/fundamentals/typescript/SKILL.md"
+
+  # 底层原理 - 网络
+  fundamentals_network:
+    triggers:
+      - keywords: ["DNS", "TCP", "TLS", "HTTP2", "HTTP3", "TTFB", "缓存", "CDN", "WebSocket", "SSE"]
+    skill: "skills/fundamentals/network/SKILL.md"
+
+  # 底层原理 - CSS
+  fundamentals_css:
+    triggers:
+      - keywords: ["层叠", "特异性", "BFC", "z-index", "stacking context", "盒模型", "选择器", "CSS 优先级"]
+    skill: "skills/fundamentals/css/SKILL.md"
+
+  # 底层原理 - React
+  fundamentals_react:
+    triggers:
+      - keywords: ["React", "Fiber", "reconciliation", "Hooks", "useEffect", "useLayoutEffect", "StrictMode", "Concurrent"]
+    skill: "skills/fundamentals/react/SKILL.md"
+
+  # 底层原理 - .NET
+  fundamentals_dotnet:
+    triggers:
+      - keywords: [".NET", "CLR", "GC", "JIT", "IL", "Assembly", "ThreadPool", "async/await", "deadlock"]
+    skill: "skills/fundamentals/dotnet/SKILL.md"
+
+  # 底层原理 - Unix
+  fundamentals_unix:
+    triggers:
+      - keywords: ["Unix", "Linux", "POSIX", "系统调用", "虚拟内存", "fork", "exec", "signal", "文件描述符"]
+    skill: "skills/fundamentals/unix/SKILL.md"
+
+  # 底层原理 - macOS
+  fundamentals_macos:
+    triggers:
+      - keywords: ["macOS", "XNU", "launchd", "SIP", "codesign", "notarization", "sandbox", "keychain", "entitlements"]
+    skill: "skills/fundamentals/macos/SKILL.md"
+
+  # 底层原理 - 数据库
+  fundamentals_database:
+    triggers:
+      - keywords: ["SQL", "索引", "执行计划", "事务", "隔离级别", "锁", "MVCC", "WAL", "B-Tree", "死锁"]
+    skill: "skills/fundamentals/database/SKILL.md"
+
+  # 底层原理 - Python
+  fundamentals_python:
+    triggers:
+      - keywords: ["Python", "CPython", "GIL", "字节码", "引用计数", "GC", "asyncio", "协程", "解释器"]
+    skill: "skills/fundamentals/python/SKILL.md"
+
+  # 底层原理 - Node
+  fundamentals_node:
+    triggers:
+      - keywords: ["Node", "Node.js", "libuv", "Node 事件循环", "worker_threads", "stream", "背压", "perf_hooks"]
+    skill: "skills/fundamentals/node/SKILL.md"
+
+  # 底层原理 - Vue
+  fundamentals_vue:
+    triggers:
+      - keywords: ["Vue", "reactivity", "ref", "reactive", "computed", "watch", "nextTick", "patch", "hydration"]
+    skill: "skills/fundamentals/vue/SKILL.md"
+
+  # 底层原理 - Chrome/Chromium
+  fundamentals_chrome:
+    triggers:
+      - keywords: ["Chrome", "Chromium", "Blink", "GPU 进程", "渲染进程", "Browser 进程", "Site Isolation", "sandbox"]
+    skill: "skills/fundamentals/chrome/SKILL.md"
+
 # ============================================
 # Skill 自动调用触发器
 # ============================================
@@ -88,26 +172,22 @@ skill_triggers:
 
 # ============================================
 # Session 生命周期触发器（简化版）
-# claude-mem 自动处理会话历史，无需手动配置
 # ============================================
 session_lifecycle:
   on_start:
     actions:
       - read: "~/.claude/templates/SESSION.md"
       - call: "mcp__task-master-ai__next_task"
-      # claude-mem 自动注入上下文（Hooks 自动）
 
   on_checkpoint:  # 每30分钟
     interval: "30min"
     actions:
       - update: "SESSION.md progress"
-      # claude-mem 自动保存（Hooks 自动）
 
   on_end:
     actions:
       - eval: "knowledge_value_assessment"
       - cleanup: "temp files"
-      # claude-mem 自动保存会话摘要（Hooks 自动）
 
 # ============================================
 # 质量门禁触发器

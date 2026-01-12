@@ -1,12 +1,10 @@
 #!/usr/bin/env python3
 """
-SessionStart Hook: 自动加载 KI 知识库
+SessionStart Hook: 自动加载 Skills 知识库
 
 功能：
-1. 加载全局通用知识 (~/.ai-knowledge/global/)
-2. 加载领域知识 (~/.ai-knowledge/domains/)
-3. 加载项目特定知识 (~/.ai-knowledge/projects/{project}/)
-4. 输出相关踩坑提醒
+1. 加载项目特定 Skills（按技术栈）
+2. 输出相关踩坑提醒
 
 兼容：Claude / Gemini / 其他模型
 """
@@ -17,10 +15,7 @@ from pathlib import Path
 
 # ==================== 配置 ====================
 
-AI_KNOWLEDGE_BASE = Path.home() / ".ai-knowledge"
-GLOBAL_DIR = AI_KNOWLEDGE_BASE / "global"
-DOMAINS_DIR = AI_KNOWLEDGE_BASE / "domains"
-PROJECTS_DIR = AI_KNOWLEDGE_BASE / "projects"
+SKILLS_BASE = Path.home() / ".claude" / "skills"
 
 # 最大读取行数（避免过长）
 MAX_LINES_PER_FILE = 50
@@ -30,18 +25,16 @@ MAX_LINES_PER_FILE = 50
 def get_current_project() -> str:
     """获取当前项目名称"""
     cwd = os.getcwd()
-    # 尝试从 .git 目录获取项目名
     git_dir = Path(cwd)
     while git_dir != git_dir.parent:
         if (git_dir / ".git").exists():
             return git_dir.name
         git_dir = git_dir.parent
-    # 回退到当前目录名
     return Path(cwd).name
 
-def detect_domains(cwd: str) -> list[str]:
-    """根据项目文件检测适用的领域"""
-    domains = []
+def detect_tech_stack(cwd: str) -> list[str]:
+    """根据项目文件检测适用的技术栈"""
+    techs = []
     cwd_path = Path(cwd)
 
     # 前端检测
@@ -50,80 +43,79 @@ def detect_domains(cwd: str) -> list[str]:
             with open(cwd_path / "package.json") as f:
                 pkg = json.load(f)
                 deps = {**pkg.get("dependencies", {}), **pkg.get("devDependencies", {})}
-                if "react" in deps or "vue" in deps or "angular" in deps:
-                    domains.append("frontend")
+                if "react" in deps:
+                    techs.append("react")
+                if "vue" in deps:
+                    techs.append("vue")
+                if "zustand" in deps:
+                    techs.append("zustand")
+                if "reactflow" in deps or "@xyflow/react" in deps:
+                    techs.append("reactflow")
+                if "@tanstack/react-query" in deps:
+                    techs.append("react-query")
+                if "@microsoft/signalr" in deps:
+                    techs.append("signalr")
         except:
             pass
 
     # 后端检测
-    if (cwd_path / "requirements.txt").exists() or \
-       (cwd_path / "pyproject.toml").exists() or \
-       (cwd_path / "go.mod").exists():
-        domains.append("backend")
+    if (cwd_path / "requirements.txt").exists() or (cwd_path / "pyproject.toml").exists():
+        techs.append("python")
 
-    # DevOps 检测
-    if (cwd_path / "Dockerfile").exists() or \
-       (cwd_path / "docker-compose.yml").exists() or \
-       (cwd_path / ".github" / "workflows").exists():
-        domains.append("devops")
+    return techs
 
-    return domains
-
-def read_pitfalls_summary(file_path: Path, max_lines: int = MAX_LINES_PER_FILE) -> str:
-    """读取 pitfalls 文件的摘要"""
-    if not file_path.exists():
+def read_skill_pitfalls(skill_path: Path, max_lines: int = MAX_LINES_PER_FILE) -> str:
+    """读取 SKILL.md 中的踩坑部分"""
+    if not skill_path.exists():
         return ""
 
     try:
-        with open(file_path, "r", encoding="utf-8") as f:
-            lines = f.readlines()
+        with open(skill_path, "r", encoding="utf-8") as f:
+            content = f.read()
 
-        # 提取标题行（### 开头的行）
-        summaries = []
+        # 提取反模式/踩坑部分
+        lines = content.split("\n")
+        pitfalls = []
+        in_pitfall_section = False
+        
         for line in lines:
-            if line.startswith("### ["):
-                summaries.append(line.strip())
+            if "反模式" in line or "Anti-Pattern" in line or "踩坑" in line or "Pitfall" in line:
+                in_pitfall_section = True
+                pitfalls.append(line)
+            elif in_pitfall_section:
+                if line.startswith("## ") or line.startswith("# "):
+                    break
+                if line.strip():
+                    pitfalls.append(line)
+                if len(pitfalls) > max_lines:
+                    break
 
-        return "\n".join(summaries[:10])  # 最多返回 10 条
+        return "\n".join(pitfalls[:max_lines]) if pitfalls else ""
     except:
         return ""
 
 def main():
     cwd = os.getcwd()
     project_name = get_current_project()
-    domains = detect_domains(cwd)
+    techs = detect_tech_stack(cwd)
 
     output_parts = []
 
-    # 1. 全局知识
-    global_pitfalls = GLOBAL_DIR / "pitfalls.md"
-    if global_pitfalls.exists():
-        summary = read_pitfalls_summary(global_pitfalls)
-        if summary:
-            output_parts.append(f"📚 **全局踩坑记录** ({global_pitfalls}):\n{summary}")
-
-    # 2. 领域知识
-    for domain in domains:
-        domain_pitfalls = DOMAINS_DIR / domain / "pitfalls.md"
-        if domain_pitfalls.exists():
-            summary = read_pitfalls_summary(domain_pitfalls)
+    # 加载对应技术的 Skills
+    for tech in techs:
+        skill_path = SKILLS_BASE / f"{tech}-patterns" / "SKILL.md"
+        if skill_path.exists():
+            summary = read_skill_pitfalls(skill_path)
             if summary:
-                output_parts.append(f"🏷️ **{domain} 领域踩坑** ({domain_pitfalls}):\n{summary}")
-
-    # 3. 项目知识
-    project_pitfalls = PROJECTS_DIR / project_name / "pitfalls.md"
-    if project_pitfalls.exists():
-        summary = read_pitfalls_summary(project_pitfalls)
-        if summary:
-            output_parts.append(f"📁 **项目踩坑记录** ({project_pitfalls}):\n{summary}")
+                output_parts.append(f"🏷️ **{tech} 踩坑记录**:\n{summary[:500]}...")
 
     # 输出结果
     if output_parts:
         print(f"""
-🧠 **KI 知识库已加载**
+🧠 **Skills 知识库已加载**
 
 当前项目: {project_name}
-检测领域: {', '.join(domains) if domains else '无'}
+检测技术栈: {', '.join(techs) if techs else '无'}
 
 {chr(10).join(output_parts)}
 
@@ -131,14 +123,14 @@ def main():
 """)
     else:
         print(f"""
-🧠 **KI 知识库**
+🧠 **Skills 知识库**
 
 当前项目: {project_name}
-检测领域: {', '.join(domains) if domains else '无'}
+检测技术栈: {', '.join(techs) if techs else '无'}
 
 📭 暂无相关踩坑记录
 
-💡 提示: 遇到问题后会自动沉淀到知识库
+💡 提示: 遇到问题后通过知识四问评估，写入对应 SKILL.md + Evolution Marker
 """)
 
 if __name__ == "__main__":

@@ -67,50 +67,7 @@ const data = useStore(state => ({ a: state.a }), shallow);
 
 ---
 
-### 2. KI (Knowledge Item) Marker
-
-用于 `~/.ai-knowledge/*/pitfalls.md` 中的知识记录：
-
-```markdown
-<!-- KI: YYYY-MM-DD | score: {分数} | trigger: {触发类型} | project: {项目} -->
-```
-
-**字段说明**：
-
-| 字段 | 说明 | 示例 |
-|------|------|------|
-| `YYYY-MM-DD` | 记录日期 | `2026-01-10` |
-| `score` | 知识价值评分 (1-10) | `5` |
-| `trigger` | 触发类型 | 见下方触发类型表 |
-| `project` | 来源项目 | `react_ai`, `global` |
-
-**触发类型**：
-
-| 类型 | 说明 |
-|------|------|
-| `bug-fix` | Bug 修复后记录 |
-| `long-debug` | 长时间调试 (> 15min) |
-| `repeated-error` | 重复错误 (2+ 次) |
-| `user-request` | 用户主动记录 |
-| `session-end` | 会话结束时记录 |
-
-**示例**：
-
-```markdown
-### [2026-01-10] Zustand selector 导致无限重渲染
-
-**现象**: 组件疯狂重渲染
-
-**根因**: useStore 返回新对象，引用不稳定
-
-**修复**: 使用 shallow 比较
-
-<!-- KI: 2026-01-10 | score: 5 | trigger: long-debug | project: react_ai -->
-```
-
----
-
-### 3. Deprecated Marker
+### 2. Skill Deprecated Marker
 
 用于标记废弃的规则（不直接删除，保留历史）：
 
@@ -139,18 +96,9 @@ const data = useStore(state => ({ a: state.a }), shallow);
 | 废弃规则 | ✅ 使用 Deprecated Marker |
 | 格式调整（无内容变化）| ❌ 不需要 |
 
-### 何时添加 KI Marker
-
-| 场景 | 添加 |
-|------|------|
-| 知识价值评分 ≥ 3 | ✅ 必须 |
-| 知识价值评分 < 3 | ⚠️ 可选 |
-| 敏感信息 | ❌ 禁止记录 |
-
 ### 标记位置
 
 - **Skill Evolution Marker**: 放在被修改 section 的末尾
-- **KI Marker**: 放在 pitfall 条目的末尾
 - **Deprecated Marker**: 放在废弃 section 标题下方
 
 ---
@@ -162,9 +110,6 @@ const data = useStore(state => ({ a: state.a }), shallow);
 ```bash
 # 检索所有 Evolution Markers
 grep -r "<!-- Evolution:" ~/.claude/skills/ --include="*.md"
-
-# 检索所有 KI Markers
-grep -r "<!-- KI:" ~/.ai-knowledge/ --include="*.md"
 
 # 检索所有废弃规则
 grep -r "<!-- Deprecated:" ~/.claude/skills/ --include="*.md"
@@ -191,11 +136,10 @@ grep -r "<!-- Evolution:" ~/.claude/skills/ --include="*.md" | \
 │                     Evolution Markers                        │
 ├─────────────────────────────────────────────────────────────┤
 │                                                              │
-│   ki-manager ──────────→ 添加 KI Marker                     │
-│        │                                                     │
+│   知识四问评估 ──────────→ 添加 Evolution Marker            │
+│        │                   写入 skills/{tech}/SKILL.md       │
 │        ▼                                                     │
-│   skill-evolution-agent ──→ 添加 Evolution Marker           │
-│                              添加 Deprecated Marker          │
+│   skill-evolution-agent ──→ 添加 Deprecated Marker          │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
 ```

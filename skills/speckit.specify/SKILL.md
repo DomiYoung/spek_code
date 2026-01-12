@@ -1,7 +1,7 @@
 ---
 name: speckit.specify
 description: |
-  功能规范创建工具 - Spec-Kit 核心流程。
+  功能规范创建工具 - Spec-Kit 多轮对话式核心流程。
   Use when:
   - 创建新功能需要写规范文档
   - 任务权重 ≥7（复杂功能、架构变更）
@@ -14,132 +14,185 @@ globs:
   - "**/spec.md"
 ---
 
-## User Input
+# Speckit.Specify（功能规范）
 
-```text
-$ARGUMENTS
+> **Skill 类型**：Dialogue-driven（对话驱动型）
+> **核心理念**：渐进式规范生成，分段确认，门控进入下一阶段。
+
+---
+
+## Quick Start
+
+```
+需求理解(3-5轮追问) → 分段生成规范 → 逐段确认 → 门控进入 Clarify/Plan
 ```
 
-You **MUST** consider the user input before proceeding (if not empty).
+---
 
-## Outline
+## 核心流程（The Process）
 
-The text the user typed after `/speckit.specify` in the triggering message **is** the feature description. Assume you always have it available in this conversation even if `$ARGUMENTS` appears literally below. Do not ask the user to repeat it unless they provided an empty command.
+### Phase 0: 需求理解（3-5 轮追问）
 
-Given that feature description, do this:
+**在生成任何规范之前，先理解需求**：
 
-1. **Generate a concise short name** (2-4 words) for the branch:
-   - Analyze the feature description and extract the most meaningful keywords
-   - Create a 2-4 word short name that captures the essence of the feature
-   - Use action-noun format when possible (e.g., "add-user-auth", "fix-payment-bug")
-   - Preserve technical terms and acronyms (OAuth2, API, JWT, etc.)
-   - Keep it concise but descriptive enough to understand the feature at a glance
-   - Examples:
-     - "I want to add user authentication" → "user-auth"
-     - "Implement OAuth2 integration for the API" → "oauth2-api-integration"
-     - "Create a dashboard for analytics" → "analytics-dashboard"
-     - "Fix payment processing timeout bug" → "fix-payment-timeout"
+**提问原则**：
+- **一次一问** - 每条消息只包含一个问题
+- **选择题优先** - 提供 2-3 个选项让用户选择
+- **先给推荐** - 分析后给出推荐选项及理由
 
-2. **Check for existing branches before creating new one**:
+**追问焦点**：
+```
+第 1 轮：核心目标 - "这个功能要解决什么问题？"
+第 2 轮：用户角色 - "主要用户是谁？有几种角色？"
+第 3 轮：核心场景 - "用户最常用的操作路径是？"
+第 4 轮：成功标准 - "怎样算做好了？有量化指标吗？"
+第 5 轮：约束条件 - "有什么技术/时间/资源限制？"
+```
 
-   a. First, fetch all remote branches to ensure we have the latest information:
+**问题格式**：
+```markdown
+### 问题 [N]/5: [类别]
 
-      ```bash
-      git fetch --all --prune
-      ```
+[问题描述]
 
-   b. Find the highest feature number across all sources for the short-name:
-      - Remote branches: `git ls-remote --heads origin | grep -E 'refs/heads/[0-9]+-<short-name>$'`
-      - Local branches: `git branch | grep -E '^[* ]*[0-9]+-<short-name>$'`
-      - Specs directories: Check for directories matching `specs/[0-9]+-<short-name>`
+**推荐**: 选项 [X] - [推荐理由]
 
-   c. Determine the next available number:
-      - Extract all numbers from all three sources
-      - Find the highest number N
-      - Use N+1 for the new branch number
+| 选项 | 描述 |
+|------|------|
+| A | ... |
+| B | ... |
+| C | ... |
 
-   d. Run the script `.specify/scripts/bash/create-new-feature.sh --json "$ARGUMENTS"` with the calculated number and short-name:
-      - Pass `--number N+1` and `--short-name "your-short-name"` along with the feature description
-      - Bash example: `.specify/scripts/bash/create-new-feature.sh --json "$ARGUMENTS" --json --number 5 --short-name "user-auth" "Add user authentication"`
-      - PowerShell example: `.specify/scripts/bash/create-new-feature.sh --json "$ARGUMENTS" -Json -Number 5 -ShortName "user-auth" "Add user authentication"`
+请选择或补充说明：
+```
 
-   **IMPORTANT**:
-   - Check all three sources (remote branches, local branches, specs directories) to find the highest number
-   - Only match branches/directories with the exact short-name pattern
-   - If no existing branches/directories found with this short-name, start with number 1
-   - You must only ever run this script once per feature
-   - The JSON is provided in the terminal as output - always refer to it to get the actual content you're looking for
-   - The JSON output will contain BRANCH_NAME and SPEC_FILE paths
-   - For single quotes in args like "I'm Groot", use escape syntax: e.g 'I'\''m Groot' (or double-quote if possible: "I'm Groot")
+### Phase 1: 分支与文件初始化
 
-3. Load `.specify/templates/spec-template.md` to understand required sections.
+当理解足够后（约 3-5 轮），初始化项目结构：
 
-4. Follow this execution flow:
+1. **生成简短名称** (2-4 词)：
+   - 分析功能描述提取关键词
+   - 使用 action-noun 格式（如 "add-user-auth"）
+   - 保留技术术语（OAuth2, API, JWT 等）
 
-    1. Parse user description from Input
-       If empty: ERROR "No feature description provided"
-    2. Extract key concepts from description
-       Identify: actors, actions, data, constraints
-    3. For unclear aspects:
-       - Make informed guesses based on context and industry standards
-       - Only mark with [NEEDS CLARIFICATION: specific question] if:
-         - The choice significantly impacts feature scope or user experience
-         - Multiple reasonable interpretations exist with different implications
-         - No reasonable default exists
-       - **LIMIT: Maximum 3 [NEEDS CLARIFICATION] markers total**
-       - Prioritize clarifications by impact: scope > security/privacy > user experience > technical details
-    4. Fill User Scenarios & Testing section
-       If no clear user flow: ERROR "Cannot determine user scenarios"
-    5. Generate Functional Requirements
-       Each requirement must be testable
-       Use reasonable defaults for unspecified details (document assumptions in Assumptions section)
-    6. Define Success Criteria
-       Create measurable, technology-agnostic outcomes
-       Include both quantitative metrics (time, performance, volume) and qualitative measures (user satisfaction, task completion)
-       Each criterion must be verifiable without implementation details
-    7. Identify Key Entities (if data involved)
-    8. Return: SUCCESS (spec ready for planning)
+2. **检查现有分支** 避免冲突：
+   ```bash
+   git fetch --all --prune
+   ```
 
-5. Write the specification to SPEC_FILE using the template structure, replacing placeholders with concrete details derived from the feature description (arguments) while preserving section order and headings.
+3. **运行初始化脚本**：
+   ```bash
+   .specify/scripts/bash/create-new-feature.sh --json --number N --short-name "name" "description"
+   ```
 
-6. **Specification Quality Validation**: After writing the initial spec, validate it against quality criteria.
+4. **加载模板**：`.specify/templates/spec-template.md`
 
-7. Report completion with branch name, spec file path, checklist results, and readiness for the next phase (`/speckit.clarify` or `/speckit.plan`).
+### Phase 2: 分段生成规范
 
-**NOTE:** The script creates and checks out the new branch and initializes the spec file before writing.
+**不要一次性生成完整 spec，而是分段呈现**：
 
-## General Guidelines
+| 段落 | 内容 | 字数 |
+|------|------|------|
+| 1. 概述 | 功能目标、用户价值 | 100-150 |
+| 2. 用户场景 | 主要用例、用户流程 | 200-300 |
+| 3. 功能需求 | 具体功能点、验收标准 | 200-300 |
+| 4. 成功标准 | 量化指标、验证方法 | 100-150 |
+| 5. 约束与假设 | 限制条件、前提假设 | 100-150 |
 
-- Focus on **WHAT** users need and **WHY**.
-- Avoid HOW to implement (no tech stack, APIs, code structure).
-- Written for business stakeholders, not developers.
-- DO NOT create any checklists that are embedded in the spec. That will be a separate command.
+**每段后必须确认**：
+```
+以上 [段落名称] 描述准确吗？有需要调整的地方吗？
+```
 
-### Section Requirements
+**用户确认后才继续下一段**。
 
-- **Mandatory sections**: Must be completed for every feature
-- **Optional sections**: Include only when relevant to the feature
-- When a section doesn't apply, remove it entirely (don't leave as "N/A")
+### Phase 3: 整合与验证
 
-### Success Criteria Guidelines
+所有段落确认后：
 
-Success criteria must be:
+1. **整合到 spec.md** - 写入 SPEC_FILE
+2. **质量验证** - 检查必填字段、一致性
+3. **输出覆盖度卡片**：
 
-1. **Measurable**: Include specific metrics (time, percentage, count, rate)
-2. **Technology-agnostic**: No mention of frameworks, languages, databases, or tools
-3. **User-focused**: Describe outcomes from user/business perspective, not system internals
-4. **Verifiable**: Can be tested/validated without knowing implementation details
+```
+╔════════════════════════════════════════════════════════╗
+║  📋 Spec 生成完成                                       ║
+╠════════════════════════════════════════════════════════╣
+║  分支: [BRANCH_NAME]                                    ║
+║  文件: [SPEC_FILE]                                      ║
+║  ──────────────────────────────────────────────────── ║
+║  ✅ 已完成: 概述、用户场景、功能需求、成功标准           ║
+║  ⚠️ 待澄清: [N] 项 [NEEDS CLARIFICATION]                ║
+╚════════════════════════════════════════════════════════╝
+```
 
-**Good examples**:
+### Phase 4: 门控进入下一阶段
 
-- "Users can complete checkout in under 3 minutes"
-- "System supports 10,000 concurrent users"
-- "95% of searches return results in under 1 second"
-- "Task completion rate improves by 40%"
+**必须询问**：
 
-**Bad examples** (implementation-focused):
+```markdown
+---
+Spec 已生成 ✓
 
-- "API response time is under 200ms" (too technical, use "Users see results instantly")
-- "Database can handle 1000 TPS" (implementation detail, use user-facing metric)
-- "React components render efficiently" (framework-specific)
-- "Redis cache hit rate above 80%" (technology-specific)
+**下一步选择**：
+1. 📝 查看完整 Spec 文件
+2. 🔍 进入 `/speckit.clarify` 澄清待定项
+3. 🚀 直接进入 `/speckit.plan` 生成实现计划
+4. 🔄 还需要调整某些部分
+
+请选择 (1/2/3/4)：
+```
+
+**只有用户明确选择后才进入下一阶段**。
+
+---
+
+## 规范质量准则
+
+### 内容准则
+
+- 聚焦 **WHAT**（做什么）和 **WHY**（为什么）
+- 避免 **HOW**（怎么实现）- 不涉及技术栈、API、代码结构
+- 面向**业务干系人**，非开发者
+
+### 成功标准准则
+
+| ✅ 好的标准 | ❌ 差的标准 |
+|------------|------------|
+| "用户可在 3 分钟内完成结账" | "API 响应时间 < 200ms" |
+| "系统支持 10,000 并发用户" | "数据库可处理 1000 TPS" |
+| "95% 搜索在 1 秒内返回" | "React 组件渲染高效" |
+
+### 待澄清标记
+
+仅在以下情况标记 `[NEEDS CLARIFICATION: 具体问题]`：
+- 选择会显著影响功能范围或用户体验
+- 存在多种合理解释且影响不同
+- 无法设定合理默认值
+
+**限制**：最多 3 个待澄清标记
+
+---
+
+## 与其他 Skills 的关系
+
+```
+brainstorm (方案探索)
+    ↓
+speckit.specify (本 Skill - 生成规范)
+    ↓
+speckit.clarify (澄清待定项)
+    ↓
+speckit.plan (生成实现计划)
+```
+
+---
+
+## Critical Guidelines
+
+1. **先理解后生成** - 3-5 轮追问确认需求再动笔
+2. **一次一问** - 不要用多个问题轰炸用户
+3. **选择题优先** - 比开放式问题更容易回答
+4. **分段呈现** - 每段 100-300 字，逐段确认
+5. **门控下一步** - 用户明确选择后才进入下一阶段
+6. **聚焦 WHAT/WHY** - 避免实现细节

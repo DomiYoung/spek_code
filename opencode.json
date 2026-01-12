@@ -1,0 +1,30 @@
+{
+    "$schema": "https://opencode.ai/config.json",
+    "provider": {
+        "antigravity": {
+            "npm": "@ai-sdk/anthropic",
+            "name": "Antigravity",
+            "options": {
+                "baseURL": "http://127.0.0.1:8045/v1/messages?beta=true",
+                "apiKey": "sk-a4af2119daf94770ab0f74c4ecc6de97",
+                "timeout": 600000
+            },
+            "models": {
+                "claude-opus-4-5-thinking": {
+                    "name": "Claude Opus 4.5 Thinking",
+                    "limit": {
+                        "context": 200000,
+                        "output": 32000
+                    }
+                }
+            }
+        }
+    },
+    "model": "antigravity/claude-opus-4-5-thinking",
+    "compaction": {
+        "auto": true,
+        "prune": true
+    },
+    "autoupdate": true,
+    "theme": "claude-code"
+}
