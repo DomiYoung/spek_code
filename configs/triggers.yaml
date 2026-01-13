@@ -145,15 +145,11 @@ expert_routing:
 # Skill 自动调用触发器
 # ============================================
 skill_triggers:
-  # Spec-Kit 触发
-  speckit:
-    condition: "weight >= 7"
-    sequence:
-      - "/speckit.constitution"
-      - "/speckit.specify"
-      - "/speckit.plan"
-      - "/speckit.tasks"
-      - "/speckit.implement"
+  # 统一使用 planning-with-files（取消 Spec-Kit）
+  planning:
+    condition: "weight >= 3"
+    skill: "skills/planning-with-files/SKILL.md"
+    description: "所有 3 分以上任务统一使用 planning-with-files"
 
   # 工作流编排触发
   workflow_orchestrator:
@@ -202,12 +198,10 @@ quality_gates:
     on_fail: "block_commit"
 
   pre_implement:
-    condition: "weight >= 7"
+    condition: "weight >= 3"
     checks:
-      - "spec.md exists"
-      - "plan.md exists"
-      - "tasks.md exists"
-    on_fail: "redirect_to_speckit"
+      - "task_plan.md exists in .planning/"
+    on_fail: "redirect_to_planning"
 
 # ============================================
 # Hook 映射

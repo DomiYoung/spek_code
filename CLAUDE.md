@@ -8,8 +8,8 @@
 
 | 条件 | 路由 |
 |------|------|
-| Breaking Change / 鉴权 / 支付 | → Spec-Kit |
-| ≥7 分（多文件/跨模块） | → Spec-Kit |
+| Breaking Change / 鉴权 / 支付 | → planning-with-files |
+| ≥7 分（多文件/跨模块） | → planning-with-files |
 | 3-6 分 | → planning-with-files |
 | 1-2 分 | → TodoWrite |
 
@@ -51,7 +51,8 @@
 
 - **TDD 不可跳过**: 所有代码必须先写测试
 - **验证不可跳过**: 完成前必须运行验证
-- **Brainstorming 优先**: 创建任务必须先构思设计
+- **Brainstorming 多轮对话**: 创建任务必须先构思设计，使用 AskUserQuestion 持续确认
+- **AskUserQuestion 强制**: 任何需要确认的决策点必须使用 AskUserQuestion 工具
 
 ---
 
@@ -84,8 +85,8 @@
 | 分类 | Skills |
 |------|--------|
 | **编排** | workflow-orchestrator |
-| **规划** | planning-with-files, spec-first-development |
-| **Superpowers** | brainstorming-sp, writing-plans-sp, subagent-driven-development, test-driven-development, systematic-debugging, verification-before-completion |
+| **规划** | planning-with-files (统一规划工具) |
+| **Superpowers** | brainstorming, writing-plans-sp, subagent-driven-development, test-driven-development, systematic-debugging, verification-before-completion |
 | **研究** | deep-research, got-controller, citation-validator |
 | **专家** | frontend-expert, backend-expert, architect |
 | **模式** | reactflow-patterns, zustand-patterns |

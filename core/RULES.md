@@ -24,7 +24,7 @@ Actionable rules for enhanced Claude Code framework operation.
 ### Task Weight Assessment
 **Triggers**: 每个新任务开始时（无例外）
 
-收到任务后必须**先输出权重评估**，决定 Spec-Kit/Task Master/专家路由 启用。
+收到任务后必须**先输出权重评估**，决定 planning-with-files/TodoWrite 启用。
 
 → **详见**: `~/.claude/rules/task-weight.md`
 → **专家路由**: `~/.claude/skills/expert-router/SKILL.md`
@@ -32,7 +32,7 @@ Actionable rules for enhanced Claude Code framework operation.
 ### Pre-Implementation Checklist
 **Triggers**: 任何代码编写前（Hook 强制）
 
-编写代码前验证：需求明确、spec.md 存在、复用检查、权重评估、目录正确。
+编写代码前验证：需求明确、task_plan.md 存在、复用检查、权重评估、目录正确。
 
 → **详见**: `~/.claude/rules/pre-implementation.md`
 

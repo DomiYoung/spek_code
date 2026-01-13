@@ -1,6 +1,6 @@
 # Task Weight Assessment
 
-> 两段式路由：Stage A (决策树硬门槛) + Stage B (打分路由)
+> 统一使用 planning-with-files，取消 Spec-Kit
 
 ---
 
@@ -15,12 +15,12 @@
 ┌─────────────────────────────────────────────────────────┐
 │ 硬门槛检查（按优先级从上到下）                           │
 ├─────────────────────────────────────────────────────────┤
-│ □ Breaking Change?                    → 🔵 Spec-Kit    │
-│ □ Schema/数据迁移?                    → 🔵 Spec-Kit    │
-│ □ 对外 API 契约变化?                  → 🔵 Spec-Kit    │
-│ □ 权限/鉴权/审计/合规?                → 🔵 Spec-Kit    │
-│ □ 资金/结算/订单等高风险?             → 🔵 Spec-Kit    │
-│ □ 跨服务/跨模块链路?                  → 🔵 Spec-Kit    │
+│ □ Breaking Change?                    → 🟢 planning    │
+│ □ Schema/数据迁移?                    → 🟢 planning    │
+│ □ 对外 API 契约变化?                  → 🟢 planning    │
+│ □ 权限/鉴权/审计/合规?                → 🟢 planning    │
+│ □ 资金/结算/订单等高风险?             → 🟢 planning    │
+│ □ 跨服务/跨模块链路?                  → 🟢 planning    │
 │─────────────────────────────────────────────────────────│
 │ □ 需要 >5 次工具调用?                 → 🟢 planning    │
 │ □ 多阶段执行?                         → 🟢 planning    │
@@ -76,32 +76,8 @@
 
 | 总分 | 工作流 | 目录 | 说明 |
 |------|--------|------|------|
-| ≥ 7 | 🔵 Spec-Kit | `.specify/specs/{feature}/` | 完整规格流程 |
-| 5-6 | 🟢 planning-with-files | `.planning/` | 文件持久化规划 |
-| 3-4 | 🟢 planning-with-files-lite | `.planning/` | 仅 task_plan.md |
+| ≥ 3 | 🟢 planning-with-files | `.planning/` | 统一使用文件持久化规划 |
 | 0-2 | ⚪ TodoWrite | 无 | 内存规划 |
-
----
-
-## Task Master 启用条件
-
-满足任一即启用：
-
-- [ ] 子任务 ≥ 5
-- [ ] 需要回滚/灰度
-- [ ] 跨模块联动验证
-- [ ] 多角色协作（PM/后端/运维）
-- [ ] 有明确验收清单
-
----
-
-## Mode 判定
-
-| 条件 | Mode |
-|------|------|
-| 需要外部证据/对比方案/最新信息 | `--research` |
-| 纯设计权衡/架构决策 | `--think` |
-| 其他 | 默认 |
 
 ---
 
@@ -116,26 +92,10 @@
 
 ---
 
-## 降级规则
-
-当 `.specify/` 不存在但需要 Spec-Kit 时：
-
-**默认动作**：降级到 planning-with-files + 详细 task_plan.md
-
-> 不问用户，直接降级（避免卡住执行流）
-
----
-
 ## 豁免场景
 
 - 用户明确说"跳过评估"、"直接开始"
 - 纯问答对话（非任务执行）
-
----
-
-## 代码实现
-
-详见 `scripts/assess.ts` 和 `configs/workflow-rules.yaml`
 
 ---
 
@@ -146,7 +106,7 @@
 ```
 输入: changedFiles=2, flags={auth_audit_compliance: true}
 Stage A: 命中"权限/鉴权/审计/合规"
-结果: 🔵 Spec-Kit（不看分数）
+结果: 🟢 planning-with-files（硬门槛命中）
 ```
 
 ### 例 2：10 文件但纯格式化
